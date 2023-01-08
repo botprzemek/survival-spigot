@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import pl.botprzemek.bpSurvival.SurvivalManager.Config.Configs.PluginConfig;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 public class PluginManager {
@@ -38,7 +39,7 @@ public class PluginManager {
 
         if (spawnSection == null) return;
 
-        World world = Bukkit.getWorld(spawnSection.getString("world"));
+        World world = Bukkit.getWorld(Objects.requireNonNull(spawnSection.getString("world")));
 
         double x = spawnSection.getDouble("x");
         double y = spawnSection.getDouble("y");
@@ -98,8 +99,6 @@ public class PluginManager {
     }
 
     public void clearWaitingPlayer(Player player) {
-
-        player.sendMessage("Cleaned data...");
 
         waitingPlayers.remove(player.getUniqueId());
 

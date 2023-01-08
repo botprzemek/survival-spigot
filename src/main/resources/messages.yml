@@ -5,8 +5,17 @@ prefix: "<color:#FFE04A>★ <bold><gradient:#FFE04A:#FFA400>ʙʜɪᴠᴇ.ᴘʟ</
 # Commands messages
 
 commands:
+  reload:
+    success: "%prefix% Konfiguracja <gradient:#FFE04A:#FFA400><bold>przeładowana!</bold></gradient>"
+    failed: "%prefix% Wystąpił <gradient:#FFE04A:#FFA400><bold>błąd</bold></gradient> przy przeładowywaniu <gradient:#FFE04A:#FFA400><bold>konfiguracji!</bold></gradient>"
   spawn:
     start: "%prefix% Rozpoczęto <gradient:#FFE04A:#FFA400><bold>odliczanie</bold></gradient> na <gradient:#FFE04A:#FFA400><bold>spawn!</bold></gradient>"
     time: "%prefix% Poczekaj jeszcze <gradient:#FFE04A:#FFA400><bold>%value%/5 sekund!</bold></gradient>"
     success: "%prefix% Przeniesiono na <gradient:#FFE04A:#FFA400><bold>spawn!</bold></gradient>"
     failed: "%prefix% Ruszyłeś/aś się! Odliczanie <gradient:#FFE04A:#FFA400><bold>przerwane!</bold></gradient>"
+
+# Connecting messages
+
+connect:
+  join: "%prefix% %player_name% dołączył/a <gradient:#FFE04A:#FFA400><bold>do gry!</bold></gradient>"
+  quit: "%prefix% %player_name% nas <gradient:#FFE04A:#FFA400><bold>opuścił/a!</bold></gradient>"

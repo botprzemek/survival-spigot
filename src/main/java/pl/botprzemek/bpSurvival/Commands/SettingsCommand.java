@@ -8,11 +8,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class TestCommand implements CommandExecutor {
+public class SettingsCommand implements CommandExecutor {
 
     private final ProfileManager profileManager;
 
-    public TestCommand(SurvivalManager survivalManager) {
+    public SettingsCommand(SurvivalManager survivalManager) {
 
         profileManager = survivalManager.getProfileManager();
 

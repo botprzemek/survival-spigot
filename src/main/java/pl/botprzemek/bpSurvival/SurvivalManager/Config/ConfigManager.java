@@ -12,8 +12,6 @@ import java.util.List;
 
 public class ConfigManager {
 
-    private final BpSurvival instance;
-
     private final List<Config> configs = new ArrayList<>();
 
     private final PluginConfig pluginConfig;
@@ -26,7 +24,7 @@ public class ConfigManager {
 
     public ConfigManager(SurvivalManager survivalManager) {
 
-        this.instance = survivalManager.getInstance();
+        BpSurvival instance = survivalManager.getInstance();
 
         configs.add(this.pluginConfig = new PluginConfig(instance, "config.yml"));
 
@@ -42,8 +40,6 @@ public class ConfigManager {
 
     public void loadConfigs() {
 
-        instance.getLogger().info("Loading configs...");
-
         for (Config config : configs) {
 
             config.loadConfig();
@@ -54,13 +50,7 @@ public class ConfigManager {
 
     public void saveConfigs() {
 
-        instance.getLogger().info("Saving configs...");
-
-        for (Config config : configs) {
-
-            config.saveConfig();
-
-        }
+        profileConfig.saveConfig();
 
     }
 

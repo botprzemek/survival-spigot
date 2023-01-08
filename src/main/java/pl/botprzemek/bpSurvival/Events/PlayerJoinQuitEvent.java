@@ -1,6 +1,6 @@
 package pl.botprzemek.bpSurvival.Events;
 
-import pl.botprzemek.bpSurvival.SurvivalManager.Profile.Profile;
+import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Profile.ProfileManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 import org.bukkit.entity.Player;
@@ -13,9 +13,13 @@ public class PlayerJoinQuitEvent implements Listener {
 
     private final ProfileManager profileManager;
 
+    private final MessageManager messageManager;
+
     public PlayerJoinQuitEvent(SurvivalManager survivalManager) {
 
-        this.profileManager = survivalManager.getProfileManager();
+        profileManager = survivalManager.getProfileManager();
+
+        messageManager = survivalManager.getMessageManager();
 
     }
 
@@ -24,15 +28,9 @@ public class PlayerJoinQuitEvent implements Listener {
 
         Player player = event.getPlayer();
 
-        Profile profile = profileManager.getProfile(player);
+        event.setJoinMessage(messageManager.getMessageString(player, "connect.join"));
 
-        if (profile == null) profile = profileManager.createProfile(player);
-
-        player.sendMessage("=== Your config ===");
-        player.sendMessage("Level: " + profile.getLevel());
-        player.sendMessage("Drop-To-Inv: " + profile.getSettings().isToInventory());
-        player.sendMessage("Drop-Mined-Block: " + profile.getSettings().isMinedBlock());
-        player.sendMessage("Multiplier: " + profile.getSettings().getMultiplier());
+        if (profileManager.getProfile(player) == null) profileManager.createProfile(player);
 
     }
 
@@ -40,6 +38,8 @@ public class PlayerJoinQuitEvent implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
 
         Player player = event.getPlayer();
+
+        event.setQuitMessage(messageManager.getMessageString(player, "connect.quit"));
 
     }
 
