@@ -1,0 +1,5 @@
+'0':
+  id: "example_sword" # Oraxen ID
+  chance: 15 # Chance in %
+  min: 1 # Min amount
+  max: 3 # Max amount

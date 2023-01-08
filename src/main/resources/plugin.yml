@@ -1,0 +1,28 @@
+name: bpSurvival
+version: '0.1'
+authors: [botprzemek]
+website: 'https://www.github.com/botprzemek/bpSurvival/'
+description: Survival addons (1.18.2)
+main: pl.botprzemek.bpSurvival.BpSurvival
+api-version: '1.18'
+softdepend: [PlaceholderAPI, Oraxen]
+commands:
+  bpsurvival:
+    aliases: [bps]
+    default: op
+    description: Reload command
+  test:
+    aliases: [t]
+    default: op
+    description: Test command
+  spawn:
+    aliases: [s]
+    default: op
+    description: Spawn command
+permissions:
+  bpsurvival.*:
+    description: Gives access to all bpSurvival commands
+    children:
+      bpsurvival.reload: true
+      bpsurvival.test: true
+      bpsurvival.spawn: true

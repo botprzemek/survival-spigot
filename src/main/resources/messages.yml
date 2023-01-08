@@ -1,0 +1,12 @@
+# Prefix for all of the messages (%prefix%)
+
+prefix: "<color:#FFE04A>★ <bold><gradient:#FFE04A:#FFA400>ʙʜɪᴠᴇ.ᴘʟ</gradient><reset> <color:#FFA400>★<reset>"
+
+# Commands messages
+
+commands:
+  spawn:
+    start: "%prefix% Rozpoczęto <gradient:#FFE04A:#FFA400><bold>odliczanie</bold></gradient> na <gradient:#FFE04A:#FFA400><bold>spawn!</bold></gradient>"
+    time: "%prefix% Poczekaj jeszcze <gradient:#FFE04A:#FFA400><bold>%value%/5 sekund!</bold></gradient>"
+    success: "%prefix% Przeniesiono na <gradient:#FFE04A:#FFA400><bold>spawn!</bold></gradient>"
+    failed: "%prefix% Ruszyłeś/aś się! Odliczanie <gradient:#FFE04A:#FFA400><bold>przerwane!</bold></gradient>"

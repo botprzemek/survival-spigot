@@ -1,0 +1,15 @@
+# Spawn location for /spawn command
+
+spawn:
+  world: "world"
+  x: 0.5
+  y: 101
+  z: 0.5
+  yaw: 180
+  pitch: -5
+
+# Commands config
+
+commands:
+  spawn:
+    timer: 5
