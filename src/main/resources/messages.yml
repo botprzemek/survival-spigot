@@ -17,5 +17,5 @@ commands:
 # Connecting messages
 
 connect:
-  join: "%prefix% %player_name% dołączył/a <gradient:#FFE04A:#FFA400><bold>do gry!</bold></gradient>"
-  quit: "%prefix% %player_name% nas <gradient:#FFE04A:#FFA400><bold>opuścił/a!</bold></gradient>"
+  join: "%prefix% %player_name% dołączył/a <gradient:#FFE04A:#FFA400><bold>do gry! (%server_online% gracz/y)</bold></gradient>"
+  quit: "%prefix% %player_name% nas <gradient:#FFE04A:#FFA400><bold>opuścił/a! (%server_online% gracz/y)</bold></gradient>"
