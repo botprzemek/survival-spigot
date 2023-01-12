@@ -1,20 +1,23 @@
 package pl.botprzemek.bpSurvival.Commands;
 
-import org.bukkit.entity.Player;
-import pl.botprzemek.bpSurvival.SurvivalManager.Config.ConfigManager;
-import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
-import pl.botprzemek.bpSurvival.SurvivalManager.Profile.ProfileManager;
-import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.ConfigManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Drop.DropManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Profile.ProfileManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
 public class ReloadCommand implements CommandExecutor {
 
     private final ConfigManager configManager;
 
     private final ProfileManager profileManager;
+
+    private final DropManager dropManager;
 
     private final MessageManager messageManager;
 
@@ -23,6 +26,8 @@ public class ReloadCommand implements CommandExecutor {
         configManager = survivalManager.getConfigManager();
 
         profileManager = survivalManager.getProfileManager();
+
+        dropManager = survivalManager.getDropManager();
 
         messageManager = survivalManager.getMessageManager();
 
@@ -40,6 +45,8 @@ public class ReloadCommand implements CommandExecutor {
             configManager.loadConfigs();
 
             profileManager.loadProfiles();
+
+            dropManager.loadItems();
 
             if (sender instanceof Player player) messageManager.sendMessage(player, "reload.success");
 

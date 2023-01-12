@@ -22,6 +22,17 @@ public class MessageConfig extends Config {
 
     }
 
+    public String getEventMessage(String path) {
+
+        ConfigurationSection section = getConfigurationSection("events");
+
+        if (section == null) return null;
+
+        return section.getString(path);
+
+    }
+
+
     public String getMessage(String path) {
 
         return getString(path);

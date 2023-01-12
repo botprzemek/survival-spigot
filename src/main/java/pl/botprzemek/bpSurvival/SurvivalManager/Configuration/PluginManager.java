@@ -7,9 +7,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import pl.botprzemek.bpSurvival.SurvivalManager.Config.Configs.PluginConfig;
 
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class PluginManager {
 
@@ -21,11 +19,15 @@ public class PluginManager {
 
     private final HashMap<UUID, Integer> waitingPlayers;
 
+    private final List<UUID> sleepingPlayers;
+
     public PluginManager(PluginConfig pluginConfig) {
 
         this.pluginConfig = pluginConfig;
 
         waitingPlayers = new HashMap<>();
+
+        sleepingPlayers = new ArrayList<>();
 
         setTimer();
 
@@ -101,6 +103,24 @@ public class PluginManager {
     public void clearWaitingPlayer(Player player) {
 
         waitingPlayers.remove(player.getUniqueId());
+
+    }
+
+    public List<UUID> getSleepingPlayers() {
+
+        return sleepingPlayers;
+
+    }
+
+    public void setSleepingPlayer(Player player) {
+
+        sleepingPlayers.add(player.getUniqueId());
+
+    }
+
+    public void clearSleepingPlayer(Player player) {
+
+        sleepingPlayers.remove(player.getUniqueId());
 
     }
 

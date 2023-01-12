@@ -11,10 +11,10 @@ commands:
     aliases: [bps]
     default: op
     description: Reload command
-  test:
-    aliases: [t]
+  settings:
+    aliases: [set]
     default: op
-    description: Test command
+    description: Settings command
   spawn:
     aliases: [s]
     default: op

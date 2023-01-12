@@ -8,13 +8,13 @@ import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
-public class PlayerMovementEvent implements Listener {
+public class MovementEvent implements Listener {
 
     private final PluginManager pluginManager;
 
     private final MessageManager messageManager;
 
-    public PlayerMovementEvent(SurvivalManager survivalManager) {
+    public MovementEvent(SurvivalManager survivalManager) {
 
         pluginManager = survivalManager.getPluginManager();
 

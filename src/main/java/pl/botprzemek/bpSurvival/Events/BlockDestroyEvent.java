@@ -1,9 +1,12 @@
 package pl.botprzemek.bpSurvival.Events;
 
-import org.bukkit.*;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -35,7 +38,18 @@ public class BlockDestroyEvent implements Listener {
     @EventHandler
     public void onBlockDrop(BlockDropItemEvent event) {
 
+        if (!event.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) return;
+
+        if (!dropManager.getBlocks().contains(event.getItems().get(0).getItemStack().getType())) return;
+
         event.setCancelled(true);
+
+    }
+
+    @EventHandler
+    public void onBlockDestroy(BlockBreakEvent event) {
+
+        if (!dropManager.getBlocks().contains(event.getBlock().getType())) return;
 
         Player player = event.getPlayer();
 
@@ -47,7 +61,7 @@ public class BlockDestroyEvent implements Listener {
 
         List<ItemStack> drops = new ArrayList<>();
 
-        if (settings.isMinedBlock()) drops.add(event.getItems().get(0).getItemStack());
+        if (settings.isMinedBlock()) drops.add(new ItemStack(event.getBlock().getType()));
 
         Location location = event.getBlock().getLocation();
 
@@ -59,7 +73,7 @@ public class BlockDestroyEvent implements Listener {
 
         Inventory inventory = player.getInventory();
 
-        World world = location.getWorld();
+        World world = player.getWorld();
 
         if (!settings.isToInventory()) {
 
@@ -73,8 +87,6 @@ public class BlockDestroyEvent implements Listener {
 
             profile.setLevel(level + 1);
 
-            profile.setExp(0);
-
             return;
 
         }
@@ -83,7 +95,7 @@ public class BlockDestroyEvent implements Listener {
 
             if (inventory.firstEmpty() != -1) inventory.addItem(item);
 
-            else world.dropItem(location, item);
+            else world.dropItemNaturally(location, item);
 
         }
 
@@ -94,8 +106,6 @@ public class BlockDestroyEvent implements Listener {
         if (profile.getExp() < 50 * level) return;
 
         profile.setLevel(level + 1);
-
-        profile.setExp(0);
 
     }
 

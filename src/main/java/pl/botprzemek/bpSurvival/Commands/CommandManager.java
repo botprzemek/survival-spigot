@@ -13,7 +13,7 @@ public class CommandManager {
 
         Objects.requireNonNull(instance.getCommand("bpsurvival")).setExecutor(new ReloadCommand(survivalManager));
 
-        Objects.requireNonNull(instance.getCommand("test")).setExecutor(new SettingsCommand(survivalManager));
+        Objects.requireNonNull(instance.getCommand("settings")).setExecutor(new SettingsCommand(survivalManager));
 
         Objects.requireNonNull(instance.getCommand("spawn")).setExecutor(new SpawnCommand(survivalManager));
 

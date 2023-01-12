@@ -6,19 +6,13 @@ public class Profile {
 
     private int exp;
 
-    private Settings settings;
+    private final Settings settings;
 
     public Profile(int level, int exp, Settings settings) {
 
         this.level = level;
 
         this.exp = exp;
-
-        this.settings = settings;
-
-    }
-
-    public void setSettings(Settings settings) {
 
         this.settings = settings;
 
@@ -33,6 +27,8 @@ public class Profile {
     public void setLevel(int level) {
 
         this.level = level;
+
+        this.exp = 0;
 
     }
 

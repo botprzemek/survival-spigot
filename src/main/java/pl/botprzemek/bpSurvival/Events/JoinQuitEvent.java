@@ -1,25 +1,30 @@
 package pl.botprzemek.bpSurvival.Events;
 
-import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
-import pl.botprzemek.bpSurvival.SurvivalManager.Profile.ProfileManager;
-import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Profile.ProfileManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
-public class PlayerJoinQuitEvent implements Listener {
+public class JoinQuitEvent implements Listener {
 
     private final ProfileManager profileManager;
 
     private final MessageManager messageManager;
 
-    public PlayerJoinQuitEvent(SurvivalManager survivalManager) {
+    private final PluginManager pluginManager;
+
+    public JoinQuitEvent(SurvivalManager survivalManager) {
 
         profileManager = survivalManager.getProfileManager();
 
         messageManager = survivalManager.getMessageManager();
+
+        pluginManager = survivalManager.getPluginManager();
 
     }
 
@@ -28,7 +33,7 @@ public class PlayerJoinQuitEvent implements Listener {
 
         Player player = event.getPlayer();
 
-        event.setJoinMessage(messageManager.getMessageString(player, "connect.join"));
+        event.setJoinMessage(messageManager.getMessageString(player, "events.connect.join"));
 
         if (profileManager.getProfile(player) == null) profileManager.createProfile(player);
 
@@ -39,7 +44,9 @@ public class PlayerJoinQuitEvent implements Listener {
 
         Player player = event.getPlayer();
 
-        event.setQuitMessage(messageManager.getMessageString(player, "connect.quit"));
+        event.setQuitMessage(messageManager.getMessageString(player, "events.connect.quit"));
+
+        pluginManager.clearSleepingPlayer(player);
 
     }
 

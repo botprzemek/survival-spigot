@@ -9,11 +9,15 @@ public class EventManager {
 
         BpSurvival instance = survivalManager.getInstance();
 
-        instance.getServer().getPluginManager().registerEvents(new PlayerJoinQuitEvent(survivalManager), instance);
+        instance.getServer().getPluginManager().registerEvents(new JoinQuitEvent(survivalManager), instance);
 
         instance.getServer().getPluginManager().registerEvents(new BlockDestroyEvent(survivalManager), instance);
 
-        instance.getServer().getPluginManager().registerEvents(new PlayerMovementEvent(survivalManager), instance);
+        instance.getServer().getPluginManager().registerEvents(new ChatEvent(survivalManager), instance);
+
+        instance.getServer().getPluginManager().registerEvents(new MovementEvent(survivalManager), instance);
+
+        instance.getServer().getPluginManager().registerEvents(new BedSleepEvent(survivalManager), instance);
 
     }
 

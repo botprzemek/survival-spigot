@@ -2,7 +2,7 @@
 
 prefix: "<color:#FFE04A>★ <bold><gradient:#FFE04A:#FFA400>ʙʜɪᴠᴇ.ᴘʟ</gradient><reset> <color:#FFA400>★<reset>"
 
-# Commands messages
+# Command messages
 
 commands:
   reload:
@@ -13,9 +13,28 @@ commands:
     time: "%prefix% Poczekaj jeszcze <gradient:#FFE04A:#FFA400><bold>%value%/5 sekund!</bold></gradient>"
     success: "%prefix% Przeniesiono na <gradient:#FFE04A:#FFA400><bold>spawn!</bold></gradient>"
     failed: "%prefix% Ruszyłeś/aś się! Odliczanie <gradient:#FFE04A:#FFA400><bold>przerwane!</bold></gradient>"
+  settings:
+    message: "%prefix% Twoje <gradient:#FFE04A:#FFA400><bold>Statystyki</bold></gradient>"
+    level: " - Poziom: <gradient:#FFE04A:#FFA400><bold>%value%</bold></gradient>"
+    exp: " - Doświadczenie: <gradient:#FFE04A:#FFA400><bold>%value%</bold></gradient>"
+    to-inv: " - Wrzuć do ekwipunku: <gradient:#FFE04A:#FFA400><bold>%value%</bold></gradient>"
+    mined: " - Wyrzucić wykopany item: <gradient:#FFE04A:#FFA400><bold>%value%</bold></gradient>"
+    multiplier: " - Mnożnik dropu: <gradient:#FFE04A:#FFA400><bold>%value%</bold></gradient>"
 
-# Connecting messages
+# Event messages
 
-connect:
-  join: "%prefix% %player_name% dołączył/a <gradient:#FFE04A:#FFA400><bold>do gry! (%server_online% gracz/y)</bold></gradient>"
-  quit: "%prefix% %player_name% nas <gradient:#FFE04A:#FFA400><bold>opuścił/a! (%server_online% gracz/y)</bold></gradient>"
+events:
+  connect:
+    join: "%prefix% %player_name% dołączył/a <gradient:#FFE04A:#FFA400><bold>do gry! (%server_online% gracz/y)</bold></gradient>"
+    quit: "%prefix% %player_name% nas <gradient:#FFE04A:#FFA400><bold>opuścił/a! (%server_online% gracz/y)</bold></gradient>"
+  chat:
+    success: "<color:#FFE04A>♦<reset>%luckperms_prefix%<gradient:#FFE04A:#FFA400><bold>%player_name%</bold> ♦</gradient><reset> %value%"
+    failed: "%prefix% Nie masz <gradient:#FFE04A:#FFA400><bold>uprawnień</bold></gradient> do wysyłania <gradient:#FFE04A:#FFA400><bold>wiadomości!</bold></gradient>"
+  sleep:
+    message: "%prefix% %player_name% położył/a się <gradient:#FFE04A:#FFA400><bold>spać! (%value%% gracz/y śpi)</bold></gradient>"
+    success:
+      title: "<gradient:#FFE04A:#FFA400><bold>Noc minęła!</bold></gradient>"
+      description: "Zdrowie oraz głód zostały odnowione!"
+      fadein: 1
+      stay: 3
+      fadeout: 1
