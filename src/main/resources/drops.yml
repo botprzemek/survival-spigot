@@ -1,4 +1,4 @@
-blocks: ["stone"]
+blocks: ["stone", "andesite", "diorite", "granite", "sandstone", "deepslate"]
 
 items:
   '0':

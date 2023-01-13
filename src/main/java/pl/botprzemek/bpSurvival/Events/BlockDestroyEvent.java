@@ -3,6 +3,7 @@ package pl.botprzemek.bpSurvival.Events;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -55,13 +56,21 @@ public class BlockDestroyEvent implements Listener {
 
         if (!player.getGameMode().equals(GameMode.SURVIVAL)) return;
 
+        if (!player.getInventory().getItemInMainHand().getType().toString().contains("PICKAXE")) return;
+
+        event.setDropItems(false);
+
         Profile profile = profileManager.getProfile(player);
 
         Settings settings = profile.getSettings();
 
         List<ItemStack> drops = new ArrayList<>();
 
-        if (settings.isMinedBlock()) drops.add(new ItemStack(event.getBlock().getType()));
+        int multiplier = (player.getInventory().getItemInMainHand().containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) ? settings.getMultiplier() * player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS) : settings.getMultiplier();
+
+        ItemStack droppedItem = event.getBlock().getDrops(player.getItemInUse()).stream().toList().get(0);
+
+        if (settings.isMinedBlock() && droppedItem != null) drops.add(droppedItem);
 
         Location location = event.getBlock().getLocation();
 
@@ -69,7 +78,7 @@ public class BlockDestroyEvent implements Listener {
 
         Items items = dropManager.getItems().get(random.nextInt(dropManager.getItems().size()));
 
-        if (items.shouldDrop(random)) drops.add(items.createItem(random, settings.getMultiplier()));
+        if (items.shouldDrop(random)) drops.add(items.createItem(random, multiplier));
 
         Inventory inventory = player.getInventory();
 

@@ -1,20 +1,17 @@
 package pl.botprzemek.bpSurvival.SurvivalManager;
 
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import pl.botprzemek.bpSurvival.BpSurvival;
 import pl.botprzemek.bpSurvival.Commands.CommandManager;
 import pl.botprzemek.bpSurvival.Events.EventManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.ConfigManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Drop.DropManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Profile.ProfileManager;
-import pl.botprzemek.bpSurvival.BpSurvival;
-import pl.botprzemek.bpSurvival.SurvivalManager.Config.ConfigManager;
 
 public class SurvivalManager {
 
     private final BpSurvival instance;
-
-    private final BukkitAudiences adventure;
 
     private final ConfigManager configManager;
 
@@ -30,13 +27,11 @@ public class SurvivalManager {
 
         this.instance = instance;
 
-        adventure = BukkitAudiences.create(getInstance());
-
         configManager = new ConfigManager(this);
 
         pluginManager = new PluginManager(configManager.getPluginConfig());
 
-        messageManager = new MessageManager(configManager.getMessageConfig(), getAdventure());
+        messageManager = new MessageManager(this);
 
         profileManager = new ProfileManager(configManager.getProfileConfig());
 
@@ -59,12 +54,6 @@ public class SurvivalManager {
     public BpSurvival getInstance() {
 
         return instance;
-
-    }
-
-    public BukkitAudiences getAdventure() {
-
-        return adventure;
 
     }
 

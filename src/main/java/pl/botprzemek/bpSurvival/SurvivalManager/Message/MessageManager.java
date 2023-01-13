@@ -6,6 +6,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import pl.botprzemek.bpSurvival.SurvivalManager.Config.Configs.MessageConfig;
+import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
 public class MessageManager {
 
@@ -15,11 +16,11 @@ public class MessageManager {
 
     private final StringSerializer stringSerializer;
 
-    public MessageManager(MessageConfig messageConfig, BukkitAudiences adventure) {
+    public MessageManager(SurvivalManager survivalManager) {
 
-        this.messageConfig = messageConfig;
+        this.messageConfig = survivalManager.getConfigManager().getMessageConfig();
 
-        this.adventure = adventure;
+        adventure = BukkitAudiences.create(survivalManager.getInstance());
 
         stringSerializer = new StringSerializer();
 

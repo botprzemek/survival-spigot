@@ -55,7 +55,7 @@ public class BedSleepEvent implements Listener {
 
         Player player = event.getPlayer();
 
-        player.sendMessage(String.valueOf(player.getWorld().getTime()));
+        if (player.getWorld().getTime() != 0) return;
 
         if (!pluginManager.getSleepingPlayers().contains(player.getUniqueId())) return;
 
