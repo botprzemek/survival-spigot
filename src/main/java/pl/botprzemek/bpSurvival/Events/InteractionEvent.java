@@ -9,6 +9,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Drop.DropManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Profile.ProfileManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
@@ -20,6 +21,8 @@ public class InteractionEvent implements Listener {
 
     private final ProfileManager profileManager;
 
+    private final DropManager dropManager;
+
     private final PluginManager pluginManager;
 
     private final MessageManager messageManager;
@@ -27,6 +30,8 @@ public class InteractionEvent implements Listener {
     public InteractionEvent(SurvivalManager survivalManager) {
 
         profileManager = survivalManager.getProfileManager();
+
+        dropManager = survivalManager.getDropManager();
 
         pluginManager = survivalManager.getPluginManager();
 
@@ -40,6 +45,8 @@ public class InteractionEvent implements Listener {
         if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
 
         if (!Objects.equals(event.getHand(), EquipmentSlot.HAND)) return;
+
+        if (!dropManager.getBlocks().contains(Objects.requireNonNull(event.getClickedBlock()).getType())) return;
 
         Player player = event.getPlayer();
 
