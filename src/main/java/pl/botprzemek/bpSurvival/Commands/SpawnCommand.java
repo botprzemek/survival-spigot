@@ -36,7 +36,7 @@ public class SpawnCommand implements CommandExecutor {
 
         pluginManager.setWaitingPlayer(player, 0);
 
-        messageManager.sendMessage(player, "spawn.start");
+        messageManager.sendCommandMessage(player, "spawn.start");
 
         new BukkitRunnable() {
 
@@ -52,7 +52,7 @@ public class SpawnCommand implements CommandExecutor {
 
                 }
 
-                messageManager.sendMessage(player, "spawn.time", String.valueOf(time));
+                messageManager.sendCommandMessage(player, "spawn.time", String.valueOf(time));
 
                 if (time == pluginManager.getTimer()) {
 
@@ -60,7 +60,7 @@ public class SpawnCommand implements CommandExecutor {
 
                     pluginManager.clearWaitingPlayer(player);
 
-                    messageManager.sendMessage(player, "spawn.success");
+                    messageManager.sendCommandMessage(player, "spawn.success");
 
                     cancel();
 

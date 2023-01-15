@@ -17,6 +17,8 @@ public class CommandManager {
 
         Objects.requireNonNull(instance.getCommand("spawn")).setExecutor(new SpawnCommand(survivalManager));
 
+        Objects.requireNonNull(instance.getCommand("vanish")).setExecutor(new VanishCommand(survivalManager));
+
     }
 
 }

@@ -19,10 +19,15 @@ commands:
     aliases: [s]
     default: op
     description: Spawn command
+  vanish:
+    aliases: [ukryj, v]
+    default: op
+    description: Vanish command
 permissions:
   bpsurvival.*:
     description: Gives access to all bpSurvival commands
     children:
       bpsurvival.reload: true
-      bpsurvival.test: true
+      bpsurvival.settings: true
       bpsurvival.spawn: true
+      bpsurvival.vanish: true

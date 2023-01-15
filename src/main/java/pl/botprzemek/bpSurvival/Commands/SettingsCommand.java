@@ -33,17 +33,17 @@ public class SettingsCommand implements CommandExecutor {
 
         if (args.length == 0) {
 
-            messageManager.sendMessage(player, "settings.message");
+            messageManager.sendCommandMessage(player, "settings.message");
 
-            messageManager.sendMessage(player, "settings.level", String.valueOf(profile.getLevel()));
+            messageManager.sendCommandMessage(player, "settings.level", String.valueOf(profile.getLevel()));
 
-            messageManager.sendMessage(player, "settings.exp", String.valueOf(profile.getExp()));
+            messageManager.sendCommandMessage(player, "settings.exp", String.valueOf(profile.getExp()));
 
-            messageManager.sendMessage(player, "settings.to-inv", String.valueOf(profile.getSettings().isToInventory()));
+            messageManager.sendCommandMessage(player, "settings.to-inv", String.valueOf(profile.getSettings().isToInventory()));
 
-            messageManager.sendMessage(player, "settings.mined", String.valueOf(profile.getSettings().isMinedBlock()));
+            messageManager.sendCommandMessage(player, "settings.mined", String.valueOf(profile.getSettings().isMinedBlock()));
 
-            messageManager.sendMessage(player, "settings.multiplier", String.valueOf(profile.getSettings().getMultiplier()));
+            messageManager.sendCommandMessage(player, "settings.multiplier", String.valueOf(profile.getSettings().getMultiplier()));
 
             return true;
 

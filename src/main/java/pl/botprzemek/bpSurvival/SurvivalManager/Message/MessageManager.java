@@ -26,7 +26,7 @@ public class MessageManager {
 
     }
 
-    public void sendMessage(Player player, String path) {
+    public void sendCommandMessage(Player player, String path) {
 
         String message = messageConfig.getCommandMessage(path);
 
@@ -37,7 +37,7 @@ public class MessageManager {
 
     }
 
-    public void sendMessage(Player player, String path, String value) {
+    public void sendCommandMessage(Player player, String path, String value) {
 
         String message = messageConfig.getCommandMessage(path);
 
@@ -49,9 +49,21 @@ public class MessageManager {
 
     }
 
+    public void sendEventMessage(Player player, String path, String value) {
+
+        String message = messageConfig.getEventMessage(path);
+
+        Component serializedMessage = stringSerializer.serializeString(player, message
+                .replace("%prefix%", messageConfig.getPrefix())
+                .replace("%value%", value));
+
+        adventure.player(player).sendMessage(serializedMessage);
+
+    }
+
     public void sendTitle(Player player, String path) {
 
-        ConfigurationSection section = messageConfig.getConfigurationSection("events." + path);
+        ConfigurationSection section = messageConfig.getConfigurationSection(path);
 
         if (section == null) return;
 

@@ -8,18 +8,29 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Profile.ProfileManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
+import java.time.Instant;
 import java.util.Objects;
 
 public class InteractionEvent implements Listener {
 
     private final ProfileManager profileManager;
 
+    private final PluginManager pluginManager;
+
+    private final MessageManager messageManager;
+
     public InteractionEvent(SurvivalManager survivalManager) {
 
         profileManager = survivalManager.getProfileManager();
+
+        pluginManager = survivalManager.getPluginManager();
+
+        messageManager = survivalManager.getMessageManager();
 
     }
 
@@ -38,9 +49,41 @@ public class InteractionEvent implements Listener {
 
         if (level < 5) return;
 
-        player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, (int) (level * 2), (int) Math.floor(level/5), false, false, false));
+        long newTime = Instant.now().getEpochSecond();
 
-        for (PotionEffect potionEffect : player.getActivePotionEffects()) player.sendMessage("Aktywowano efekt: " + potionEffect.getType().getName() + ", Na: " + potionEffect.getDuration() + "/20, Lvl: " + potionEffect.getAmplifier());
+        if (pluginManager.getMinersBoostCooldown().get(player.getUniqueId()) != null) {
+
+            long oldTime = pluginManager.getMinerBoostCooldown(player);
+
+            if (oldTime + 60 >= newTime) {
+
+                messageManager.sendEventMessage(player, "interact.boost.miner.cooldown", String.valueOf(60 - (newTime - oldTime)));
+
+                return;
+
+            }
+
+            pluginManager.clearMinerBoostCooldown(player);
+
+            activateMinerBoost(player, level, newTime);
+
+            return;
+
+        }
+
+        activateMinerBoost(player, level, newTime);
+
+    }
+
+    private void activateMinerBoost(Player player, double level, Long newTime) {
+
+        PotionEffect potionEffect = new PotionEffect(PotionEffectType.FAST_DIGGING, (int) (level * 2), (int) Math.floor(level/5), false, false, false);
+
+        player.addPotionEffect(potionEffect);
+
+        pluginManager.setMinerBoostCooldown(player, newTime);
+
+        messageManager.sendEventMessage(player, "interact.boost.miner.activate", String.valueOf((double) potionEffect.getDuration() / 20));
 
     }
 

@@ -19,7 +19,11 @@ public class PluginManager {
 
     private final HashMap<UUID, Integer> waitingPlayers;
 
+    private final HashMap<UUID, Long> minersBoostCooldown;
+
     private final List<UUID> sleepingPlayers;
+
+    private final List<UUID> hiddenPlayers;
 
     public PluginManager(PluginConfig pluginConfig) {
 
@@ -27,7 +31,11 @@ public class PluginManager {
 
         waitingPlayers = new HashMap<>();
 
+        minersBoostCooldown = new HashMap<>();
+
         sleepingPlayers = new ArrayList<>();
+
+        hiddenPlayers = new ArrayList<>();
 
         setTimer();
 
@@ -78,19 +86,13 @@ public class PluginManager {
 
     }
 
-    public int getWaitingPlayer(Player player) {
+    public Integer getWaitingPlayer(Player player) {
 
-        try {
+        if (waitingPlayers.size() == 0) return -1;
 
-            return waitingPlayers.get(player.getUniqueId());
+        if (waitingPlayers.get(player.getUniqueId()) == null) return -1;
 
-        }
-
-        catch (NullPointerException error) {
-
-            return -1;
-
-        }
+        return waitingPlayers.get(player.getUniqueId());
 
     }
 
@@ -103,6 +105,30 @@ public class PluginManager {
     public void clearWaitingPlayer(Player player) {
 
         waitingPlayers.remove(player.getUniqueId());
+
+    }
+
+    public HashMap<UUID, Long> getMinersBoostCooldown() {
+
+        return minersBoostCooldown;
+
+    }
+
+    public Long getMinerBoostCooldown(Player player) {
+
+        return minersBoostCooldown.get(player.getUniqueId());
+
+    }
+
+    public void setMinerBoostCooldown(Player player, Long newTime) {
+
+        minersBoostCooldown.put(player.getUniqueId(), newTime);
+
+    }
+
+    public void clearMinerBoostCooldown(Player player) {
+
+        minersBoostCooldown.remove(player.getUniqueId());
 
     }
 
@@ -121,6 +147,30 @@ public class PluginManager {
     public void clearSleepingPlayer(Player player) {
 
         sleepingPlayers.remove(player.getUniqueId());
+
+    }
+
+    public void setHiddenPlayer(Player player) {
+
+        hiddenPlayers.add(player.getUniqueId());
+
+    }
+
+    public List<UUID> getHiddenPlayers() {
+
+        return hiddenPlayers;
+
+    }
+
+    public boolean isHiddenPlayer(Player player) {
+
+        return hiddenPlayers.contains(player.getUniqueId());
+
+    }
+
+    public void clearHiddenPlayer(Player player) {
+
+        hiddenPlayers.remove(player.getUniqueId());
 
     }
 

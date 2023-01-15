@@ -13,6 +13,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import pl.botprzemek.bpSurvival.SurvivalManager.Drop.DropManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Drop.Items;
+import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Profile.Profile;
 import pl.botprzemek.bpSurvival.SurvivalManager.Profile.ProfileManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Profile.Settings;
@@ -26,11 +27,15 @@ public class BlockDestroyEvent implements Listener {
 
     private final ProfileManager profileManager;
 
+    private final MessageManager messageManager;
+
     private final DropManager dropManager;
 
     public BlockDestroyEvent(SurvivalManager survivalManager) {
 
         profileManager = survivalManager.getProfileManager();
+
+        messageManager = survivalManager.getMessageManager();
 
         dropManager = survivalManager.getDropManager();
 
@@ -40,6 +45,8 @@ public class BlockDestroyEvent implements Listener {
     public void onBlockDrop(BlockDropItemEvent event) {
 
         if (!event.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) return;
+
+        if (event.getItems().size() == 0) return;
 
         if (!dropManager.getBlocks().contains(event.getItems().get(0).getItemStack().getType())) return;
 
@@ -68,9 +75,7 @@ public class BlockDestroyEvent implements Listener {
 
         int multiplier = (player.getInventory().getItemInMainHand().containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) ? settings.getMultiplier() * player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS) : settings.getMultiplier();
 
-        ItemStack droppedItem = event.getBlock().getDrops(player.getItemInUse()).stream().toList().get(0);
-
-        if (settings.isMinedBlock() && droppedItem != null) drops.add(droppedItem);
+        if (settings.isMinedBlock() && event.getBlock().getDrops().size() != 0) drops.add(event.getBlock().getDrops(player.getItemInUse()).stream().toList().get(0));
 
         Location location = event.getBlock().getLocation();
 
@@ -96,6 +101,8 @@ public class BlockDestroyEvent implements Listener {
 
             profile.setLevel(level + 1);
 
+            messageManager.sendTitle(player, "level.up.miner");
+
             return;
 
         }
@@ -115,6 +122,8 @@ public class BlockDestroyEvent implements Listener {
         if (profile.getExp() < 50 * level) return;
 
         profile.setLevel(level + 1);
+
+        messageManager.sendTitle(player, "level.up.miner");
 
     }
 

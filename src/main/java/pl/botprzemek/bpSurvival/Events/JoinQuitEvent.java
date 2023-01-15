@@ -1,16 +1,23 @@
 package pl.botprzemek.bpSurvival.Events;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import pl.botprzemek.bpSurvival.BpSurvival;
 import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Profile.ProfileManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
+import java.util.Objects;
+import java.util.UUID;
+
 public class JoinQuitEvent implements Listener {
+
+    private final BpSurvival instance;
 
     private final ProfileManager profileManager;
 
@@ -19,6 +26,8 @@ public class JoinQuitEvent implements Listener {
     private final PluginManager pluginManager;
 
     public JoinQuitEvent(SurvivalManager survivalManager) {
+
+        instance = survivalManager.getInstance();
 
         profileManager = survivalManager.getProfileManager();
 
@@ -33,9 +42,11 @@ public class JoinQuitEvent implements Listener {
 
         Player player = event.getPlayer();
 
-        event.setJoinMessage(messageManager.getMessageString(player, "events.connect.join"));
+        event.setJoinMessage(messageManager.getMessageString(player, "events.connect.join", String.valueOf(Bukkit.getOnlinePlayers().size() - pluginManager.getHiddenPlayers().size())));
 
         if (profileManager.getProfile(player) == null) profileManager.createProfile(player);
+
+        for (UUID playerUUID : pluginManager.getHiddenPlayers()) player.hidePlayer(instance, Objects.requireNonNull(Bukkit.getPlayer(playerUUID)));
 
     }
 
@@ -47,6 +58,8 @@ public class JoinQuitEvent implements Listener {
         event.setQuitMessage(messageManager.getMessageString(player, "events.connect.quit"));
 
         pluginManager.clearSleepingPlayer(player);
+
+        if (pluginManager.isHiddenPlayer(player)) pluginManager.clearHiddenPlayer(player);
 
     }
 

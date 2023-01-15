@@ -15,12 +15,6 @@ public class StringSerializer {
 
     }
 
-    public Component serializeString(String message) {
-
-        return mm.deserialize(message);
-
-    }
-
     public Component serializeString(Player player,  String message) {
 
         return mm.deserialize(PlaceholderAPI.setPlaceholders(player, message));

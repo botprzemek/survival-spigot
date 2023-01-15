@@ -10,9 +10,12 @@ commands:
     failed: "%prefix% Wystąpił <gradient:#FFE04A:#FFA400><bold>błąd</bold></gradient> przy przeładowywaniu <gradient:#FFE04A:#FFA400><bold>konfiguracji!</bold></gradient>"
   spawn:
     start: "%prefix% Rozpoczęto <gradient:#FFE04A:#FFA400><bold>odliczanie</bold></gradient> na <gradient:#FFE04A:#FFA400><bold>spawn!</bold></gradient>"
-    time: "%prefix% Poczekaj jeszcze <gradient:#FFE04A:#FFA400><bold>%value%/5 sekund!</bold></gradient>"
+    time: "%prefix% Poczekaj jeszcze <gradient:#FFE04A:#FFA400><bold>%value%/5s!</bold></gradient>"
     success: "%prefix% Przeniesiono na <gradient:#FFE04A:#FFA400><bold>spawn!</bold></gradient>"
     failed: "%prefix% Ruszyłeś/aś się! Odliczanie <gradient:#FFE04A:#FFA400><bold>przerwane!</bold></gradient>"
+  vanish:
+    show: "%prefix% Jesteś teraz <gradient:#FFE04A:#FFA400><bold>widoczny/a</bold></gradient> dla graczy!"
+    hide: "%prefix% Jesteś teraz <gradient:#FFE04A:#FFA400><bold>niewidoczny/a</bold></gradient> dla graczy!"
   settings:
     message: "%prefix% Twoje <gradient:#FFE04A:#FFA400><bold>Statystyki</bold></gradient>"
     level: " - Poziom: <gradient:#FFE04A:#FFA400><bold>%value%</bold></gradient>"
@@ -25,8 +28,8 @@ commands:
 
 events:
   connect:
-    join: "%prefix% %player_name% dołączył/a <gradient:#FFE04A:#FFA400><bold>do gry! (%server_online% gracz/y)</bold></gradient>"
-    quit: "%prefix% %player_name% nas <gradient:#FFE04A:#FFA400><bold>opuścił/a! (%server_online% gracz/y)</bold></gradient>"
+    join: "%prefix% %player_name% dołączył/a <gradient:#FFE04A:#FFA400><bold>do gry! (%value% gracz/y)</bold></gradient>"
+    quit: "%prefix% %player_name% nas <gradient:#FFE04A:#FFA400><bold>opuścił/a!</bold></gradient>"
   chat:
     success: "<color:#FFE04A>♦<reset>%luckperms_prefix%<gradient:#FFE04A:#FFA400><bold>%player_name%</bold> ♦</gradient><reset> %value%"
     failed: "%prefix% Nie masz <gradient:#FFE04A:#FFA400><bold>uprawnień</bold></gradient> do wysyłania <gradient:#FFE04A:#FFA400><bold>wiadomości!</bold></gradient>"
@@ -38,3 +41,16 @@ events:
       fadein: 1
       stay: 3
       fadeout: 1
+  level:
+    up:
+      miner:
+        title: "<gradient:#FFE04A:#FFA400><bold>Awans!</bold></gradient>"
+        description: "Poziom górnictwa zwiększony!"
+        fadein: 1
+        stay: 3
+        fadeout: 1
+  interact:
+    boost:
+      miner:
+        activate: "%prefix% Aktywowałeś/aś doładowanie <gradient:#FFE04A:#FFA400><bold>kopania! (na %value%s)</bold></gradient>"
+        cooldown: "%prefix% Musisz odpocząć jeszcze <gradient:#FFE04A:#FFA400><bold>%value%s!</bold></gradient>"

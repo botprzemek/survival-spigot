@@ -48,13 +48,13 @@ public class ReloadCommand implements CommandExecutor {
 
             dropManager.loadItems();
 
-            if (sender instanceof Player player) messageManager.sendMessage(player, "reload.success");
+            if (sender instanceof Player player) messageManager.sendCommandMessage(player, "reload.success");
 
         }
 
         catch (Exception error) {
 
-            if (sender instanceof Player player) messageManager.sendMessage(player, "reload.failed");
+            if (sender instanceof Player player) messageManager.sendCommandMessage(player, "reload.failed");
 
         }
 

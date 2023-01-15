@@ -40,7 +40,15 @@ public class BedSleepEvent implements Listener {
 
         pluginManager.setSleepingPlayer(player);
 
-        int percentage = (int) Math.floor(((double) pluginManager.getSleepingPlayers().size() / instance.getServer().getOnlinePlayers().size()) * 100);
+        if (pluginManager.getHiddenPlayers().contains(player.getUniqueId())) {
+
+            event.setCancelled(true);
+
+            return;
+
+        }
+
+        int percentage = (int) Math.floor(((double) pluginManager.getSleepingPlayers().size() / instance.getServer().getOnlinePlayers().size() - pluginManager.getHiddenPlayers().size()) * 100);
 
         messageManager.sendAnnouncement(player, "sleep.message", String.valueOf(percentage));
 

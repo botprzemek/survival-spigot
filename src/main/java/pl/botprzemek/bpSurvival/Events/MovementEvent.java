@@ -27,11 +27,9 @@ public class MovementEvent implements Listener {
 
         Player player = event.getPlayer();
 
-        int time = pluginManager.getWaitingPlayer(player);
+        if (pluginManager.getWaitingPlayer(player) == -1) return;
 
-        if (time == -1) return;
-
-        messageManager.sendMessage(player, "spawn.failed");
+        messageManager.sendCommandMessage(player, "spawn.failed");
 
         pluginManager.clearWaitingPlayer(player);
 
