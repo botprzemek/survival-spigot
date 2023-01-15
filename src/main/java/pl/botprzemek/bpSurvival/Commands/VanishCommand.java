@@ -1,6 +1,7 @@
 package pl.botprzemek.bpSurvival.Commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -49,7 +50,7 @@ public class VanishCommand implements CommandExecutor {
 
             messageManager.sendCommandMessage(player, "vanish.show");
 
-            player.setAllowFlight(false);
+            player.setGameMode(GameMode.CREATIVE);
 
             return true;
 
@@ -67,9 +68,10 @@ public class VanishCommand implements CommandExecutor {
 
         messageManager.sendCommandMessage(player, "vanish.hide");
 
-        player.setAllowFlight(true);
+        player.setGameMode(GameMode.SPECTATOR);
 
         return true;
 
     }
+
 }

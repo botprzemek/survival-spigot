@@ -29,7 +29,7 @@ public class MovementEvent implements Listener {
 
         if (pluginManager.getWaitingPlayer(player) == -1) return;
 
-        messageManager.sendCommandMessage(player, "spawn.failed");
+        messageManager.sendCommandMessage(player, "teleport.failed");
 
         pluginManager.clearWaitingPlayer(player);
 

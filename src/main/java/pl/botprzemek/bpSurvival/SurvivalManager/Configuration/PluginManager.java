@@ -19,11 +19,13 @@ public class PluginManager {
 
     private final HashMap<UUID, Integer> waitingPlayers;
 
-    private final HashMap<UUID, Long> minersBoostCooldown;
+    private final HashMap<UUID, UUID> teleportingQueue;
 
     private final List<UUID> sleepingPlayers;
 
     private final List<UUID> hiddenPlayers;
+
+    private final HashMap<UUID, Long> minersBoostCooldown;
 
     public PluginManager(PluginConfig pluginConfig) {
 
@@ -31,11 +33,13 @@ public class PluginManager {
 
         waitingPlayers = new HashMap<>();
 
-        minersBoostCooldown = new HashMap<>();
+        teleportingQueue = new HashMap<>();
 
         sleepingPlayers = new ArrayList<>();
 
         hiddenPlayers = new ArrayList<>();
+
+        minersBoostCooldown = new HashMap<>();
 
         setTimer();
 
@@ -108,30 +112,6 @@ public class PluginManager {
 
     }
 
-    public HashMap<UUID, Long> getMinersBoostCooldown() {
-
-        return minersBoostCooldown;
-
-    }
-
-    public Long getMinerBoostCooldown(Player player) {
-
-        return minersBoostCooldown.get(player.getUniqueId());
-
-    }
-
-    public void setMinerBoostCooldown(Player player, Long newTime) {
-
-        minersBoostCooldown.put(player.getUniqueId(), newTime);
-
-    }
-
-    public void clearMinerBoostCooldown(Player player) {
-
-        minersBoostCooldown.remove(player.getUniqueId());
-
-    }
-
     public List<UUID> getSleepingPlayers() {
 
         return sleepingPlayers;
@@ -147,6 +127,30 @@ public class PluginManager {
     public void clearSleepingPlayer(Player player) {
 
         sleepingPlayers.remove(player.getUniqueId());
+
+    }
+
+    public HashMap<UUID, UUID> getTeleportingQueuePlayers() {
+
+        return teleportingQueue;
+
+    }
+
+    public UUID getTeleportingQueueRequestedPlayer(Player player) {
+
+        return teleportingQueue.get(player.getUniqueId());
+
+    }
+
+    public void setTeleportingQueuePlayer(Player player, Player requestedPlayer) {
+
+        teleportingQueue.put(player.getUniqueId(), requestedPlayer.getUniqueId());
+
+    }
+
+    public void clearTeleportingQueuePlayer(Player player) {
+
+        teleportingQueue.remove(player.getUniqueId());
 
     }
 
@@ -171,6 +175,30 @@ public class PluginManager {
     public void clearHiddenPlayer(Player player) {
 
         hiddenPlayers.remove(player.getUniqueId());
+
+    }
+
+    public HashMap<UUID, Long> getMinersBoostCooldown() {
+
+        return minersBoostCooldown;
+
+    }
+
+    public Long getMinerBoostCooldown(Player player) {
+
+        return minersBoostCooldown.get(player.getUniqueId());
+
+    }
+
+    public void setMinerBoostCooldown(Player player, Long newTime) {
+
+        minersBoostCooldown.put(player.getUniqueId(), newTime);
+
+    }
+
+    public void clearMinerBoostCooldown(Player player) {
+
+        minersBoostCooldown.remove(player.getUniqueId());
 
     }
 

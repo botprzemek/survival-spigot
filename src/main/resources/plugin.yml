@@ -23,11 +23,22 @@ commands:
     aliases: [ukryj, v]
     default: op
     description: Vanish command
+  tprequest:
+    default: op
+    description: Teleport request command
+  tpaccept:
+    default: op
+    description: Teleport accept command
+  tpdeny:
+    default: op
+    description: Teleport deny command
 permissions:
   bpsurvival.*:
     description: Gives access to all bpSurvival commands
     children:
+      bpsurvival.chat: true
       bpsurvival.reload: true
       bpsurvival.settings: true
       bpsurvival.spawn: true
       bpsurvival.vanish: true
+      bpsurvival.tpa: true

@@ -1,5 +1,6 @@
 package pl.botprzemek.bpSurvival.Commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -11,7 +12,7 @@ import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
-public class SpawnCommand implements CommandExecutor {
+public class TeleportRequestCommand implements CommandExecutor {
 
     private final BpSurvival instance;
 
@@ -19,7 +20,7 @@ public class SpawnCommand implements CommandExecutor {
 
     private final MessageManager messageManager;
 
-    public SpawnCommand(SurvivalManager survivalManager) {
+    public TeleportRequestCommand(SurvivalManager survivalManager) {
 
         instance = survivalManager.getInstance();
 
@@ -42,49 +43,37 @@ public class SpawnCommand implements CommandExecutor {
 
         }
 
-        pluginManager.setWaitingPlayer(player, 0);
+        if (args.length == 0) {
 
-        messageManager.sendCommandMessage(player, "spawn.start");
+            messageManager.sendCommandMessage(player, "tp.request.invalid");
+
+            return false;
+
+        }
+
+        Player target = Bukkit.getPlayer(args[0]);
+
+        if (target == null) {
+
+            messageManager.sendCommandMessage(player, "tp.request.offline");
+
+            return false;
+
+        }
+
+        pluginManager.setTeleportingQueuePlayer(target, player);
+
+        messageManager.sendCommandMessage(player, "tp.request.success", args[0]);
+
+        messageManager.sendCommandMessage(target, "tp.request.request", player.getDisplayName());
 
         new BukkitRunnable() {
 
-            private int time = 1;
+            public void run() { pluginManager.clearTeleportingQueuePlayer(target); }
 
-            public void run() {
+        }.runTaskLaterAsynchronously(instance, 60 * 20);
 
-                if (!pluginManager.getWaitingPlayers().containsKey(player.getUniqueId())) {
-
-                    cancel();
-
-                    return;
-
-                }
-
-                messageManager.sendCommandMessage(player, "spawn.time", String.valueOf(time));
-
-                if (time == pluginManager.getTimer()) {
-
-                    player.teleport(pluginManager.getSpawnLocation());
-
-                    pluginManager.clearWaitingPlayer(player);
-
-                    messageManager.sendCommandMessage(player, "spawn.success");
-
-                    cancel();
-
-                    return;
-
-                }
-
-                time++;
-
-                pluginManager.setWaitingPlayer(player, time);
-
-            }
-
-        }.runTaskTimer(instance, 20, 20);
-
-        return false;
+        return true;
 
     }
 

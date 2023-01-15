@@ -8,14 +8,34 @@ commands:
   reload:
     success: "%prefix% Konfiguracja <gradient:#FFE04A:#FFA400><bold>przeładowana!</bold></gradient>"
     failed: "%prefix% Wystąpił <gradient:#FFE04A:#FFA400><bold>błąd</bold></gradient> przy przeładowywaniu <gradient:#FFE04A:#FFA400><bold>konfiguracji!</bold></gradient>"
+  teleport:
+    already: "%prefix% Jesteś już przenoszony/a <gradient:#FFE04A:#FFA400><bold>gdzieś indziej!</bold></gradient>"
+    failed: "%prefix% Ruszyłeś/aś się! Odliczanie <gradient:#FFE04A:#FFA400><bold>przerwane!</bold></gradient>"
   spawn:
     start: "%prefix% Rozpoczęto <gradient:#FFE04A:#FFA400><bold>odliczanie</bold></gradient> na <gradient:#FFE04A:#FFA400><bold>spawn!</bold></gradient>"
     time: "%prefix% Poczekaj jeszcze <gradient:#FFE04A:#FFA400><bold>%value%/5s!</bold></gradient>"
     success: "%prefix% Przeniesiono na <gradient:#FFE04A:#FFA400><bold>spawn!</bold></gradient>"
-    failed: "%prefix% Ruszyłeś/aś się! Odliczanie <gradient:#FFE04A:#FFA400><bold>przerwane!</bold></gradient>"
   vanish:
     show: "%prefix% Jesteś teraz <gradient:#FFE04A:#FFA400><bold>widoczny/a</bold></gradient> dla graczy!"
     hide: "%prefix% Jesteś teraz <gradient:#FFE04A:#FFA400><bold>niewidoczny/a</bold></gradient> dla graczy!"
+  tp:
+    request:
+      success: "%prefix% Prośba o przeniesienie do <gradient:#FFE04A:#FFA400><bold>%value%</bold></gradient> została <gradient:#FFE04A:#FFA400><bold>wysłana!</bold></gradient>"
+      request: "%prefix% Otrzymałeś/aś prośbę przeniesienie od <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient> Użyj komendy <gradient:#FFE04A:#FFA400><bold><click:run_command:/tpaccept>/tpaccept,</click></bold></gradient> aby zaakceptować!"
+      invalid: "%prefix% Użycie: <insert:/tprequest>/tprequest <gradient:#FFE04A:#FFA400><bold>(gracz)</bold></gradient></insert>"
+      offline: "%prefix% Gracz, do którego próbujesz się przenieść, jest <gradient:#FFE04A:#FFA400><bold>offline!</bold></gradient>"
+    accept:
+      accept: "%prefix% Zaakceptowano prośbę o przeniesienie od <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
+      success:
+        requested: "%prefix% %value% został/a przeniesiony/a <gradient:#FFE04A:#FFA400><bold>pomyślnie!</bold></gradient>"
+        target: "%prefix% Zostałeś/aś <gradient:#FFE04A:#FFA400><bold>przeniesiony/a</bold></gradient> do <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
+      start: "%prefix% Rozpoczęto przenoszenie do <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
+      time: "%prefix% Poczekaj jeszcze <gradient:#FFE04A:#FFA400><bold>%value%/5s!</bold></gradient>"
+      empty: "%prefix% Nie posiadasz żadnych próśb o <gradient:#FFE04A:#FFA400><bold>teleportacje!</bold></gradient>"
+      offline: "%prefix% Gracz, do którego próbujesz się przenieść, jest <gradient:#FFE04A:#FFA400><bold>offline!</bold></gradient>"
+    deny:
+      empty: "%prefix% Nie posiadasz żadnych próśb o <gradient:#FFE04A:#FFA400><bold>teleportacje!</bold></gradient>"
+      clear: "%prefix% Prośby o przeniesienie zostały <gradient:#FFE04A:#FFA400><bold>anulowane!</bold></gradient>"
   settings:
     message: "%prefix% Twoje <gradient:#FFE04A:#FFA400><bold>Statystyki</bold></gradient>"
     level: " - Poziom: <gradient:#FFE04A:#FFA400><bold>%value%</bold></gradient>"

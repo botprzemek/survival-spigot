@@ -1,5 +1,6 @@
 package pl.botprzemek.bpSurvival.Commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -11,7 +12,7 @@ import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
-public class SpawnCommand implements CommandExecutor {
+public class TeleportAcceptCommand implements CommandExecutor {
 
     private final BpSurvival instance;
 
@@ -19,7 +20,7 @@ public class SpawnCommand implements CommandExecutor {
 
     private final MessageManager messageManager;
 
-    public SpawnCommand(SurvivalManager survivalManager) {
+    public TeleportAcceptCommand(SurvivalManager survivalManager) {
 
         instance = survivalManager.getInstance();
 
@@ -34,17 +35,29 @@ public class SpawnCommand implements CommandExecutor {
 
         if (!(sender instanceof Player player)) return false;
 
-        if (pluginManager.getWaitingPlayers().containsKey(player.getUniqueId())) {
+        if (!pluginManager.getTeleportingQueuePlayers().containsKey(player.getUniqueId())) {
 
-            messageManager.sendCommandMessage(player, "teleport.already");
+            messageManager.sendCommandMessage(player, "tp.accept.empty");
 
             return false;
 
         }
 
-        pluginManager.setWaitingPlayer(player, 0);
+        Player requestPlayer = Bukkit.getPlayer(pluginManager.getTeleportingQueueRequestedPlayer(player));
 
-        messageManager.sendCommandMessage(player, "spawn.start");
+        if (requestPlayer == null) {
+
+            messageManager.sendCommandMessage(player, "tp.accept.offline");
+
+            return false;
+
+        }
+
+        pluginManager.setWaitingPlayer(requestPlayer, 0);
+
+        messageManager.sendCommandMessage(player, "tp.accept.accept", requestPlayer.getDisplayName());
+
+        messageManager.sendCommandMessage(requestPlayer, "tp.accept.start", player.getDisplayName());
 
         new BukkitRunnable() {
 
@@ -52,7 +65,7 @@ public class SpawnCommand implements CommandExecutor {
 
             public void run() {
 
-                if (!pluginManager.getWaitingPlayers().containsKey(player.getUniqueId())) {
+                if (!pluginManager.getWaitingPlayers().containsKey(requestPlayer.getUniqueId())) {
 
                     cancel();
 
@@ -60,15 +73,17 @@ public class SpawnCommand implements CommandExecutor {
 
                 }
 
-                messageManager.sendCommandMessage(player, "spawn.time", String.valueOf(time));
+                messageManager.sendCommandMessage(requestPlayer, "tp.accept.time", String.valueOf(time));
 
                 if (time == pluginManager.getTimer()) {
 
-                    player.teleport(pluginManager.getSpawnLocation());
+                    requestPlayer.teleport(player);
 
-                    pluginManager.clearWaitingPlayer(player);
+                    pluginManager.clearWaitingPlayer(requestPlayer);
 
-                    messageManager.sendCommandMessage(player, "spawn.success");
+                    messageManager.sendCommandMessage(player, "tp.accept.success.requested", requestPlayer.getDisplayName());
+
+                    messageManager.sendCommandMessage(requestPlayer, "tp.accept.success.target", player.getDisplayName());
 
                     cancel();
 
@@ -78,13 +93,13 @@ public class SpawnCommand implements CommandExecutor {
 
                 time++;
 
-                pluginManager.setWaitingPlayer(player, time);
+                pluginManager.setWaitingPlayer(requestPlayer, time);
 
             }
 
         }.runTaskTimer(instance, 20, 20);
 
-        return false;
+        return true;
 
     }
 
