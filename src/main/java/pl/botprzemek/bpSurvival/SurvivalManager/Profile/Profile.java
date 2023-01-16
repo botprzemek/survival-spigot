@@ -1,5 +1,9 @@
 package pl.botprzemek.bpSurvival.SurvivalManager.Profile;
 
+import org.bukkit.Location;
+
+import java.util.HashMap;
+
 public class Profile {
 
     private int level;
@@ -8,7 +12,9 @@ public class Profile {
 
     private final Settings settings;
 
-    public Profile(int level, int exp, Settings settings) {
+    private final HashMap<String, Location> homes;
+
+    public Profile(int level, int exp, Settings settings, HashMap<String, Location> homes) {
 
         this.level = level;
 
@@ -16,11 +22,25 @@ public class Profile {
 
         this.settings = settings;
 
+        this.homes = homes;
+
     }
 
     public Settings getSettings() {
 
         return settings;
+
+    }
+
+    public void setHome(String homeName, Location location) {
+
+        homes.put(homeName, location);
+
+    }
+
+    public HashMap<String, Location> getHomes() {
+
+        return homes;
 
     }
 

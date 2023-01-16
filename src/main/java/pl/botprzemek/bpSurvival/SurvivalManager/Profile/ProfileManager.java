@@ -20,15 +20,13 @@ public class ProfileManager {
 
     }
 
-    public Profile createProfile(Player player) {
+    public void createProfile(Player player) {
 
-        Profile profile = new Profile(0, 0, new Settings(false, true, 1));
+        Profile profile = new Profile(0, 0, new Settings(false, true, 1), new HashMap<>());
 
         UUID playerUUID = player.getUniqueId();
 
         profiles.put(playerUUID, profile);
-
-        return profile;
 
     }
 

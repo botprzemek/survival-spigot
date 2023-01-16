@@ -1,13 +1,14 @@
 package pl.botprzemek.bpSurvival.SurvivalManager.Config.Configs;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import pl.botprzemek.bpSurvival.BpSurvival;
 import pl.botprzemek.bpSurvival.SurvivalManager.Config.Config;
 import pl.botprzemek.bpSurvival.SurvivalManager.Profile.Profile;
 import pl.botprzemek.bpSurvival.SurvivalManager.Profile.Settings;
 import org.bukkit.configuration.ConfigurationSection;
 
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 public class ProfileConfig extends Config {
 
@@ -22,6 +23,8 @@ public class ProfileConfig extends Config {
     public HashMap<UUID, Profile> loadProfiles() {
 
         ConfigurationSection section = getConfigurationSection("");
+
+        if (section == null) return profiles;
 
         for (String path : section.getKeys(false)) profiles.put(UUID.fromString(path), getProfile(UUID.fromString(path)));
 
@@ -55,7 +58,30 @@ public class ProfileConfig extends Config {
             settingsConfig.getInt("multiplier")
         );
 
-        return new Profile(level, exp, settings);
+        ConfigurationSection homesConfig = config.getConfigurationSection("homes");
+
+        HashMap<String, Location> homes = new HashMap<>();
+
+        if (homesConfig == null) return new Profile(level, exp, settings, homes);
+
+        for (String homeName : homesConfig.getKeys(false)) {
+
+            ConfigurationSection homeConfig = homesConfig.getConfigurationSection(homeName);
+
+            if (homeConfig == null) return new Profile(level, exp, settings, homes);
+
+            Location location = new Location(
+                Bukkit.getWorld(Objects.requireNonNull(homeConfig.getString("world"))),
+                homeConfig.getDouble("x"),
+                homeConfig.getDouble("y"),
+                homeConfig.getDouble("z")
+            );
+
+            homes.put(homeName, location);
+
+        }
+
+        return new Profile(level, exp, settings, homes);
 
     }
 
@@ -82,6 +108,28 @@ public class ProfileConfig extends Config {
         set(path + ".settings.multiplier",
                 profile.getSettings().getMultiplier()
         );
+
+        for (String homeName : profile.getHomes().keySet()) {
+
+            Location location = profile.getHomes().get(homeName);
+
+            set(path + ".homes." + homeName + ".world",
+                    Objects.requireNonNull(location.getWorld()).getName()
+            );
+
+            set(path + ".homes." + homeName + ".x",
+                    location.getX()
+            );
+
+            set(path + ".homes." + homeName + ".y",
+                    location.getY()
+            );
+
+            set(path + ".homes." + homeName + ".z",
+                    location.getZ()
+            );
+
+        }
 
     }
 

@@ -32,6 +32,14 @@ commands:
   tpdeny:
     default: op
     description: Teleport deny command
+  home:
+    aliases: [dom, h]
+    default: op
+    description: Home command
+  sethome:
+    aliases: [ustawdom]
+    default: op
+    description: Set home command
 permissions:
   bpsurvival.*:
     description: Gives access to all bpSurvival commands
@@ -41,4 +49,8 @@ permissions:
       bpsurvival.settings: true
       bpsurvival.spawn: true
       bpsurvival.vanish: true
-      bpsurvival.tpa: true
+      bpsurvival.tprequest: true
+      bpsurvival.tpaccept: true
+      bpsurvival.tpdeny: true
+      bpsurvival.home: true
+      bpsurvival.sethome: true
