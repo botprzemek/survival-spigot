@@ -40,6 +40,10 @@ commands:
     aliases: [ustawdom]
     default: op
     description: Set home command
+  kit:
+    aliases: [zestaw]
+    default: op
+    description: Kit command
 permissions:
   bpsurvival.*:
     description: Gives access to all bpSurvival commands

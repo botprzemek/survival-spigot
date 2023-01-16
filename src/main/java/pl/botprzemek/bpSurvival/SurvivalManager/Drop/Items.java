@@ -20,7 +20,7 @@ public class Items {
 
         item = OraxenItems.getItemById(section.getString("id")).build();
 
-        chance = section.getInt("chance");
+        chance = section.getDouble("chance");
 
         minAmount = section.getInt("min");
 

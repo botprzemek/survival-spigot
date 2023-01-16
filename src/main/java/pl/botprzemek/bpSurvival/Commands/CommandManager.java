@@ -29,6 +29,8 @@ public class CommandManager {
 
         Objects.requireNonNull(instance.getCommand("sethome")).setExecutor(new SetHomeCommand(survivalManager));
 
+        Objects.requireNonNull(instance.getCommand("kit")).setExecutor(new KitsCommand(survivalManager));
+
     }
 
 }

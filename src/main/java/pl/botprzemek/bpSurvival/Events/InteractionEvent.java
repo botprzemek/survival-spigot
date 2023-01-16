@@ -8,9 +8,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Drop.DropManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Profile.Profile;
 import pl.botprzemek.bpSurvival.SurvivalManager.Profile.ProfileManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
@@ -23,8 +23,6 @@ public class InteractionEvent implements Listener {
 
     private final DropManager dropManager;
 
-    private final PluginManager pluginManager;
-
     private final MessageManager messageManager;
 
     public InteractionEvent(SurvivalManager survivalManager) {
@@ -32,8 +30,6 @@ public class InteractionEvent implements Listener {
         profileManager = survivalManager.getProfileManager();
 
         dropManager = survivalManager.getDropManager();
-
-        pluginManager = survivalManager.getPluginManager();
 
         messageManager = survivalManager.getMessageManager();
 
@@ -50,7 +46,9 @@ public class InteractionEvent implements Listener {
 
         Player player = event.getPlayer();
 
-        double level = profileManager.getProfile(player).getLevel();
+        Profile profile = profileManager.getProfile(player);
+
+        double level = profile.getLevel();
 
         if (!player.getInventory().getItemInMainHand().getType().toString().contains("PICKAXE")) return;
 
@@ -58,19 +56,19 @@ public class InteractionEvent implements Listener {
 
         long newTime = Instant.now().getEpochSecond();
 
-        if (pluginManager.getMinersBoostCooldown().get(player.getUniqueId()) != null) {
+        if (profile.getCooldowns().get("boosts.mining") != null) {
 
-            long oldTime = pluginManager.getMinerBoostCooldown(player);
+            long oldTime = profile.getCooldowns().get("boosts.mining");
 
             if (oldTime + 60 >= newTime) {
 
-                messageManager.sendEventMessage(player, "interact.boost.miner.cooldown", String.valueOf(60 - (newTime - oldTime)));
+                messageManager.sendEventMessage(player, "interact.boost.mining.cooldown", String.valueOf(60 - (newTime - oldTime)));
 
                 return;
 
             }
 
-            pluginManager.clearMinerBoostCooldown(player);
+            profile.clearCooldown("boosts.mining");
 
             activateMinerBoost(player, level, newTime);
 
@@ -88,9 +86,9 @@ public class InteractionEvent implements Listener {
 
         player.addPotionEffect(potionEffect);
 
-        pluginManager.setMinerBoostCooldown(player, newTime);
+        profileManager.getProfile(player).setCooldown("boosts.mining", newTime);
 
-        messageManager.sendEventMessage(player, "interact.boost.miner.activate", String.valueOf((double) potionEffect.getDuration() / 20));
+        messageManager.sendEventMessage(player, "interact.boost.mining.activate", String.valueOf((double) potionEffect.getDuration() / 20));
 
     }
 

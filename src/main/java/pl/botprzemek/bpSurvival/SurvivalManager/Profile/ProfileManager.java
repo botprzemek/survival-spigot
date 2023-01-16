@@ -22,7 +22,7 @@ public class ProfileManager {
 
     public void createProfile(Player player) {
 
-        Profile profile = new Profile(0, 0, new Settings(false, true, 1), new HashMap<>());
+        Profile profile = new Profile(0, 0, new Settings(false, true, 1), new HashMap<>(), new HashMap<>());
 
         UUID playerUUID = player.getUniqueId();
 

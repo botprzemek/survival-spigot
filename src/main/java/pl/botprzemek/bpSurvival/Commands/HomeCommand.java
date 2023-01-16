@@ -41,6 +41,20 @@ public class HomeCommand implements CommandExecutor {
 
         if (!(sender instanceof Player player)) return false;
 
+        String homeName = (args.length == 0) ? "dom" : args[0];
+
+        Profile profile = profileManager.getProfile(player);
+
+        if (profile.getHomes().get(homeName) == null) {
+
+            messageManager.sendCommandMessage(player, "home.teleport.empty", homeName);
+
+            return false;
+
+        }
+
+        Location location = profile.getHomes().get(homeName);
+
         if (pluginManager.getWaitingPlayers().containsKey(player.getUniqueId())) {
 
             messageManager.sendCommandMessage(player, "teleport.already");
@@ -48,12 +62,6 @@ public class HomeCommand implements CommandExecutor {
             return false;
 
         }
-
-        String homeName = (args.length == 0) ? "home" : args[0];
-
-        Profile profile = profileManager.getProfile(player);
-
-        Location location = profile.getHomes().get(homeName);
 
         pluginManager.setWaitingPlayer(player, 0);
 

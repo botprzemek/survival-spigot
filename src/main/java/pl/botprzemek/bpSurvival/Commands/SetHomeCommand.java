@@ -44,7 +44,7 @@ public class SetHomeCommand implements CommandExecutor {
 
         Profile profile = profileManager.getProfile(player);
 
-        String homeName = (args.length == 0) ? "home" : args[0];
+        String homeName = (args.length == 0) ? "dom" : args[0];
 
         profile.setHome(homeName, player.getLocation());
 

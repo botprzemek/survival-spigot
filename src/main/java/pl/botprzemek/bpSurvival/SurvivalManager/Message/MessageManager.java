@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 import pl.botprzemek.bpSurvival.SurvivalManager.Config.Configs.MessageConfig;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
+import java.util.Objects;
+
 public class MessageManager {
 
     private final MessageConfig messageConfig;
@@ -68,8 +70,26 @@ public class MessageManager {
         if (section == null) return;
 
         player.sendTitle(
-            section.getString("title"),
-            section.getString("description"),
+            Objects.requireNonNull(section.getString("title")),
+            Objects.requireNonNull(section.getString("description")),
+            section.getInt("fadein") * 20,
+            section.getInt("stay") * 20,
+            section.getInt("fadeout") * 20
+        );
+
+    }
+
+    public void sendTitle(Player player, String path, String value1, String value2) {
+
+        ConfigurationSection section = messageConfig.getConfigurationSection(path);
+
+        if (section == null) return;
+
+        player.sendTitle(
+            Objects.requireNonNull(section.getString("title"))
+                .replace("%value%", value1),
+            Objects.requireNonNull(section.getString("description"))
+                .replace("%value%", value2),
             section.getInt("fadein") * 20,
             section.getInt("stay") * 20,
             section.getInt("fadeout") * 20

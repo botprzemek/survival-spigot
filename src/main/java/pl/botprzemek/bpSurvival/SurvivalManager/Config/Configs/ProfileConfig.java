@@ -53,35 +53,58 @@ public class ProfileConfig extends Config {
         if (settingsConfig == null) return null;
 
         Settings settings = new Settings(
+
             settingsConfig.getBoolean("drop-to-inv"),
+
             settingsConfig.getBoolean("drop-mined"),
+
             settingsConfig.getInt("multiplier")
+
         );
 
         ConfigurationSection homesConfig = config.getConfigurationSection("homes");
 
         HashMap<String, Location> homes = new HashMap<>();
 
-        if (homesConfig == null) return new Profile(level, exp, settings, homes);
+        if (homesConfig == null) return null;
 
         for (String homeName : homesConfig.getKeys(false)) {
 
             ConfigurationSection homeConfig = homesConfig.getConfigurationSection(homeName);
 
-            if (homeConfig == null) return new Profile(level, exp, settings, homes);
+            if (homeConfig == null) return null;
 
             Location location = new Location(
+
                 Bukkit.getWorld(Objects.requireNonNull(homeConfig.getString("world"))),
+
                 homeConfig.getDouble("x"),
+
                 homeConfig.getDouble("y"),
+
                 homeConfig.getDouble("z")
+
             );
 
             homes.put(homeName, location);
 
         }
 
-        return new Profile(level, exp, settings, homes);
+        ConfigurationSection cooldownsConfig = config.getConfigurationSection("cooldowns");
+
+        if (cooldownsConfig == null) return null;
+
+        HashMap<String, Long> cooldowns = new HashMap<>();
+
+        for (String cooldown : cooldownsConfig.getKeys(false)) {
+
+            Long time = cooldownsConfig.getLong(cooldown);
+
+            cooldowns.put(cooldown, time);
+
+        }
+
+        return new Profile(level, exp, settings, homes, cooldowns);
 
     }
 
@@ -94,19 +117,19 @@ public class ProfileConfig extends Config {
         );
 
         set(path + ".exp",
-                profile.getExp()
+            profile.getExp()
         );
 
         set(path + ".settings.drop-to-inv",
-                profile.getSettings().isToInventory()
+            profile.getSettings().isToInventory()
         );
 
         set(path + ".settings.drop-mined",
-                profile.getSettings().isMinedBlock()
+            profile.getSettings().isMinedBlock()
         );
 
         set(path + ".settings.multiplier",
-                profile.getSettings().getMultiplier()
+            profile.getSettings().getMultiplier()
         );
 
         for (String homeName : profile.getHomes().keySet()) {
@@ -114,19 +137,27 @@ public class ProfileConfig extends Config {
             Location location = profile.getHomes().get(homeName);
 
             set(path + ".homes." + homeName + ".world",
-                    Objects.requireNonNull(location.getWorld()).getName()
+                Objects.requireNonNull(location.getWorld()).getName()
             );
 
             set(path + ".homes." + homeName + ".x",
-                    location.getX()
+                location.getX()
             );
 
             set(path + ".homes." + homeName + ".y",
-                    location.getY()
+                location.getY()
             );
 
             set(path + ".homes." + homeName + ".z",
-                    location.getZ()
+                location.getZ()
+            );
+
+        }
+
+        for (String cooldownName : profile.getCooldowns().keySet()) {
+
+            set(path + ".cooldowns." + cooldownName,
+                profile.getCooldowns().get(cooldownName)
             );
 
         }

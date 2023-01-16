@@ -14,7 +14,9 @@ public class Profile {
 
     private final HashMap<String, Location> homes;
 
-    public Profile(int level, int exp, Settings settings, HashMap<String, Location> homes) {
+    private final HashMap<String, Long> cooldowns;
+
+    public Profile(int level, int exp, Settings settings, HashMap<String, Location> homes, HashMap<String, Long> cooldowns) {
 
         this.level = level;
 
@@ -23,6 +25,8 @@ public class Profile {
         this.settings = settings;
 
         this.homes = homes;
+
+        this.cooldowns = cooldowns;
 
     }
 
@@ -41,6 +45,24 @@ public class Profile {
     public HashMap<String, Location> getHomes() {
 
         return homes;
+
+    }
+
+    public void setCooldown(String cooldown, Long time) {
+
+        cooldowns.put(cooldown, time);
+
+    }
+
+    public HashMap<String, Long> getCooldowns() {
+
+        return cooldowns;
+
+    }
+
+    public void clearCooldown(String cooldownName) {
+
+        cooldowns.remove(cooldownName);
 
     }
 

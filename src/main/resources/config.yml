@@ -1,15 +1,26 @@
 # Spawn location for /spawn command
 
 spawn:
-  world: "world"
-  x: 0.5
-  y: 101
-  z: 0.5
-  yaw: 180
-  pitch: -5
+  world: "world" # Spawn world
+  x: 0.5 # X Coordinate of spawn
+  y: 101 # Y Coordinate of spawn
+  z: 0.5 # Z Coordinate of spawn
+  yaw: 180 # Rotation of player
+  pitch: -5 # Face axis of player
 
 # Commands config
 
 commands:
-  spawn:
+  cooldown:
     timer: 5
+
+# Kits config
+
+kits:
+  nowicjusz:
+    '0':
+      id: "example_sword" # Oraxen ID
+      amount: 1 # Amount
+    '1':
+      id: "grape"
+      amount: 2

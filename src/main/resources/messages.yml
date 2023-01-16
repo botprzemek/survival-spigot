@@ -22,7 +22,7 @@ commands:
     request:
       success: "%prefix% Prośba o przeniesienie do <gradient:#FFE04A:#FFA400><bold>%value%</bold></gradient> została <gradient:#FFE04A:#FFA400><bold>wysłana!</bold></gradient>"
       request: "%prefix% Otrzymałeś/aś prośbę przeniesienie od <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient> Użyj komendy <gradient:#FFE04A:#FFA400><bold><click:run_command:/tpaccept>/tpaccept,</click></bold></gradient> aby zaakceptować!"
-      invalid: "%prefix% Użycie: <insert:/tprequest>/tprequest <gradient:#FFE04A:#FFA400><bold>(gracz)</bold></gradient></insert>"
+      invalid: "%prefix% Użycie: <insert:/tprequest>/tprequest</insert> <gradient:#FFE04A:#FFA400><bold>(gracz)</bold></gradient>"
       offline: "%prefix% Gracz, do którego próbujesz się przenieść, jest <gradient:#FFE04A:#FFA400><bold>offline!</bold></gradient>"
     accept:
       accept: "%prefix% Zaakceptowano prośbę o przeniesienie od <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
@@ -44,6 +44,18 @@ commands:
       start: "%prefix% Rozpoczęto <gradient:#FFE04A:#FFA400><bold>odliczanie</bold></gradient> na <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
       time: "%prefix% Poczekaj jeszcze <gradient:#FFE04A:#FFA400><bold>%value%/5s!</bold></gradient>"
       success: "%prefix% Przeniesiono na <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
+      empty: "%prefix% Nie masz domu o nazwie <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient> Użyj komendy <gradient:#FFE04A:#FFA400><bold><insert:/sethome>/sethome (nazwa),</insert></bold></gradient> aby go dodać!"
+  kit:
+    success:
+      title:
+        title: "<gradient:#FFE04A:#FFA400><bold>Otrzymałeś/aś zestaw!</bold></gradient>"
+        description: "Zestaw %value% został zrealizowany!"
+        fadein: 1
+        stay: 3
+        fadeout: 1
+      message: "%prefix% Otrzymałeś/aś zestaw <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
+    full: "%prefix% Masz pełny <gradient:#FFE04A:#FFA400><bold>ekwipunek!</bold></gradient> Aby odebrać zestaw, zrób trochę miejsca!"
+    cooldown: "%prefix% Musisz poczekać jeszcze <gradient:#FFE04A:#FFA400><bold>%value%s!</bold></gradient>"
   settings:
     message: "%prefix% Twoje <gradient:#FFE04A:#FFA400><bold>Statystyki</bold></gradient>"
     level: " - Poziom: <gradient:#FFE04A:#FFA400><bold>%value%</bold></gradient>"
@@ -79,6 +91,6 @@ events:
         fadeout: 1
   interact:
     boost:
-      miner:
+      mining:
         activate: "%prefix% Aktywowałeś/aś doładowanie <gradient:#FFE04A:#FFA400><bold>kopania! (na %value%s)</bold></gradient>"
         cooldown: "%prefix% Musisz odpocząć jeszcze <gradient:#FFE04A:#FFA400><bold>%value%s!</bold></gradient>"

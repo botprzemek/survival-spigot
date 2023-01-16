@@ -1,10 +1,13 @@
 package pl.botprzemek.bpSurvival.SurvivalManager.Configuration;
 
+import io.th0rgal.oraxen.api.OraxenItems;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import pl.botprzemek.bpSurvival.SurvivalManager.Config.Configs.PluginConfig;
 
 import java.util.*;
@@ -21,11 +24,11 @@ public class PluginManager {
 
     private final HashMap<UUID, UUID> teleportingQueue;
 
+    private final HashMap<String, List<ItemStack>> kits;
+
     private final List<UUID> sleepingPlayers;
 
     private final List<UUID> hiddenPlayers;
-
-    private final HashMap<UUID, Long> minersBoostCooldown;
 
     public PluginManager(PluginConfig pluginConfig) {
 
@@ -35,15 +38,31 @@ public class PluginManager {
 
         teleportingQueue = new HashMap<>();
 
+        kits = new HashMap<>();
+
         sleepingPlayers = new ArrayList<>();
 
         hiddenPlayers = new ArrayList<>();
 
-        minersBoostCooldown = new HashMap<>();
-
         setTimer();
 
         setSpawnLocation();
+
+        setKits();
+
+    }
+
+    public boolean inventoryHaveSpace(Player player, int size) {
+
+        int isEmpty = -5;
+
+        for (ItemStack item : player.getInventory().getContents()) {
+
+            if (item == null || item.getType() == Material.AIR) isEmpty++;
+
+        }
+
+        return isEmpty >= size;
 
     }
 
@@ -74,13 +93,53 @@ public class PluginManager {
 
     public void setTimer() {
 
-        timer = pluginConfig.getInt("commands.spawn.timer");
+        timer = pluginConfig.getInt("commands.cooldown.timer");
 
     }
 
     public Integer getTimer() {
 
         return timer;
+
+    }
+
+    public void setKits() {
+
+        ConfigurationSection kitsSection = pluginConfig.getConfigurationSection("kits");
+
+        if (kitsSection == null) return;
+
+        for (String kitName : kitsSection.getKeys(false)) {
+
+            ConfigurationSection kitSection = kitsSection.getConfigurationSection(kitName);
+
+            if (kitSection == null) return;
+
+            List<ItemStack> kitItems = new ArrayList<>();
+
+            for (String key : kitSection.getKeys(false)) {
+
+                ConfigurationSection itemSection = kitSection.getConfigurationSection(key);
+
+                if (itemSection == null) return;
+
+                ItemStack item = OraxenItems.getItemById(itemSection.getString("id")).build();
+
+                item.setAmount(itemSection.getInt("amount"));
+
+                kitItems.add(item);
+
+            }
+
+            kits.put(kitName, kitItems);
+
+        }
+
+    }
+
+    public List<ItemStack> getKit(String kitName) {
+
+        return kits.get(kitName);
 
     }
 
@@ -175,30 +234,6 @@ public class PluginManager {
     public void clearHiddenPlayer(Player player) {
 
         hiddenPlayers.remove(player.getUniqueId());
-
-    }
-
-    public HashMap<UUID, Long> getMinersBoostCooldown() {
-
-        return minersBoostCooldown;
-
-    }
-
-    public Long getMinerBoostCooldown(Player player) {
-
-        return minersBoostCooldown.get(player.getUniqueId());
-
-    }
-
-    public void setMinerBoostCooldown(Player player, Long newTime) {
-
-        minersBoostCooldown.put(player.getUniqueId(), newTime);
-
-    }
-
-    public void clearMinerBoostCooldown(Player player) {
-
-        minersBoostCooldown.remove(player.getUniqueId());
 
     }
 
