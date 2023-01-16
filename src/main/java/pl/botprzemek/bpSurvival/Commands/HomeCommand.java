@@ -57,7 +57,7 @@ public class HomeCommand implements CommandExecutor {
 
         pluginManager.setWaitingPlayer(player, 0);
 
-        messageManager.sendCommandMessage(player, "home.teleport.start");
+        messageManager.sendCommandMessage(player, "home.teleport.start", homeName);
 
         new BukkitRunnable() {
 
@@ -81,7 +81,7 @@ public class HomeCommand implements CommandExecutor {
 
                     pluginManager.clearWaitingPlayer(player);
 
-                    messageManager.sendCommandMessage(player, "home.teleport.success");
+                    messageManager.sendCommandMessage(player, "home.teleport.success", homeName);
 
                     cancel();
 
