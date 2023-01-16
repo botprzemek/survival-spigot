@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import pl.botprzemek.bpSurvival.SurvivalManager.Config.ConfigManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Drop.DropManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Profile.ProfileManager;
@@ -21,6 +22,8 @@ public class ReloadCommand implements CommandExecutor {
 
     private final MessageManager messageManager;
 
+    private final PluginManager pluginManager;
+
     public ReloadCommand(SurvivalManager survivalManager) {
 
         configManager = survivalManager.getConfigManager();
@@ -30,6 +33,8 @@ public class ReloadCommand implements CommandExecutor {
         dropManager = survivalManager.getDropManager();
 
         messageManager = survivalManager.getMessageManager();
+
+        pluginManager = survivalManager.getPluginManager();
 
     }
 
@@ -48,17 +53,32 @@ public class ReloadCommand implements CommandExecutor {
 
             dropManager.loadItems();
 
-            if (sender instanceof Player player) messageManager.sendCommandMessage(player, "reload.success");
+            pluginManager.setKits();
+
+            if (sender instanceof Player player) {
+
+                messageManager.sendCommandMessage(player, "reload.success");
+
+                messageManager.playPlayerSound(player, "activate");
+
+            }
 
         }
 
         catch (Exception error) {
 
-            if (sender instanceof Player player) messageManager.sendCommandMessage(player, "reload.failed");
+            if (sender instanceof Player player) {
+
+                messageManager.sendCommandMessage(player, "reload.failed");
+
+                messageManager.playPlayerSound(player, "error");
+
+            }
 
         }
 
         return false;
 
     }
+
 }

@@ -93,15 +93,7 @@ public class BlockDestroyEvent implements Listener {
 
             for (ItemStack item : drops) { world.dropItemNaturally(location, item); }
 
-            profile.setExp(profile.getExp() + settings.getMultiplier());
-
-            int level = profile.getLevel();
-
-            if (profile.getExp() < 50 * level) return;
-
-            profile.setLevel(level + 1);
-
-            messageManager.sendTitle(player, "level.up.miner");
+            levelUp(player, profile, settings);
 
             return;
 
@@ -115,6 +107,13 @@ public class BlockDestroyEvent implements Listener {
 
         }
 
+        levelUp(player, profile, settings);
+
+
+    }
+
+    private void levelUp(Player player, Profile profile, Settings settings) {
+
         profile.setExp(profile.getExp() + settings.getMultiplier());
 
         int level = profile.getLevel();
@@ -123,7 +122,9 @@ public class BlockDestroyEvent implements Listener {
 
         profile.setLevel(level + 1);
 
-        messageManager.sendTitle(player, "level.up.miner");
+        messageManager.sendTitle(player, "level.up.mining");
+
+        messageManager.playPlayerSound(player, "success");
 
     }
 

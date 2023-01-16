@@ -1,17 +1,25 @@
 package pl.botprzemek.bpSurvival.Events;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
+import java.util.UUID;
+
 public class ChatEvent implements Listener {
+
+    private final PluginManager pluginManager;
 
     private final MessageManager messageManager;
 
     public ChatEvent(SurvivalManager survivalManager) {
+
+        pluginManager = survivalManager.getPluginManager();
 
         messageManager = survivalManager.getMessageManager();
 
@@ -26,7 +34,9 @@ public class ChatEvent implements Listener {
 
             event.setCancelled(true);
 
-            messageManager.getMessageString(player, "events.chat.failed");
+            messageManager.sendEventMessage(player, "chat.failed", "");
+
+            messageManager.playPlayerSound(player, "error");
 
         }
 
@@ -35,6 +45,14 @@ public class ChatEvent implements Listener {
         String format = messageManager.getMessageString(player, "events.chat.success", originalMessage);
 
         event.setFormat(format);
+
+        for (UUID playerUUID : pluginManager.getStreamingPlayers()) {
+
+            Player streamingPlayer = Bukkit.getPlayer(playerUUID);
+
+            if (streamingPlayer != null && !streamingPlayer.equals(player)) event.getRecipients().remove(streamingPlayer);
+
+        }
 
     }
 

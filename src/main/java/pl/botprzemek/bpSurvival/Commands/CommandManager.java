@@ -31,6 +31,12 @@ public class CommandManager {
 
         Objects.requireNonNull(instance.getCommand("kit")).setExecutor(new KitsCommand(survivalManager));
 
+        Objects.requireNonNull(instance.getCommand("streaming")).setExecutor(new StreamingModeCommand(survivalManager));
+
+        Objects.requireNonNull(instance.getCommand("message")).setExecutor(new MessageCommand(survivalManager));
+
+        Objects.requireNonNull(instance.getCommand("reply")).setExecutor(new ReplyCommand(survivalManager));
+
     }
 
 }

@@ -62,7 +62,9 @@ public class InteractionEvent implements Listener {
 
             if (oldTime + 60 >= newTime) {
 
-                messageManager.sendEventMessage(player, "interact.boost.mining.cooldown", String.valueOf(60 - (newTime - oldTime)));
+                messageManager.sendEventMessage(player, "interact.boosts.mining.cooldown", String.valueOf(60 - (newTime - oldTime)));
+
+                messageManager.playPlayerSound(player, "error");
 
                 return;
 
@@ -88,7 +90,9 @@ public class InteractionEvent implements Listener {
 
         profileManager.getProfile(player).setCooldown("boosts.mining", newTime);
 
-        messageManager.sendEventMessage(player, "interact.boost.mining.activate", String.valueOf((double) potionEffect.getDuration() / 20));
+        messageManager.sendEventMessage(player, "interact.boosts.mining.activate", String.valueOf((double) potionEffect.getDuration() / 20));
+
+        messageManager.playPlayerSound(player, "success");
 
     }
 

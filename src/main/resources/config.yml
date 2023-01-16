@@ -18,9 +18,11 @@ commands:
 
 kits:
   nowicjusz:
-    '0':
-      id: "example_sword" # Oraxen ID
-      amount: 1 # Amount
-    '1':
-      id: "grape"
-      amount: 2
+    cooldown: 86400
+    items:
+      '0':
+        id: "example_sword" # Oraxen ID
+        amount: 1 # Amount
+      '1':
+        id: "grape"
+        amount: 2

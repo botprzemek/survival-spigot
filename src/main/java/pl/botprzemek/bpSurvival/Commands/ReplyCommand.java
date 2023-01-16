@@ -1,5 +1,6 @@
 package pl.botprzemek.bpSurvival.Commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -9,29 +10,27 @@ import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
-
-public class TeleportDenyCommand implements CommandExecutor {
+public class ReplyCommand implements CommandExecutor {
 
     private final PluginManager pluginManager;
 
     private final MessageManager messageManager;
 
-    public TeleportDenyCommand(SurvivalManager survivalManager) {
+    public ReplyCommand(SurvivalManager survivalManager) {
 
         pluginManager = survivalManager.getPluginManager();
 
         messageManager = survivalManager.getMessageManager();
 
     }
-
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
         if (!(sender instanceof Player player)) return false;
 
-        if (!pluginManager.getTeleportingQueuePlayers().containsKey(player.getUniqueId())) {
+        if (args.length == 0) {
 
-            messageManager.sendCommandMessage(player, "tp.deny.empty");
+            messageManager.sendCommandMessage(player, "message.invalid");
 
             messageManager.playPlayerSound(player, "error");
 
@@ -39,14 +38,31 @@ public class TeleportDenyCommand implements CommandExecutor {
 
         }
 
-        pluginManager.clearTeleportingQueuePlayer(player);
+        Player target = Bukkit.getPlayer(pluginManager.getReplyPlayer(player));
 
-        messageManager.sendCommandMessage(player, "tp.deny.clear");
+        if (target == null) {
 
-        messageManager.playPlayerSound(player, "activate");
+            messageManager.sendCommandMessage(player, "message.offline");
+
+            messageManager.playPlayerSound(player, "error");
+
+            return false;
+
+        }
+
+        if (pluginManager.isStreamingPlayer(target)) {
+
+            messageManager.sendCommandMessage(player, "message.deny");
+
+            messageManager.playPlayerSound(player, "error");
+
+            return false;
+
+        }
+
+        messageManager.sendMessageToReceiver(pluginManager, player, target, args, 0);
 
         return true;
 
     }
-
 }

@@ -39,6 +39,8 @@ public class TeleportAcceptCommand implements CommandExecutor {
 
             messageManager.sendCommandMessage(player, "tp.accept.empty");
 
+            messageManager.playPlayerSound(player, "error");
+
             return false;
 
         }
@@ -49,6 +51,8 @@ public class TeleportAcceptCommand implements CommandExecutor {
 
             messageManager.sendCommandMessage(player, "tp.accept.offline");
 
+            messageManager.playPlayerSound(player, "error");
+
             return false;
 
         }
@@ -58,6 +62,10 @@ public class TeleportAcceptCommand implements CommandExecutor {
         messageManager.sendCommandMessage(player, "tp.accept.accept", requestPlayer.getDisplayName());
 
         messageManager.sendCommandMessage(requestPlayer, "tp.accept.start", player.getDisplayName());
+
+        messageManager.playPlayerSound(player, "step");
+
+        messageManager.playPlayerSound(requestPlayer, "activate");
 
         new BukkitRunnable() {
 
@@ -75,6 +83,8 @@ public class TeleportAcceptCommand implements CommandExecutor {
 
                 messageManager.sendCommandMessage(requestPlayer, "tp.accept.time", String.valueOf(time));
 
+                messageManager.playPlayerSound(requestPlayer, "step");
+
                 if (time == pluginManager.getTimer()) {
 
                     requestPlayer.teleport(player);
@@ -84,6 +94,10 @@ public class TeleportAcceptCommand implements CommandExecutor {
                     messageManager.sendCommandMessage(player, "tp.accept.success.requested", requestPlayer.getDisplayName());
 
                     messageManager.sendCommandMessage(requestPlayer, "tp.accept.success.target", player.getDisplayName());
+
+                    messageManager.playPlayerSound(player, "activate");
+
+                    messageManager.playPlayerSound(requestPlayer, "activate");
 
                     cancel();
 

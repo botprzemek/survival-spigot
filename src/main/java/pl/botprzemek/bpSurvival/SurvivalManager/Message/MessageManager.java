@@ -6,6 +6,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import pl.botprzemek.bpSurvival.SurvivalManager.Config.Configs.MessageConfig;
+import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
 import java.util.Objects;
@@ -56,8 +57,8 @@ public class MessageManager {
         String message = messageConfig.getEventMessage(path);
 
         Component serializedMessage = stringSerializer.serializeString(player, message
-                .replace("%prefix%", messageConfig.getPrefix())
-                .replace("%value%", value));
+            .replace("%prefix%", messageConfig.getPrefix())
+            .replace("%value%", value));
 
         adventure.player(player).sendMessage(serializedMessage);
 
@@ -102,8 +103,8 @@ public class MessageManager {
         String message = messageConfig.getEventMessage(path);
 
         Component serializedMessage = stringSerializer.serializeString(player, message
-                .replace("%prefix%", messageConfig.getPrefix())
-                .replace("%value%", value));
+            .replace("%prefix%", messageConfig.getPrefix())
+            .replace("%value%", value));
 
         adventure.all().sendMessage(serializedMessage);
 
@@ -114,7 +115,7 @@ public class MessageManager {
         String message = messageConfig.getMessage(path);
 
         Component serializedMessage = stringSerializer.serializeString(player, message
-                .replace("%prefix%", messageConfig.getPrefix()));
+            .replace("%prefix%", messageConfig.getPrefix()));
 
         return LegacyComponentSerializer.legacySection().serialize(serializedMessage);
 
@@ -125,10 +126,50 @@ public class MessageManager {
         String message = messageConfig.getMessage(path);
 
         Component serializedMessage = stringSerializer.serializeString(player, message
-                .replace("%prefix%", messageConfig.getPrefix())
-                .replace("%value%", value));
+            .replace("%prefix%", messageConfig.getPrefix())
+            .replace("%value%", value));
 
         return LegacyComponentSerializer.legacySection().serialize(serializedMessage);
+
+    }
+
+    public String getMessageString(Player player, String path, String value, String playerName) {
+
+        String message = messageConfig.getMessage(path);
+
+        Component serializedMessage = stringSerializer.serializeString(player, message
+            .replace("%player%", playerName)
+            .replace("%value%", value));
+
+        return LegacyComponentSerializer.legacySection().serialize(serializedMessage);
+
+    }
+
+    public void playPlayerSound(Player player, String path) {
+
+        player.playSound(player, messageConfig.getSound(path), 1F, 1F);
+
+    }
+
+    public void sendMessageToReceiver(PluginManager pluginManager, Player player, Player target, String[] args, int index) {
+
+        StringBuilder message = new StringBuilder();
+
+        for (int i = index; i < args.length; i++) {
+
+            String set = " " + args[i];
+
+            message.append(set);
+
+        }
+
+        target.sendMessage(getMessageString(target, "commands.message.format.receiver", message.toString(), player.getDisplayName()));
+
+        player.sendMessage(getMessageString(player, "commands.message.format.sender", message.toString(), target.getDisplayName()));
+
+        pluginManager.setReplyPlayer(target, player);
+
+        pluginManager.setReplyPlayer(player, target);
 
     }
 

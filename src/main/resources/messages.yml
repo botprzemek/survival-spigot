@@ -1,6 +1,6 @@
 # Prefix for all of the messages (%prefix%)
 
-prefix: "<color:#FFE04A>★ <bold><gradient:#FFE04A:#FFA400>ʙʜɪᴠᴇ.ᴘʟ</gradient><reset> <color:#FFA400>★<reset>"
+prefix: "<color:#FFE04A>★ <bold><gradient:#FFE04A:#FFA400>ʙʜɪᴠᴇ.ᴘʟ</gradient> ★<reset>"
 
 # Command messages
 
@@ -24,6 +24,7 @@ commands:
       request: "%prefix% Otrzymałeś/aś prośbę przeniesienie od <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient> Użyj komendy <gradient:#FFE04A:#FFA400><bold><click:run_command:/tpaccept>/tpaccept,</click></bold></gradient> aby zaakceptować!"
       invalid: "%prefix% Użycie: <insert:/tprequest>/tprequest</insert> <gradient:#FFE04A:#FFA400><bold>(gracz)</bold></gradient>"
       offline: "%prefix% Gracz, do którego próbujesz się przenieść, jest <gradient:#FFE04A:#FFA400><bold>offline!</bold></gradient>"
+      same: "%prefix% Nie możesz <gradient:#FFE04A:#FFA400><bold>przenieść</bold></gradient> się do <gradient:#FFE04A:#FFA400><bold>samego/ej siebie!</bold></gradient>"
     accept:
       accept: "%prefix% Zaakceptowano prośbę o przeniesienie od <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
       success:
@@ -44,8 +45,8 @@ commands:
       start: "%prefix% Rozpoczęto <gradient:#FFE04A:#FFA400><bold>odliczanie</bold></gradient> na <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
       time: "%prefix% Poczekaj jeszcze <gradient:#FFE04A:#FFA400><bold>%value%/5s!</bold></gradient>"
       success: "%prefix% Przeniesiono na <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
-      empty: "%prefix% Nie masz domu o nazwie <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient> Użyj komendy <gradient:#FFE04A:#FFA400><bold><insert:/sethome>/sethome (nazwa),</insert></bold></gradient> aby go dodać!"
-  kit:
+      empty: "%prefix% Nie masz domu o nazwie <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient> Użyj komendy <gradient:#FFE04A:#FFA400><bold><insert:/ustawdom>/ustawdom (nazwa),</insert></bold></gradient> aby go dodać!"
+  kits:
     success:
       title:
         title: "<gradient:#FFE04A:#FFA400><bold>Otrzymałeś/aś zestaw!</bold></gradient>"
@@ -55,7 +56,21 @@ commands:
         fadeout: 1
       message: "%prefix% Otrzymałeś/aś zestaw <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
     full: "%prefix% Masz pełny <gradient:#FFE04A:#FFA400><bold>ekwipunek!</bold></gradient> Aby odebrać zestaw, zrób trochę miejsca!"
-    cooldown: "%prefix% Musisz poczekać jeszcze <gradient:#FFE04A:#FFA400><bold>%value%s!</bold></gradient>"
+    empty: "%prefix% Wprowadzony przez ciebie <gradient:#FFE04A:#FFA400><bold>zestaw</bold></gradient> nie <gradient:#FFE04A:#FFA400><bold>istnieje!</bold></gradient>"
+    invalid: "%prefix% Określ nazwę <gradient:#FFE04A:#FFA400><bold>zestawu!</bold></gradient> Użyj komendy <gradient:#FFE04A:#FFA400><bold><insert:/zestaw>/zestaw (nazwa),</insert></bold></gradient> aby go otrzymać!"
+    cooldown: "%prefix% Musisz poczekać do: <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
+    deny: "%prefix% Nie masz dostępu do zestawu <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
+  streaming:
+    allow: "%prefix% Włączyłeś/aś wiadomości od <gradient:#FFE04A:#FFA400><bold>innych graczy!</bold></gradient>"
+    block: "%prefix% Wyłączyłeś/aś wiadomości od <gradient:#FFE04A:#FFA400><bold>innych graczy!</bold></gradient>"
+  message:
+    invalid: "%prefix% Użycie: <insert:/tprequest>/tprequest</insert> <gradient:#FFE04A:#FFA400><bold>(gracz)</bold></gradient>"
+    offline: "%prefix% Gracz, do którego próbujesz napisać, jest <gradient:#FFE04A:#FFA400><bold>offline!</bold></gradient>"
+    same: "%prefix% Nie możesz <gradient:#FFE04A:#FFA400><bold>napisać</bold></gradient> do <gradient:#FFE04A:#FFA400><bold>samego/ej siebie!</bold></gradient>"
+    deny: "%prefix% Gracz, do którego próbujesz napisać, nie otrzymuje <gradient:#FFE04A:#FFA400><bold>wiadomości!</bold></gradient>"
+    format:
+      receiver: "<color:#FFE04A>★<reset> %player% <gradient:#FFE04A:#FFA400><bold>do ciebie</bold> ★</gradient> %value%"
+      sender: "<color:#FFE04A>★<reset> Ty <gradient:#FFE04A:#FFA400><bold>do %player%</bold> ★</gradient> %value%"
   settings:
     message: "%prefix% Twoje <gradient:#FFE04A:#FFA400><bold>Statystyki</bold></gradient>"
     level: " - Poziom: <gradient:#FFE04A:#FFA400><bold>%value%</bold></gradient>"
@@ -71,7 +86,7 @@ events:
     join: "%prefix% %player_name% dołączył/a <gradient:#FFE04A:#FFA400><bold>do gry! (%value% gracz/y)</bold></gradient>"
     quit: "%prefix% %player_name% nas <gradient:#FFE04A:#FFA400><bold>opuścił/a!</bold></gradient>"
   chat:
-    success: "<color:#FFE04A>♦<reset>%luckperms_prefix%<gradient:#FFE04A:#FFA400><bold>%player_name%</bold> ♦</gradient><reset> %value%"
+    success: "<color:#FFE04A>★<reset>%luckperms_prefix%<gradient:#FFE04A:#FFA400><bold>%player_name%</bold> ★</gradient><reset> %value%"
     failed: "%prefix% Nie masz <gradient:#FFE04A:#FFA400><bold>uprawnień</bold></gradient> do wysyłania <gradient:#FFE04A:#FFA400><bold>wiadomości!</bold></gradient>"
   sleep:
     message: "%prefix% %player_name% położył/a się <gradient:#FFE04A:#FFA400><bold>spać! (%value%% gracz/y śpi)</bold></gradient>"
@@ -83,14 +98,22 @@ events:
       fadeout: 1
   level:
     up:
-      miner:
+      mining:
         title: "<gradient:#FFE04A:#FFA400><bold>Awans!</bold></gradient>"
         description: "Poziom górnictwa zwiększony!"
         fadein: 1
         stay: 3
         fadeout: 1
   interact:
-    boost:
+    boosts:
       mining:
         activate: "%prefix% Aktywowałeś/aś doładowanie <gradient:#FFE04A:#FFA400><bold>kopania! (na %value%s)</bold></gradient>"
         cooldown: "%prefix% Musisz odpocząć jeszcze <gradient:#FFE04A:#FFA400><bold>%value%s!</bold></gradient>"
+
+# Sounds
+
+sounds:
+  success: "ui_toast_challenge_complete"
+  activate: "block_note_block_pling"
+  step: "block_note_block_xylophone"
+  error: "block_note_block_bit"

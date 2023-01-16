@@ -42,7 +42,7 @@ public class ProfileConfig extends Config {
 
         ConfigurationSection config = getConfigurationSection(playerUUID.toString());
 
-        if (config == null) return null;
+        if (config == null) return new Profile(0, 0, new Settings(false, true, 1), new HashMap<>(), new HashMap<>());
 
         int level = config.getInt("level");
 
@@ -50,57 +50,79 @@ public class ProfileConfig extends Config {
 
         ConfigurationSection settingsConfig = config.getConfigurationSection("settings");
 
-        if (settingsConfig == null) return null;
+        Settings settings;
 
-        Settings settings = new Settings(
+        if (settingsConfig != null) {
 
-            settingsConfig.getBoolean("drop-to-inv"),
+            settings = new Settings(
 
-            settingsConfig.getBoolean("drop-mined"),
+                    settingsConfig.getBoolean("drop-to-inv"),
 
-            settingsConfig.getInt("multiplier")
+                    settingsConfig.getBoolean("drop-mined"),
 
-        );
+                    settingsConfig.getInt("multiplier")
+
+            );
+
+        }
+
+        else settings = new Settings(false, true, 1);
 
         ConfigurationSection homesConfig = config.getConfigurationSection("homes");
 
         HashMap<String, Location> homes = new HashMap<>();
 
-        if (homesConfig == null) return null;
+        if (homesConfig != null) {
 
-        for (String homeName : homesConfig.getKeys(false)) {
+            for (String homeName : homesConfig.getKeys(false)) {
 
-            ConfigurationSection homeConfig = homesConfig.getConfigurationSection(homeName);
+                ConfigurationSection homeConfig = homesConfig.getConfigurationSection(homeName);
 
-            if (homeConfig == null) return null;
+                if (homeConfig != null) {
 
-            Location location = new Location(
+                    Location location = new Location(
 
-                Bukkit.getWorld(Objects.requireNonNull(homeConfig.getString("world"))),
+                            Bukkit.getWorld(Objects.requireNonNull(homeConfig.getString("world"))),
 
-                homeConfig.getDouble("x"),
+                            homeConfig.getDouble("x"),
 
-                homeConfig.getDouble("y"),
+                            homeConfig.getDouble("y"),
 
-                homeConfig.getDouble("z")
+                            homeConfig.getDouble("z")
 
-            );
+                    );
 
-            homes.put(homeName, location);
+                    homes.put(homeName, location);
+
+                }
+
+            }
 
         }
 
         ConfigurationSection cooldownsConfig = config.getConfigurationSection("cooldowns");
 
-        if (cooldownsConfig == null) return null;
-
         HashMap<String, Long> cooldowns = new HashMap<>();
 
-        for (String cooldown : cooldownsConfig.getKeys(false)) {
+        if (cooldownsConfig != null) {
 
-            Long time = cooldownsConfig.getLong(cooldown);
+            for (String cooldownSection : cooldownsConfig.getKeys(false)) {
 
-            cooldowns.put(cooldown, time);
+                ConfigurationSection cooldownConfig = cooldownsConfig.getConfigurationSection(cooldownSection);
+
+                if (cooldownConfig != null) {
+
+                    for (String cooldownName : cooldownConfig.getKeys(false)) {
+
+                        Long time = cooldownConfig.getLong(cooldownName);
+
+                        cooldowns.put(cooldownSection + "." + cooldownName, time);
+
+                    }
+
+                }
+
+            }
 
         }
 

@@ -3,15 +3,20 @@ package pl.botprzemek.bpSurvival.Commands;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Profile.Profile;
 import pl.botprzemek.bpSurvival.SurvivalManager.Profile.ProfileManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
-public class SetHomeCommand implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.List;
+
+public class SetHomeCommand implements CommandExecutor, TabCompleter {
 
     private final PluginManager pluginManager;
 
@@ -38,6 +43,8 @@ public class SetHomeCommand implements CommandExecutor {
 
             messageManager.sendCommandMessage(player, "teleport.already");
 
+            messageManager.playPlayerSound(player, "error");
+
             return false;
 
         }
@@ -50,8 +57,21 @@ public class SetHomeCommand implements CommandExecutor {
 
         messageManager.sendCommandMessage(player, "home.set.custom", homeName);
 
+        messageManager.playPlayerSound(player, "activate");
+
         return true;
 
     }
 
+    @Nullable
+    @Override
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+
+        List<String> suggestion = new ArrayList<>();
+
+        suggestion.add("nazwa");
+
+        return suggestion;
+
+    }
 }

@@ -24,12 +24,15 @@ commands:
     default: op
     description: Vanish command
   tprequest:
+    aliases: [tpa, tpwyslij]
     default: op
     description: Teleport request command
   tpaccept:
+    aliases: [tpakceptuj]
     default: op
     description: Teleport accept command
   tpdeny:
+    aliases: [tpodrzuc]
     default: op
     description: Teleport deny command
   home:
@@ -44,6 +47,18 @@ commands:
     aliases: [zestaw]
     default: op
     description: Kit command
+  streaming:
+    aliases: [czat]
+    default: op
+    description: Disables chat command
+  message:
+    aliases: [msg, wiadomosc]
+    default: op
+    description: Message command
+  reply:
+    aliases: [r, odpowiedz]
+    default: op
+    description: Reply command
 permissions:
   bpsurvival.*:
     description: Gives access to all bpSurvival commands
@@ -58,3 +73,7 @@ permissions:
       bpsurvival.tpdeny: true
       bpsurvival.home: true
       bpsurvival.sethome: true
+      bpsurvival.kit: true
+      bpsurvival.streaming: true
+      bpsurvival.message: true
+      bpsurvival.reply: true

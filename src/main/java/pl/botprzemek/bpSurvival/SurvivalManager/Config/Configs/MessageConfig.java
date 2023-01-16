@@ -1,5 +1,6 @@
 package pl.botprzemek.bpSurvival.SurvivalManager.Config.Configs;
 
+import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import pl.botprzemek.bpSurvival.BpSurvival;
 import pl.botprzemek.bpSurvival.SurvivalManager.Config.Config;
@@ -36,6 +37,16 @@ public class MessageConfig extends Config {
     public String getMessage(String path) {
 
         return getString(path);
+
+    }
+
+    public Sound getSound(String path) {
+
+        String soundName = getString("sounds." + path);
+
+        if (soundName == null) return Sound.ENTITY_PLAYER_LEVELUP;
+
+        return Sound.valueOf(soundName.toUpperCase());
 
     }
 

@@ -59,7 +59,7 @@ public class JoinQuitEvent implements Listener {
 
         pluginManager.clearSleepingPlayer(player);
 
-        if (pluginManager.isHiddenPlayer(player)) pluginManager.clearHiddenPlayer(player);
+        pluginManager.clearReplyPlayer(player);
 
     }
 

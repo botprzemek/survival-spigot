@@ -9,14 +9,13 @@ import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
-
-public class TeleportDenyCommand implements CommandExecutor {
+public class StreamingModeCommand implements CommandExecutor {
 
     private final PluginManager pluginManager;
 
     private final MessageManager messageManager;
 
-    public TeleportDenyCommand(SurvivalManager survivalManager) {
+    public StreamingModeCommand(SurvivalManager survivalManager) {
 
         pluginManager = survivalManager.getPluginManager();
 
@@ -29,19 +28,21 @@ public class TeleportDenyCommand implements CommandExecutor {
 
         if (!(sender instanceof Player player)) return false;
 
-        if (!pluginManager.getTeleportingQueuePlayers().containsKey(player.getUniqueId())) {
+        if (pluginManager.isStreamingPlayer(player)) {
 
-            messageManager.sendCommandMessage(player, "tp.deny.empty");
+            pluginManager.clearStreamingPlayer(player);
 
-            messageManager.playPlayerSound(player, "error");
+            messageManager.sendCommandMessage(player, "streaming.allow");
 
-            return false;
+            messageManager.playPlayerSound(player, "activate");
+
+            return true;
 
         }
 
-        pluginManager.clearTeleportingQueuePlayer(player);
+        pluginManager.setStreamingPlayer(player);
 
-        messageManager.sendCommandMessage(player, "tp.deny.clear");
+        messageManager.sendCommandMessage(player, "streaming.block");
 
         messageManager.playPlayerSound(player, "activate");
 

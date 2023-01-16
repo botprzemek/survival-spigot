@@ -31,6 +31,8 @@ public class MovementEvent implements Listener {
 
         messageManager.sendCommandMessage(player, "teleport.failed");
 
+        messageManager.playPlayerSound(player, "error");
+
         pluginManager.clearWaitingPlayer(player);
 
     }

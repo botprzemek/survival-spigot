@@ -24,11 +24,15 @@ public class PluginManager {
 
     private final HashMap<UUID, UUID> teleportingQueue;
 
-    private final HashMap<String, List<ItemStack>> kits;
+    private final HashMap<UUID, UUID> replyPlayers;
+
+    private final List<Kit> kits;
 
     private final List<UUID> sleepingPlayers;
 
     private final List<UUID> hiddenPlayers;
+
+    private final List<UUID> streamingPlayers;
 
     public PluginManager(PluginConfig pluginConfig) {
 
@@ -38,11 +42,15 @@ public class PluginManager {
 
         teleportingQueue = new HashMap<>();
 
-        kits = new HashMap<>();
+        replyPlayers = new HashMap<>();
+
+        kits = new ArrayList<>();
 
         sleepingPlayers = new ArrayList<>();
 
         hiddenPlayers = new ArrayList<>();
+
+        streamingPlayers = new ArrayList<>();
 
         setTimer();
 
@@ -105,6 +113,8 @@ public class PluginManager {
 
     public void setKits() {
 
+        kits.clear();
+
         ConfigurationSection kitsSection = pluginConfig.getConfigurationSection("kits");
 
         if (kitsSection == null) return;
@@ -115,11 +125,17 @@ public class PluginManager {
 
             if (kitSection == null) return;
 
+            int kitCooldown = kitSection.getInt("cooldown");
+
             List<ItemStack> kitItems = new ArrayList<>();
 
-            for (String key : kitSection.getKeys(false)) {
+            ConfigurationSection itemsSection = kitSection.getConfigurationSection("items");
 
-                ConfigurationSection itemSection = kitSection.getConfigurationSection(key);
+            if (itemsSection == null) return;
+
+            for (String key : itemsSection.getKeys(false)) {
+
+                ConfigurationSection itemSection = itemsSection.getConfigurationSection(key);
 
                 if (itemSection == null) return;
 
@@ -131,15 +147,27 @@ public class PluginManager {
 
             }
 
-            kits.put(kitName, kitItems);
+            kits.add(new Kit(kitName, kitCooldown, kitItems));
 
         }
 
     }
 
-    public List<ItemStack> getKit(String kitName) {
+    public List<Kit> getKits() {
 
-        return kits.get(kitName);
+        return kits;
+
+    }
+
+    public Kit getKit(String kitName) {
+
+        for (Kit kit : kits) {
+
+            if (kit.getName().equals(kitName)) return kit;
+
+        }
+
+        return null;
 
     }
 
@@ -234,6 +262,48 @@ public class PluginManager {
     public void clearHiddenPlayer(Player player) {
 
         hiddenPlayers.remove(player.getUniqueId());
+
+    }
+
+    public void setStreamingPlayer(Player player) {
+
+        streamingPlayers.add(player.getUniqueId());
+
+    }
+
+    public List<UUID> getStreamingPlayers() {
+
+        return streamingPlayers;
+
+    }
+
+    public boolean isStreamingPlayer(Player player) {
+
+        return streamingPlayers.contains(player.getUniqueId());
+
+    }
+
+    public void clearStreamingPlayer(Player player) {
+
+        streamingPlayers.remove(player.getUniqueId());
+
+    }
+
+    public void clearReplyPlayer(Player player) {
+
+        replyPlayers.remove(player.getUniqueId());
+
+    }
+
+    public void setReplyPlayer(Player player, Player target) {
+
+        replyPlayers.put(player.getUniqueId(), target.getUniqueId());
+
+    }
+
+    public UUID getReplyPlayer(Player player) {
+
+        return replyPlayers.get(player.getUniqueId());
 
     }
 

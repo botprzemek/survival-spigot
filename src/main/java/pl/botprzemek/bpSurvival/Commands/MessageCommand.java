@@ -5,49 +5,32 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
-import pl.botprzemek.bpSurvival.BpSurvival;
 import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
-public class TeleportRequestCommand implements CommandExecutor {
-
-    private final BpSurvival instance;
+public class MessageCommand implements CommandExecutor {
 
     private final PluginManager pluginManager;
 
     private final MessageManager messageManager;
 
-    public TeleportRequestCommand(SurvivalManager survivalManager) {
-
-        instance = survivalManager.getInstance();
+    public MessageCommand(SurvivalManager survivalManager) {
 
         pluginManager = survivalManager.getPluginManager();
 
         messageManager = survivalManager.getMessageManager();
 
     }
-
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
         if (!(sender instanceof Player player)) return false;
 
-        if (pluginManager.getWaitingPlayers().containsKey(player.getUniqueId())) {
-
-            messageManager.sendCommandMessage(player, "teleport.already");
-
-            messageManager.playPlayerSound(player, "error");
-
-            return false;
-
-        }
-
         if (args.length == 0) {
 
-            messageManager.sendCommandMessage(player, "tp.request.invalid");
+            messageManager.sendCommandMessage(player, "message.invalid");
 
             messageManager.playPlayerSound(player, "error");
 
@@ -59,7 +42,7 @@ public class TeleportRequestCommand implements CommandExecutor {
 
         if (target == null) {
 
-            messageManager.sendCommandMessage(player, "tp.request.offline");
+            messageManager.sendCommandMessage(player, "message.offline");
 
             messageManager.playPlayerSound(player, "error");
 
@@ -69,7 +52,7 @@ public class TeleportRequestCommand implements CommandExecutor {
 
         if (target.equals(player)) {
 
-            messageManager.sendCommandMessage(player, "tp.request.same");
+            messageManager.sendCommandMessage(player, "message.same");
 
             messageManager.playPlayerSound(player, "error");
 
@@ -77,22 +60,19 @@ public class TeleportRequestCommand implements CommandExecutor {
 
         }
 
-        pluginManager.setTeleportingQueuePlayer(target, player);
+        if (pluginManager.isStreamingPlayer(target)) {
 
-        messageManager.sendCommandMessage(player, "tp.request.success", args[0]);
+            messageManager.sendCommandMessage(player, "message.deny");
 
-        messageManager.sendCommandMessage(target, "tp.request.request", player.getDisplayName());
+            messageManager.playPlayerSound(player, "error");
 
-        messageManager.playPlayerSound(player, "activate");
+            return false;
 
-        new BukkitRunnable() {
+        }
 
-            public void run() { pluginManager.clearTeleportingQueuePlayer(target); }
-
-        }.runTaskLaterAsynchronously(instance, 60 * 20);
+        messageManager.sendMessageToReceiver(pluginManager, player, target, args, 1);
 
         return true;
 
     }
-
 }

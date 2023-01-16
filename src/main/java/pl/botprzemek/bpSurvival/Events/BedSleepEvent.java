@@ -79,6 +79,8 @@ public class BedSleepEvent implements Listener {
 
         messageManager.sendTitle(player, "sleep.success");
 
+        messageManager.playPlayerSound(player, "step");
+
         pluginManager.clearSleepingPlayer(player);
 
     }

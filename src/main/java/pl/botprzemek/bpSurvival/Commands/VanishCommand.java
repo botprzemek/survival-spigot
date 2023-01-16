@@ -38,7 +38,7 @@ public class VanishCommand implements CommandExecutor {
 
         if (!(sender instanceof Player player)) return false;
 
-        if (pluginManager.getHiddenPlayers().contains(player.getUniqueId())) {
+        if (pluginManager.isHiddenPlayer(player)) {
 
             pluginManager.clearHiddenPlayer(player);
 
@@ -49,6 +49,8 @@ public class VanishCommand implements CommandExecutor {
             messageManager.sendAnnouncement(player, "connect.join", String.valueOf(Bukkit.getOnlinePlayers().size() - pluginManager.getHiddenPlayers().size()));
 
             messageManager.sendCommandMessage(player, "vanish.show");
+
+            messageManager.playPlayerSound(player, "activate");
 
             player.setGameMode(GameMode.CREATIVE);
 
@@ -67,6 +69,8 @@ public class VanishCommand implements CommandExecutor {
         messageManager.sendAnnouncement(player, "connect.quit", String.valueOf(Bukkit.getOnlinePlayers().size() - pluginManager.getHiddenPlayers().size()));
 
         messageManager.sendCommandMessage(player, "vanish.hide");
+
+        messageManager.playPlayerSound(player, "activate");
 
         player.setGameMode(GameMode.SPECTATOR);
 

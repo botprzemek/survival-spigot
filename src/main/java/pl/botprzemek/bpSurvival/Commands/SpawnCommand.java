@@ -38,6 +38,8 @@ public class SpawnCommand implements CommandExecutor {
 
             messageManager.sendCommandMessage(player, "teleport.already");
 
+            messageManager.playPlayerSound(player, "error");
+
             return false;
 
         }
@@ -45,6 +47,8 @@ public class SpawnCommand implements CommandExecutor {
         pluginManager.setWaitingPlayer(player, 0);
 
         messageManager.sendCommandMessage(player, "spawn.start");
+
+        messageManager.playPlayerSound(player, "activate");
 
         new BukkitRunnable() {
 
@@ -62,6 +66,8 @@ public class SpawnCommand implements CommandExecutor {
 
                 messageManager.sendCommandMessage(player, "spawn.time", String.valueOf(time));
 
+                messageManager.playPlayerSound(player, "step");
+
                 if (time == pluginManager.getTimer()) {
 
                     player.teleport(pluginManager.getSpawnLocation());
@@ -69,6 +75,8 @@ public class SpawnCommand implements CommandExecutor {
                     pluginManager.clearWaitingPlayer(player);
 
                     messageManager.sendCommandMessage(player, "spawn.success");
+
+                    messageManager.playPlayerSound(player, "activate");
 
                     cancel();
 
