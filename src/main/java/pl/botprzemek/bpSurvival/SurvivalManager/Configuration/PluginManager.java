@@ -34,6 +34,8 @@ public class PluginManager {
 
     private final List<UUID> streamingPlayers;
 
+    private final List<String> whitelistedBlocks;
+
     public PluginManager(PluginConfig pluginConfig) {
 
         this.pluginConfig = pluginConfig;
@@ -52,11 +54,21 @@ public class PluginManager {
 
         streamingPlayers = new ArrayList<>();
 
-        setTimer();
+        whitelistedBlocks = new ArrayList<>();
+
+        loadConfigs();
+
+    }
+
+    public void loadConfigs() {
 
         setSpawnLocation();
 
         setKits();
+
+        setWhitelistedBlocks();
+
+        setTimer();
 
     }
 
@@ -304,6 +316,18 @@ public class PluginManager {
     public UUID getReplyPlayer(Player player) {
 
         return replyPlayers.get(player.getUniqueId());
+
+    }
+
+    public void setWhitelistedBlocks() {
+
+        for (String materialName : pluginConfig.getStringList("whitelist")) whitelistedBlocks.add(materialName.toUpperCase().replace(" ", "_"));
+
+    }
+
+    public List<String> getWhitelistedBlocks() {
+
+        return whitelistedBlocks;
 
     }
 

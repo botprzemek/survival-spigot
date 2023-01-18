@@ -53,7 +53,7 @@ public class ReloadCommand implements CommandExecutor {
 
             dropManager.loadItems();
 
-            pluginManager.setKits();
+            pluginManager.loadConfigs();
 
             if (sender instanceof Player player) {
 

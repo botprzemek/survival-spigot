@@ -38,9 +38,10 @@ commands:
       empty: "%prefix% Nie posiadasz żadnych próśb o <gradient:#FFE04A:#FFA400><bold>teleportacje!</bold></gradient>"
       clear: "%prefix% Prośby o przeniesienie zostały <gradient:#FFE04A:#FFA400><bold>anulowane!</bold></gradient>"
   home:
+    max: "%prefix% Utworzyłeś/aś maksymalną ilość <gradient:#FFE04A:#FFA400><bold>domów!</bold></gradient>"
     set:
-      default: "%prefix% Pomyślnie ustawiłeś/aś swój <gradient:#FFE04A:#FFA400><bold>dom!</bold></gradient>"
       custom: "%prefix% Pomyślnie ustawiłeś/aś swój <gradient:#FFE04A:#FFA400><bold>dom</bold></gradient> o nazwie <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
+      rewrite: "%prefix% Pomyślnie nadpisałeś/aś swój <gradient:#FFE04A:#FFA400><bold>dom</bold></gradient> o nazwie <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
     teleport:
       start: "%prefix% Rozpoczęto <gradient:#FFE04A:#FFA400><bold>odliczanie</bold></gradient> na <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
       time: "%prefix% Poczekaj jeszcze <gradient:#FFE04A:#FFA400><bold>%value%/5s!</bold></gradient>"

@@ -11,6 +11,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Drop.DropManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Drop.Items;
 import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
@@ -21,6 +22,7 @@ import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BlockDestroyEvent implements Listener {
@@ -31,6 +33,8 @@ public class BlockDestroyEvent implements Listener {
 
     private final DropManager dropManager;
 
+    private final PluginManager pluginManager;
+
     public BlockDestroyEvent(SurvivalManager survivalManager) {
 
         profileManager = survivalManager.getProfileManager();
@@ -38,6 +42,8 @@ public class BlockDestroyEvent implements Listener {
         messageManager = survivalManager.getMessageManager();
 
         dropManager = survivalManager.getDropManager();
+
+        pluginManager = survivalManager.getPluginManager();
 
     }
 
@@ -57,13 +63,19 @@ public class BlockDestroyEvent implements Listener {
     @EventHandler
     public void onBlockDestroy(BlockBreakEvent event) {
 
+        if (Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) {
+
+            if (!event.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) return;
+
+            event.setCancelled(true);
+
+        }
+
         if (!dropManager.getBlocks().contains(event.getBlock().getType())) return;
 
         Player player = event.getPlayer();
 
         if (!player.getGameMode().equals(GameMode.SURVIVAL)) return;
-
-        if (!player.getInventory().getItemInMainHand().getType().toString().contains("PICKAXE")) return;
 
         event.setDropItems(false);
 
@@ -108,7 +120,6 @@ public class BlockDestroyEvent implements Listener {
         }
 
         levelUp(player, profile, settings);
-
 
     }
 

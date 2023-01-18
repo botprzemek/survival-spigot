@@ -53,13 +53,37 @@ public class SetHomeCommand implements CommandExecutor, TabCompleter {
 
         String homeName = (args.length == 0) ? "dom" : args[0];
 
-        profile.setHome(homeName, player.getLocation());
+        int maxHomes = 0;
 
-        messageManager.sendCommandMessage(player, "home.set.custom", homeName);
+        for (int i = 0; i <= 5; i++) {
 
-        messageManager.playPlayerSound(player, "activate");
+            if (player.hasPermission("bpsurvival.homes." + i)) {
 
-        return true;
+                maxHomes = i;
+
+                break;
+
+            }
+
+        }
+
+        if (maxHomes == 0) {
+
+            return setPlayerHome(player, profile, homeName);
+
+        }
+
+        if (profile.getHomes().size() >= maxHomes) {
+
+            messageManager.sendCommandMessage(player, "home.max");
+
+            messageManager.playPlayerSound(player, "error");
+
+            return false;
+
+        }
+
+        return setPlayerHome(player, profile, homeName);
 
     }
 
@@ -74,4 +98,27 @@ public class SetHomeCommand implements CommandExecutor, TabCompleter {
         return suggestion;
 
     }
+
+    private boolean setPlayerHome(Player player, Profile profile, String homeName) {
+        if (profile.getHomes().containsKey(homeName)) {
+
+            profile.setHome(homeName, player.getLocation());
+
+            messageManager.sendCommandMessage(player, "home.set.rewrite", homeName);
+
+            messageManager.playPlayerSound(player, "activate");
+
+            return true;
+
+        }
+
+        profile.setHome(homeName, player.getLocation());
+
+        messageManager.sendCommandMessage(player, "home.set.custom", homeName);
+
+        messageManager.playPlayerSound(player, "activate");
+
+        return true;
+    }
+
 }

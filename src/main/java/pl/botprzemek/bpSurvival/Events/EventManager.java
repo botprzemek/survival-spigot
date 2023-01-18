@@ -19,6 +19,8 @@ public class EventManager {
 
         instance.getServer().getPluginManager().registerEvents(new BedSleepEvent(survivalManager), instance);
 
+        instance.getServer().getPluginManager().registerEvents(new SpawnProtectionEvent(survivalManager), instance);
+
         instance.getServer().getPluginManager().registerEvents(new InteractionEvent(survivalManager), instance);
 
     }
