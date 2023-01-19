@@ -6,14 +6,13 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.*;
 import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
@@ -130,6 +129,45 @@ public class SpawnProtectionEvent implements Listener {
         Player player = event.getPlayer();
 
         if (player.getBedSpawnLocation() == null) event.setRespawnLocation(pluginManager.getSpawnLocation());
+
+    }
+
+    @EventHandler
+    public void onPlayerBlockPlace(BlockPlaceEvent event) {
+
+        if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
+
+        Player player = event.getPlayer();
+
+        if (!Objects.requireNonNull(player).getGameMode().equals(GameMode.SURVIVAL)) return;
+
+        event.setCancelled(true);
+
+    }
+
+    @EventHandler
+    public void onPlayerWaterFill(PlayerBucketFillEvent event) {
+
+        if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
+
+        Player player = event.getPlayer();
+
+        if (!Objects.requireNonNull(player).getGameMode().equals(GameMode.SURVIVAL)) return;
+
+        event.setCancelled(true);
+
+    }
+
+    @EventHandler
+    public void onPlayerWaterEmpty(PlayerBucketEmptyEvent event) {
+
+        if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
+
+        Player player = event.getPlayer();
+
+        if (!Objects.requireNonNull(player).getGameMode().equals(GameMode.SURVIVAL)) return;
+
+        event.setCancelled(true);
 
     }
 

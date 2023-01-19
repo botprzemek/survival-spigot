@@ -67,8 +67,6 @@ public class BlockDestroyEvent implements Listener {
 
             if (!event.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) return;
 
-            event.setCancelled(true);
-
         }
 
         if (!dropManager.getBlocks().contains(event.getBlock().getType())) return;

@@ -157,7 +157,7 @@ public class MessageManager {
 
         for (int i = index; i < args.length; i++) {
 
-            String set = " " + args[i];
+            String set = args[i] + " ";
 
             message.append(set);
 

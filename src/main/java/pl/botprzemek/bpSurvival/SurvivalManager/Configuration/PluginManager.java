@@ -18,7 +18,9 @@ public class PluginManager {
 
     private Location spawnLocation;
 
-    private  Integer timer;
+    private Integer timer;
+
+    private Integer limit;
 
     private final HashMap<UUID, Integer> waitingPlayers;
 
@@ -70,6 +72,8 @@ public class PluginManager {
 
         setTimer();
 
+        setLimit();
+
     }
 
     public boolean inventoryHaveSpace(Player player, int size) {
@@ -120,6 +124,18 @@ public class PluginManager {
     public Integer getTimer() {
 
         return timer;
+
+    }
+
+    public void setLimit() {
+
+        limit = pluginConfig.getInt("world.limit");
+
+    }
+
+    public Integer getLimit() {
+
+        return limit;
 
     }
 

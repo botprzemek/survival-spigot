@@ -25,7 +25,7 @@ public class DropManager {
 
     public List<Material> loadBlocks() {
 
-        blocks.clear();
+        if (blocks != null) blocks.clear();
 
         return dropConfig.loadBlocks();
 
@@ -39,7 +39,7 @@ public class DropManager {
 
     public List<Items> loadItems() {
 
-        items.clear();
+        if (items != null) items.clear();
 
         return dropConfig.loadItems();
 

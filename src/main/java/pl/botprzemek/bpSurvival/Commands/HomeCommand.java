@@ -47,7 +47,7 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
 
         Profile profile = profileManager.getProfile(player);
 
-        String homeName = (args.length == 0) ? profile.getHomes().entrySet().iterator().next().getKey() : args[0];
+        String homeName = (args.length == 0) ? "dom" : args[0];
 
         if (profile.getHomes().get(homeName) == null) {
 
