@@ -44,6 +44,18 @@ public class SpawnCommand implements CommandExecutor {
 
         }
 
+        if (player.hasPermission("bpsurvival.bypass")) {
+
+            player.teleport(pluginManager.getSpawnLocation());
+
+            pluginManager.clearWaitingPlayer(player);
+
+            messageManager.sendCommandMessage(player, "spawn.success");
+
+            messageManager.playPlayerSound(player, "activate");
+
+        }
+
         pluginManager.setWaitingPlayer(player, 0);
 
         messageManager.sendCommandMessage(player, "spawn.start");

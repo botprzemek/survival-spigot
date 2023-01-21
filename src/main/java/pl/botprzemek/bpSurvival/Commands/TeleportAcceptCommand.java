@@ -57,6 +57,22 @@ public class TeleportAcceptCommand implements CommandExecutor {
 
         }
 
+        if (player.hasPermission("bpsurvival.bypass")) {
+
+            requestPlayer.teleport(player);
+
+            messageManager.sendCommandMessage(player, "tp.accept.success.requested", requestPlayer.getDisplayName());
+
+            messageManager.sendCommandMessage(requestPlayer, "tp.accept.success.target", player.getDisplayName());
+
+            messageManager.playPlayerSound(player, "activate");
+
+            messageManager.playPlayerSound(requestPlayer, "activate");
+
+            return false;
+
+        }
+
         pluginManager.setWaitingPlayer(requestPlayer, 0);
 
         messageManager.sendCommandMessage(player, "tp.accept.accept", requestPlayer.getDisplayName());

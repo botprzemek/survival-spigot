@@ -75,6 +75,7 @@ permissions:
       bpsurvival.message: true
       bpsurvival.reply: true
       bpsurvival.bypass: true
+      bpsurvival.protection: true
   bpsurvival.reload:
     default: op
     description: Reload command permission
@@ -120,3 +121,6 @@ permissions:
   bpsurvival.bypass:
     default: op
     description: Bypass for all of the events
+  bpsurvival.protection:
+    default: op
+    description: Bypass for spawn protection

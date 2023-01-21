@@ -61,6 +61,16 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
 
         Location location = profile.getHomes().get(homeName);
 
+        if (player.hasPermission("bpsurvival.bypass")) {
+
+            player.teleport(location);
+
+            messageManager.sendCommandMessage(player, "home.teleport.success", homeName);
+
+            messageManager.playPlayerSound(player, "activate");
+
+        }
+
         if (pluginManager.getWaitingPlayers().containsKey(player.getUniqueId())) {
 
             messageManager.sendCommandMessage(player, "teleport.already");

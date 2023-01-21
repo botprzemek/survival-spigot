@@ -35,7 +35,7 @@ public class SpawnProtectionEvent implements Listener {
 
         if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
 
-        if (!event.getPlayer().hasPermission("bpsurvival.spawn.bypass")) return;
+        if (event.getPlayer().hasPermission("bpsurvival.protection")) return;
 
         event.setCancelled(true);
 
@@ -54,7 +54,7 @@ public class SpawnProtectionEvent implements Listener {
 
         }
 
-        if (!player.hasPermission("bpsurvival.spawn.bypass")) return;
+        if (player.hasPermission("bpsurvival.protection")) return;
 
         event.setCancelled(true);
 
@@ -67,7 +67,7 @@ public class SpawnProtectionEvent implements Listener {
 
         if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
 
-        if (!event.getPlayer().hasPermission("bpsurvival.spawn.bypass")) return;
+        if (event.getPlayer().hasPermission("bpsurvival.protection")) return;
 
         event.setCancelled(true);
 
@@ -80,7 +80,7 @@ public class SpawnProtectionEvent implements Listener {
 
         if (event.getDamager() instanceof Player player) {
 
-            if (!player.hasPermission("bpsurvival.spawn.bypass")) return;
+            if (player.hasPermission("bpsurvival.protection")) return;
 
             event.setCancelled(true);
 
@@ -113,7 +113,7 @@ public class SpawnProtectionEvent implements Listener {
 
         if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
 
-        if (!event.getPlayer().hasPermission("bpsurvival.spawn.bypass")) return;
+        if (event.getPlayer().hasPermission("bpsurvival.protection")) return;
 
         Block clickedBlock = event.getClickedBlock();
 
@@ -130,7 +130,7 @@ public class SpawnProtectionEvent implements Listener {
 
         if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
 
-        if (!event.getPlayer().hasPermission("bpsurvival.spawn.bypass")) return;
+        if (event.getPlayer().hasPermission("bpsurvival.protection")) return;
 
         EntityType entityType = event.getRightClicked().getType();
 
@@ -152,7 +152,7 @@ public class SpawnProtectionEvent implements Listener {
 
         if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
 
-        if (!event.getPlayer().hasPermission("bpsurvival.spawn.bypass")) return;
+        if (event.getPlayer().hasPermission("bpsurvival.protection")) return;
 
         event.setCancelled(true);
 
@@ -163,7 +163,7 @@ public class SpawnProtectionEvent implements Listener {
 
         if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
 
-        if (!event.getPlayer().hasPermission("bpsurvival.spawn.bypass")) return;
+        if (event.getPlayer().hasPermission("bpsurvival.protection")) return;
 
         event.setCancelled(true);
 
@@ -174,7 +174,7 @@ public class SpawnProtectionEvent implements Listener {
 
         if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
 
-        if (!event.getPlayer().hasPermission("bpsurvival.spawn.bypass")) return;
+        if (event.getPlayer().hasPermission("bpsurvival.protection")) return;
 
         event.setCancelled(true);
 
@@ -185,7 +185,7 @@ public class SpawnProtectionEvent implements Listener {
 
         if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
 
-        if (!event.getPlayer().hasPermission("bpsurvival.spawn.bypass")) return;
+        if (event.getPlayer().hasPermission("bpsurvival.protection")) return;
 
         event.setCancelled(true);
 
@@ -196,7 +196,7 @@ public class SpawnProtectionEvent implements Listener {
 
         if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
 
-        if (!event.getPlayer().hasPermission("bpsurvival.spawn.bypass")) return;
+        if (event.getPlayer().hasPermission("bpsurvival.protection")) return;
 
         event.setCancelled(true);
 
