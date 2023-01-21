@@ -7,8 +7,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
 import pl.botprzemek.bpSurvival.BpSurvival;
-import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
-import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.PluginManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.MessageManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
 import java.util.Objects;
@@ -38,15 +38,11 @@ public class BedSleepEvent implements Listener {
 
         Player player = event.getPlayer();
 
+        if (!player.hasPermission("bpsurvival.sleep.skip")) return;
+
+        if (pluginManager.getHiddenPlayers().contains(player.getUniqueId())) return;
+
         pluginManager.setSleepingPlayer(player);
-
-        if (pluginManager.getHiddenPlayers().contains(player.getUniqueId())) {
-
-            event.setCancelled(true);
-
-            return;
-
-        }
 
         int percentage = (int) Math.floor(((double) pluginManager.getSleepingPlayers().size() / (instance.getServer().getOnlinePlayers().size() - pluginManager.getHiddenPlayers().size())) * 100);
 

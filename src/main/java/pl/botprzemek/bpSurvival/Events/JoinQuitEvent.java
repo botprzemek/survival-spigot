@@ -7,9 +7,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import pl.botprzemek.bpSurvival.BpSurvival;
-import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
-import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
-import pl.botprzemek.bpSurvival.SurvivalManager.Profile.ProfileManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.PluginManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.MessageManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.ProfileManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
 import java.util.Objects;

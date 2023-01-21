@@ -1,4 +1,4 @@
-package pl.botprzemek.bpSurvival.SurvivalManager.Configuration;
+package pl.botprzemek.bpSurvival.SurvivalManager.Utils;
 
 import org.bukkit.inventory.ItemStack;
 

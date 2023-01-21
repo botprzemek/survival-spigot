@@ -8,11 +8,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.Kit;
-import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
-import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
-import pl.botprzemek.bpSurvival.SurvivalManager.Profile.Profile;
-import pl.botprzemek.bpSurvival.SurvivalManager.Profile.ProfileManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Utils.Kit;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.PluginManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.MessageManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Utils.Profile;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.ProfileManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
 import java.text.SimpleDateFormat;
@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class KitsCommand implements CommandExecutor, TabCompleter {
+public class KitCommand implements CommandExecutor, TabCompleter {
 
     private final PluginManager pluginManager;
 
@@ -30,7 +30,7 @@ public class KitsCommand implements CommandExecutor, TabCompleter {
 
     private final MessageManager messageManager;
 
-    public KitsCommand(SurvivalManager survivalManager) {
+    public KitCommand(SurvivalManager survivalManager) {
 
         pluginManager = survivalManager.getPluginManager();
 

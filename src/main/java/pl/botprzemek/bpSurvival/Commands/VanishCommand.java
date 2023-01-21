@@ -8,8 +8,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import pl.botprzemek.bpSurvival.BpSurvival;
-import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
-import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.PluginManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.MessageManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
 import java.util.Objects;

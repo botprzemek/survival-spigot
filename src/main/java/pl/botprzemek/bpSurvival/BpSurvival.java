@@ -3,7 +3,7 @@ package pl.botprzemek.bpSurvival;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class BpSurvival extends JavaPlugin {
+public class    BpSurvival extends JavaPlugin {
 
     private SurvivalManager survivalManager;
 
@@ -17,7 +17,7 @@ public class BpSurvival extends JavaPlugin {
     @Override
     public void onDisable() {
 
-        survivalManager.cleanUp();
+        if (survivalManager != null) survivalManager.cleanUp();
 
     }
 

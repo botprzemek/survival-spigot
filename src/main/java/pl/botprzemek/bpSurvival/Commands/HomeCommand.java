@@ -10,10 +10,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import pl.botprzemek.bpSurvival.BpSurvival;
-import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
-import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
-import pl.botprzemek.bpSurvival.SurvivalManager.Profile.Profile;
-import pl.botprzemek.bpSurvival.SurvivalManager.Profile.ProfileManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.PluginManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.MessageManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Utils.Profile;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.ProfileManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
 import java.util.List;

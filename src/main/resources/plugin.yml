@@ -1,5 +1,5 @@
 name: bpSurvival
-version: '0.1'
+version: '0.2'
 authors: [botprzemek]
 website: 'https://www.github.com/botprzemek/bpSurvival/'
 description: Survival addons (1.18.2)
@@ -11,10 +11,6 @@ commands:
     aliases: [bps]
     default: op
     description: Reload command
-  settings:
-    aliases: [set]
-    default: op
-    description: Settings command
   spawn:
     aliases: [s]
     default: op
@@ -63,12 +59,25 @@ permissions:
   bpsurvival.*:
     default: op
     description: Gives access to all bpSurvival commands
+    children:
+      bpsurvival.reload: true
+      bpsurvival.spawn: true
+      bpsurvival.vanish: true
+      bpsurvival.tprequest: true
+      bpsurvival.tpaccept: true
+      bpsurvival.tpdeny: true
+      bpsurvival.home: true
+      bpsurvival.sethome: true
+      bpsurvival.homes.0: true
+      bpsurvival.kit: true
+      bpsurvival.kits.name: true
+      bpsurvival.chat: true
+      bpsurvival.message: true
+      bpsurvival.reply: true
+      bpsurvival.bypass: true
   bpsurvival.reload:
     default: op
     description: Reload command permission
-  bpsurvival.settings:
-    default: op
-    description: Settings command permission
   bpsurvival.spawn:
     default: op
     description: Spawn command permission
@@ -96,6 +105,9 @@ permissions:
   bpsurvival.kit:
     default: op
     description: Kit command permission
+  bpsurvival.kits.name:
+    default: op
+    description: Kit permission for players
   bpsurvival.chat:
     default: op
     description: Disables chat command permission
@@ -105,3 +117,6 @@ permissions:
   bpsurvival.reply:
     default: op
     description: Reply command permission
+  bpsurvival.bypass:
+    default: op
+    description: Bypass for all of the events

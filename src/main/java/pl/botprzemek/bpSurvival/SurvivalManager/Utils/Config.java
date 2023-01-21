@@ -1,4 +1,4 @@
-package pl.botprzemek.bpSurvival.SurvivalManager.Config;
+package pl.botprzemek.bpSurvival.SurvivalManager.Utils;
 
 import pl.botprzemek.bpSurvival.BpSurvival;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -28,8 +28,6 @@ public abstract class Config extends YamlConfiguration {
     private void checkConfig() {
 
         if (file.exists()) return;
-
-        file.getParentFile().mkdirs();
 
         instance.saveResource(name, false);
 

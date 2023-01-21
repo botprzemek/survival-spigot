@@ -1,6 +1,6 @@
 # Prefix for all of the messages (%prefix%)
 
-prefix: "<color:#FFE04A>★ <bold><gradient:#FFE04A:#FFA400>ʙʜɪᴠᴇ.ᴘʟ</gradient> ★<reset>"
+prefix: "<gradient:#FFE04A:#FFA400>★ <bold>ʙʜɪᴠᴇ.ᴘʟ</bold> ★</gradient> <reset>"
 
 # Command messages
 
@@ -72,13 +72,6 @@ commands:
     format:
       receiver: "<color:#FFE04A>★<reset> %player% <gradient:#FFE04A:#FFA400><bold>do ciebie</bold> ★</gradient> %value%"
       sender: "<color:#FFE04A>★<reset> Ty <gradient:#FFE04A:#FFA400><bold>do %player%</bold> ★</gradient> %value%"
-  settings:
-    message: "%prefix% Twoje <gradient:#FFE04A:#FFA400><bold>Statystyki</bold></gradient>"
-    level: " - Poziom: <gradient:#FFE04A:#FFA400><bold>%value%</bold></gradient>"
-    exp: " - Doświadczenie: <gradient:#FFE04A:#FFA400><bold>%value%</bold></gradient>"
-    to-inv: " - Wrzuć do ekwipunku: <gradient:#FFE04A:#FFA400><bold>%value%</bold></gradient>"
-    mined: " - Wyrzucić wykopany item: <gradient:#FFE04A:#FFA400><bold>%value%</bold></gradient>"
-    multiplier: " - Mnożnik dropu: <gradient:#FFE04A:#FFA400><bold>%value%</bold></gradient>"
 
 # Event messages
 
@@ -97,19 +90,6 @@ events:
       fadein: 1
       stay: 3
       fadeout: 1
-  level:
-    up:
-      mining:
-        title: "<gradient:#FFE04A:#FFA400><bold>Awans!</bold></gradient>"
-        description: "Poziom górnictwa zwiększony!"
-        fadein: 1
-        stay: 3
-        fadeout: 1
-  interact:
-    boosts:
-      mining:
-        activate: "%prefix% Aktywowałeś/aś doładowanie <gradient:#FFE04A:#FFA400><bold>kopania! (na %value%s)</bold></gradient>"
-        cooldown: "%prefix% Musisz odpocząć jeszcze <gradient:#FFE04A:#FFA400><bold>%value%s!</bold></gradient>"
 
 # Sounds
 

@@ -1,7 +1,7 @@
-package pl.botprzemek.bpSurvival.SurvivalManager.Profile;
+package pl.botprzemek.bpSurvival.SurvivalManager.Config;
 
-import pl.botprzemek.bpSurvival.SurvivalManager.Config.Configs.ProfileConfig;
 import org.bukkit.entity.Player;
+import pl.botprzemek.bpSurvival.SurvivalManager.Utils.Profile;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -22,7 +22,7 @@ public class ProfileManager {
 
     public void createProfile(Player player) {
 
-        Profile profile = new Profile(0, 0, new Settings(false, true, 1), new HashMap<>(), new HashMap<>());
+        Profile profile = new Profile(new HashMap<>(), new HashMap<>());
 
         UUID playerUUID = player.getUniqueId();
 

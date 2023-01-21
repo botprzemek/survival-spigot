@@ -1,4 +1,4 @@
-package pl.botprzemek.bpSurvival.SurvivalManager.Configuration;
+package pl.botprzemek.bpSurvival.SurvivalManager.Config;
 
 import io.th0rgal.oraxen.api.OraxenItems;
 import org.bukkit.Bukkit;
@@ -8,7 +8,7 @@ import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import pl.botprzemek.bpSurvival.SurvivalManager.Config.Configs.PluginConfig;
+import pl.botprzemek.bpSurvival.SurvivalManager.Utils.Kit;
 
 import java.util.*;
 
@@ -129,7 +129,7 @@ public class PluginManager {
 
     public void setLimit() {
 
-        limit = pluginConfig.getInt("world.limit");
+        limit = pluginConfig.getInt("spawn.limit");
 
     }
 

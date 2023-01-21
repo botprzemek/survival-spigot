@@ -1,12 +1,11 @@
 package pl.botprzemek.bpSurvival.Events;
 
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
-import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.PluginManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.MessageManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
 import java.util.Objects;
@@ -30,7 +29,7 @@ public class MovementEvent implements Listener {
 
         Player player = event.getPlayer();
 
-        if (!player.getGameMode().equals(GameMode.SURVIVAL)) return;
+        if (player.hasPermission("bpsurvival.bypass")) return;
 
         if (Objects.equals(pluginManager.getSpawnLocation().getWorld(), player.getWorld())) {
 

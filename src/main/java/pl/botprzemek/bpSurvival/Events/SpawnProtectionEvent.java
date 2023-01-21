@@ -1,11 +1,13 @@
 package pl.botprzemek.bpSurvival.Events;
 
-import org.bukkit.GameMode;
+import io.th0rgal.oraxen.api.events.OraxenFurnitureBreakEvent;
+import io.th0rgal.oraxen.api.events.OraxenFurniturePlaceEvent;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -13,7 +15,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.bukkit.event.player.*;
-import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.PluginManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
 import java.util.Objects;
@@ -25,6 +27,17 @@ public class SpawnProtectionEvent implements Listener {
     public SpawnProtectionEvent(SurvivalManager survivalManager) {
 
         pluginManager = survivalManager.getPluginManager();
+
+    }
+
+    @EventHandler
+    public void onPlayerBlockDestroyEvent(BlockBreakEvent event) {
+
+        if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
+
+        if (!event.getPlayer().hasPermission("bpsurvival.spawn.bypass")) return;
+
+        event.setCancelled(true);
 
     }
 
@@ -41,7 +54,7 @@ public class SpawnProtectionEvent implements Listener {
 
         }
 
-        if (!player.getGameMode().equals(GameMode.SURVIVAL)) return;
+        if (!player.hasPermission("bpsurvival.spawn.bypass")) return;
 
         event.setCancelled(true);
 
@@ -50,11 +63,11 @@ public class SpawnProtectionEvent implements Listener {
     @EventHandler
     public void onPlayerBlockDestroyEvent(HangingPlaceEvent event) {
 
-        if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getEntity().getWorld())) return;
+        if (event.getPlayer() == null) return;
 
-        Player player = event.getPlayer();
+        if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
 
-        if (!Objects.requireNonNull(player).getGameMode().equals(GameMode.SURVIVAL)) return;
+        if (!event.getPlayer().hasPermission("bpsurvival.spawn.bypass")) return;
 
         event.setCancelled(true);
 
@@ -63,11 +76,11 @@ public class SpawnProtectionEvent implements Listener {
     @EventHandler
     public void onPlayerDamageOthersEvent(EntityDamageByEntityEvent event) {
 
-        if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getEntity().getWorld())) return;
+        if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getDamager().getWorld())) return;
 
         if (event.getDamager() instanceof Player player) {
 
-            if (!player.getGameMode().equals(GameMode.SURVIVAL)) return;
+            if (!player.hasPermission("bpsurvival.spawn.bypass")) return;
 
             event.setCancelled(true);
 
@@ -100,6 +113,8 @@ public class SpawnProtectionEvent implements Listener {
 
         if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
 
+        if (!event.getPlayer().hasPermission("bpsurvival.spawn.bypass")) return;
+
         Block clickedBlock = event.getClickedBlock();
 
         if (clickedBlock == null) return;
@@ -115,6 +130,8 @@ public class SpawnProtectionEvent implements Listener {
 
         if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
 
+        if (!event.getPlayer().hasPermission("bpsurvival.spawn.bypass")) return;
+
         EntityType entityType = event.getRightClicked().getType();
 
         if (!pluginManager.getWhitelistedBlocks().contains(entityType.name())) return;
@@ -124,48 +141,62 @@ public class SpawnProtectionEvent implements Listener {
     }
 
     @EventHandler
-    public void onPlayerRespawn(PlayerRespawnEvent event) {
+    public void onPlayerRespawnEvent(PlayerRespawnEvent event) {
 
-        Player player = event.getPlayer();
-
-        if (player.getBedSpawnLocation() == null) event.setRespawnLocation(pluginManager.getSpawnLocation());
+        if (event.getPlayer().getBedSpawnLocation() == null) event.setRespawnLocation(pluginManager.getSpawnLocation());
 
     }
 
     @EventHandler
-    public void onPlayerBlockPlace(BlockPlaceEvent event) {
+    public void onPlayerBlockPlaceEvent(BlockPlaceEvent event) {
 
         if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
 
-        Player player = event.getPlayer();
-
-        if (!Objects.requireNonNull(player).getGameMode().equals(GameMode.SURVIVAL)) return;
+        if (!event.getPlayer().hasPermission("bpsurvival.spawn.bypass")) return;
 
         event.setCancelled(true);
 
     }
 
     @EventHandler
-    public void onPlayerWaterFill(PlayerBucketFillEvent event) {
+    public void onPlayerWaterFillEvent(PlayerBucketFillEvent event) {
 
         if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
 
-        Player player = event.getPlayer();
-
-        if (!Objects.requireNonNull(player).getGameMode().equals(GameMode.SURVIVAL)) return;
+        if (!event.getPlayer().hasPermission("bpsurvival.spawn.bypass")) return;
 
         event.setCancelled(true);
 
     }
 
     @EventHandler
-    public void onPlayerWaterEmpty(PlayerBucketEmptyEvent event) {
+    public void onPlayerWaterEmptyEvent(PlayerBucketEmptyEvent event) {
 
         if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
 
-        Player player = event.getPlayer();
+        if (!event.getPlayer().hasPermission("bpsurvival.spawn.bypass")) return;
 
-        if (!Objects.requireNonNull(player).getGameMode().equals(GameMode.SURVIVAL)) return;
+        event.setCancelled(true);
+
+    }
+
+    @EventHandler
+    public void onOraxenBlocksBreakEvent(OraxenFurnitureBreakEvent event) {
+
+        if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
+
+        if (!event.getPlayer().hasPermission("bpsurvival.spawn.bypass")) return;
+
+        event.setCancelled(true);
+
+    }
+
+    @EventHandler
+    public void onOraxenBlocksPlaceEvent(OraxenFurniturePlaceEvent event) {
+
+        if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
+
+        if (!event.getPlayer().hasPermission("bpsurvival.spawn.bypass")) return;
 
         event.setCancelled(true);
 

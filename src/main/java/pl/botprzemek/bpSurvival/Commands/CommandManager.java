@@ -13,8 +13,6 @@ public class CommandManager {
 
         Objects.requireNonNull(instance.getCommand("bpsurvival")).setExecutor(new ReloadCommand(survivalManager));
 
-        Objects.requireNonNull(instance.getCommand("settings")).setExecutor(new SettingsCommand(survivalManager));
-
         Objects.requireNonNull(instance.getCommand("spawn")).setExecutor(new SpawnCommand(survivalManager));
 
         Objects.requireNonNull(instance.getCommand("vanish")).setExecutor(new VanishCommand(survivalManager));
@@ -29,7 +27,7 @@ public class CommandManager {
 
         Objects.requireNonNull(instance.getCommand("sethome")).setExecutor(new SetHomeCommand(survivalManager));
 
-        Objects.requireNonNull(instance.getCommand("kit")).setExecutor(new KitsCommand(survivalManager));
+        Objects.requireNonNull(instance.getCommand("kit")).setExecutor(new KitCommand(survivalManager));
 
         Objects.requireNonNull(instance.getCommand("streaming")).setExecutor(new StreamingModeCommand(survivalManager));
 

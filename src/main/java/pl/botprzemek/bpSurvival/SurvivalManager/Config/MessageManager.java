@@ -1,12 +1,12 @@
-package pl.botprzemek.bpSurvival.SurvivalManager.Message;
+package pl.botprzemek.bpSurvival.SurvivalManager.Config;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import pl.botprzemek.bpSurvival.SurvivalManager.Config.Configs.MessageConfig;
-import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
 
 import java.util.Objects;
@@ -17,7 +17,7 @@ public class MessageManager {
 
     private final BukkitAudiences adventure;
 
-    private final StringSerializer stringSerializer;
+    private final MiniMessage mm;
 
     public MessageManager(SurvivalManager survivalManager) {
 
@@ -25,7 +25,13 @@ public class MessageManager {
 
         adventure = BukkitAudiences.create(survivalManager.getInstance());
 
-        stringSerializer = new StringSerializer();
+        mm = MiniMessage.miniMessage();
+
+    }
+
+    public Component serializeString(Player player,  String message) {
+
+        return mm.deserialize(PlaceholderAPI.setPlaceholders(player, message));
 
     }
 
@@ -33,7 +39,7 @@ public class MessageManager {
 
         String message = messageConfig.getCommandMessage(path);
 
-        Component serializedMessage = stringSerializer.serializeString(player, message
+        Component serializedMessage = serializeString(player, message
             .replace("%prefix%", messageConfig.getPrefix()));
 
         adventure.player(player).sendMessage(serializedMessage);
@@ -44,7 +50,7 @@ public class MessageManager {
 
         String message = messageConfig.getCommandMessage(path);
 
-        Component serializedMessage = stringSerializer.serializeString(player, message
+        Component serializedMessage = serializeString(player, message
             .replace("%prefix%", messageConfig.getPrefix())
             .replace("%value%", value));
 
@@ -56,7 +62,7 @@ public class MessageManager {
 
         String message = messageConfig.getEventMessage(path);
 
-        Component serializedMessage = stringSerializer.serializeString(player, message
+        Component serializedMessage = serializeString(player, message
             .replace("%prefix%", messageConfig.getPrefix())
             .replace("%value%", value));
 
@@ -102,7 +108,7 @@ public class MessageManager {
 
         String message = messageConfig.getEventMessage(path);
 
-        Component serializedMessage = stringSerializer.serializeString(player, message
+        Component serializedMessage = serializeString(player, message
             .replace("%prefix%", messageConfig.getPrefix())
             .replace("%value%", value));
 
@@ -114,7 +120,7 @@ public class MessageManager {
 
         String message = messageConfig.getMessage(path);
 
-        Component serializedMessage = stringSerializer.serializeString(player, message
+        Component serializedMessage = serializeString(player, message
             .replace("%prefix%", messageConfig.getPrefix()));
 
         return LegacyComponentSerializer.legacySection().serialize(serializedMessage);
@@ -125,7 +131,7 @@ public class MessageManager {
 
         String message = messageConfig.getMessage(path);
 
-        Component serializedMessage = stringSerializer.serializeString(player, message
+        Component serializedMessage = serializeString(player, message
             .replace("%prefix%", messageConfig.getPrefix())
             .replace("%value%", value));
 
@@ -137,7 +143,7 @@ public class MessageManager {
 
         String message = messageConfig.getMessage(path);
 
-        Component serializedMessage = stringSerializer.serializeString(player, message
+        Component serializedMessage = serializeString(player, message
             .replace("%player%", playerName)
             .replace("%value%", value));
 

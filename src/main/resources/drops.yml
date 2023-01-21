@@ -1,8 +1,0 @@
-blocks: ["stone", "andesite", "diorite", "granite", "sandstone", "deepslate"]
-
-items:
-  '0':
-    id: "example_sword" # Oraxen ID
-    chance: 15.0 # Chance in %
-    min: 1 # Min amount
-    max: 3 # Max amount

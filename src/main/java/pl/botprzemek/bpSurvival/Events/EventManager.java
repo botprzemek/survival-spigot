@@ -11,8 +11,6 @@ public class EventManager {
 
         instance.getServer().getPluginManager().registerEvents(new JoinQuitEvent(survivalManager), instance);
 
-        instance.getServer().getPluginManager().registerEvents(new BlockDestroyEvent(survivalManager), instance);
-
         instance.getServer().getPluginManager().registerEvents(new ChatEvent(survivalManager), instance);
 
         instance.getServer().getPluginManager().registerEvents(new MovementEvent(survivalManager), instance);
@@ -20,8 +18,6 @@ public class EventManager {
         instance.getServer().getPluginManager().registerEvents(new BedSleepEvent(survivalManager), instance);
 
         instance.getServer().getPluginManager().registerEvents(new SpawnProtectionEvent(survivalManager), instance);
-
-        instance.getServer().getPluginManager().registerEvents(new InteractionEvent(survivalManager), instance);
 
     }
 

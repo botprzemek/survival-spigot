@@ -1,11 +1,10 @@
-package pl.botprzemek.bpSurvival.SurvivalManager.Config.Configs;
+package pl.botprzemek.bpSurvival.SurvivalManager.Config;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import pl.botprzemek.bpSurvival.BpSurvival;
-import pl.botprzemek.bpSurvival.SurvivalManager.Config.Config;
-import pl.botprzemek.bpSurvival.SurvivalManager.Profile.Profile;
-import pl.botprzemek.bpSurvival.SurvivalManager.Profile.Settings;
+import pl.botprzemek.bpSurvival.SurvivalManager.Utils.Config;
+import pl.botprzemek.bpSurvival.SurvivalManager.Utils.Profile;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.*;
@@ -42,31 +41,7 @@ public class ProfileConfig extends Config {
 
         ConfigurationSection config = getConfigurationSection(playerUUID.toString());
 
-        if (config == null) return new Profile(0, 0, new Settings(false, true, 1), new HashMap<>(), new HashMap<>());
-
-        int level = config.getInt("level");
-
-        int exp = config.getInt("exp");
-
-        ConfigurationSection settingsConfig = config.getConfigurationSection("settings");
-
-        Settings settings;
-
-        if (settingsConfig != null) {
-
-            settings = new Settings(
-
-                    settingsConfig.getBoolean("drop-to-inv"),
-
-                    settingsConfig.getBoolean("drop-mined"),
-
-                    settingsConfig.getInt("multiplier")
-
-            );
-
-        }
-
-        else settings = new Settings(false, true, 1);
+        if (config == null) return new Profile(new HashMap<>(), new HashMap<>());
 
         ConfigurationSection homesConfig = config.getConfigurationSection("homes");
 
@@ -126,33 +101,13 @@ public class ProfileConfig extends Config {
 
         }
 
-        return new Profile(level, exp, settings, homes, cooldowns);
+        return new Profile(homes, cooldowns);
 
     }
 
     public void setProfile(UUID playerUUID, Profile profile) {
 
         String path = playerUUID.toString();
-
-        set(path + ".level",
-            profile.getLevel()
-        );
-
-        set(path + ".exp",
-            profile.getExp()
-        );
-
-        set(path + ".settings.drop-to-inv",
-            profile.getSettings().isToInventory()
-        );
-
-        set(path + ".settings.drop-mined",
-            profile.getSettings().isMinedBlock()
-        );
-
-        set(path + ".settings.multiplier",
-            profile.getSettings().getMultiplier()
-        );
 
         for (String homeName : profile.getHomes().keySet()) {
 

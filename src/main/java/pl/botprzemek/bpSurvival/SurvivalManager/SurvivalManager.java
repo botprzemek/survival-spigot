@@ -4,10 +4,9 @@ import pl.botprzemek.bpSurvival.BpSurvival;
 import pl.botprzemek.bpSurvival.Commands.CommandManager;
 import pl.botprzemek.bpSurvival.Events.EventManager;
 import pl.botprzemek.bpSurvival.SurvivalManager.Config.ConfigManager;
-import pl.botprzemek.bpSurvival.SurvivalManager.Configuration.PluginManager;
-import pl.botprzemek.bpSurvival.SurvivalManager.Drop.DropManager;
-import pl.botprzemek.bpSurvival.SurvivalManager.Message.MessageManager;
-import pl.botprzemek.bpSurvival.SurvivalManager.Profile.ProfileManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.PluginManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.MessageManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.ProfileManager;
 
 public class SurvivalManager {
 
@@ -21,8 +20,6 @@ public class SurvivalManager {
 
     private final ProfileManager profileManager;
 
-    private final DropManager dropManager;
-
     public SurvivalManager(BpSurvival instance) {
 
         this.instance = instance;
@@ -34,8 +31,6 @@ public class SurvivalManager {
         messageManager = new MessageManager(this);
 
         profileManager = new ProfileManager(configManager.getProfileConfig());
-
-        dropManager = new DropManager(configManager.getDropConfig());
 
         new EventManager(this);
 
@@ -78,12 +73,6 @@ public class SurvivalManager {
     public ProfileManager getProfileManager() {
 
         return profileManager;
-
-    }
-
-    public DropManager getDropManager() {
-
-        return dropManager;
 
     }
 
