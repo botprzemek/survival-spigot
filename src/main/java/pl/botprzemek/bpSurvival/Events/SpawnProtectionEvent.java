@@ -95,6 +95,14 @@ public class SpawnProtectionEvent implements Listener {
 
         if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getEntity().getWorld())) return;
 
+        if (event.getEntity() instanceof Player player) {
+
+            if (player.hasPermission("bpsurvival.protection")) return;
+
+            event.setCancelled(true);
+
+        }
+
         event.setCancelled(true);
 
     }
@@ -103,6 +111,14 @@ public class SpawnProtectionEvent implements Listener {
     public void onPlayerDamagedByBlockEvent(EntityDamageByBlockEvent event) {
 
         if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getEntity().getWorld())) return;
+
+        if (event.getEntity() instanceof Player player) {
+
+            if (player.hasPermission("bpsurvival.protection")) return;
+
+            event.setCancelled(true);
+
+        }
 
         event.setCancelled(true);
 
@@ -127,6 +143,8 @@ public class SpawnProtectionEvent implements Listener {
 
     @EventHandler
     public void onPlayerInteractEvent(PlayerInteractEntityEvent event) {
+
+        if (event.getRightClicked().hasMetadata("NPC")) return;
 
         if (!Objects.equals(pluginManager.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
 

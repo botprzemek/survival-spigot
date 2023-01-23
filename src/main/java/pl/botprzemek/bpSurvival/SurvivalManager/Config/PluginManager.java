@@ -141,7 +141,7 @@ public class PluginManager {
 
     public void setKits() {
 
-        kits.clear();
+        if (kits.size() != 0) kits.clear();
 
         ConfigurationSection kitsSection = pluginConfig.getConfigurationSection("kits");
 
@@ -336,6 +336,8 @@ public class PluginManager {
     }
 
     public void setWhitelistedBlocks() {
+
+        if (whitelistedBlocks.size() != 0) whitelistedBlocks.clear();
 
         for (String materialName : pluginConfig.getStringList("whitelist")) whitelistedBlocks.add(materialName.toUpperCase().replace(" ", "_"));
 

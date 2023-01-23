@@ -161,13 +161,7 @@ public class MessageManager {
 
         StringBuilder message = new StringBuilder();
 
-        for (int i = index; i < args.length; i++) {
-
-            String set = args[i] + " ";
-
-            message.append(set);
-
-        }
+        for (int i = index; i < args.length; i++) message.append(args[i]).append(" ");
 
         target.sendMessage(getMessageString(target, "commands.message.format.receiver", message.toString(), player.getDisplayName()));
 

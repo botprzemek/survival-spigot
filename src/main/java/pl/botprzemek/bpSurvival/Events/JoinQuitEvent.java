@@ -44,6 +44,8 @@ public class JoinQuitEvent implements Listener {
 
         event.setJoinMessage(messageManager.getMessageString(player, "events.connect.join", String.valueOf(Bukkit.getOnlinePlayers().size() - pluginManager.getHiddenPlayers().size())));
 
+        if (!player.hasPlayedBefore()) player.teleport(pluginManager.getSpawnLocation());
+
         if (profileManager.getProfile(player) == null) profileManager.createProfile(player);
 
         for (UUID playerUUID : pluginManager.getHiddenPlayers()) player.hidePlayer(instance, Objects.requireNonNull(Bukkit.getPlayer(playerUUID)));

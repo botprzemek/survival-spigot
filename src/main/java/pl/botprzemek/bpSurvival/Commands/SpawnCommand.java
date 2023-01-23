@@ -54,6 +54,8 @@ public class SpawnCommand implements CommandExecutor {
 
             messageManager.playPlayerSound(player, "activate");
 
+            return true;
+
         }
 
         pluginManager.setWaitingPlayer(player, 0);

@@ -69,6 +69,8 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
 
             messageManager.playPlayerSound(player, "activate");
 
+            return true;
+
         }
 
         if (pluginManager.getWaitingPlayers().containsKey(player.getUniqueId())) {

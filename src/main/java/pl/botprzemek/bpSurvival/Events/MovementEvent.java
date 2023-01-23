@@ -41,13 +41,15 @@ public class MovementEvent implements Listener {
 
                 messageManager.playPlayerSound(player, "error");
 
+                return;
+
             }
 
             if (player.getLocation().getY() > pluginManager.getLimit()) return;
 
             player.teleport(pluginManager.getSpawnLocation());
 
-            messageManager.sendCommandMessage(player, "spawn.success");
+            return;
 
         }
 

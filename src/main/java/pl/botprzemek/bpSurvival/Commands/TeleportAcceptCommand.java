@@ -69,7 +69,7 @@ public class TeleportAcceptCommand implements CommandExecutor {
 
             messageManager.playPlayerSound(requestPlayer, "activate");
 
-            return false;
+            return true;
 
         }
 

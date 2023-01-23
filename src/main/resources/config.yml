@@ -1,7 +1,7 @@
 # Spawn location for /spawn command
 
 spawn:
-  world: "world" # Spawn world
+  world: "spawn" # Spawn world
   x: 0.5 # X Coordinate of spawn
   y: 101 # Y Coordinate of spawn
   z: 0.5 # Z Coordinate of spawn

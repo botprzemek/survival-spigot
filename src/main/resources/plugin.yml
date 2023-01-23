@@ -66,16 +66,18 @@ permissions:
       bpsurvival.tprequest: true
       bpsurvival.tpaccept: true
       bpsurvival.tpdeny: true
-      bpsurvival.home: true
       bpsurvival.sethome: true
-      bpsurvival.homes.0: true
+      bpsurvival.home: true
+      bpsurvival.homes: true
       bpsurvival.kit: true
-      bpsurvival.kits.name: true
+      bpsurvival.kits: true
+      bpsurvival.streaming: true
       bpsurvival.chat: true
       bpsurvival.message: true
       bpsurvival.reply: true
       bpsurvival.bypass: true
       bpsurvival.protection: true
+      bpsurvival.sleep.skip: true
   bpsurvival.reload:
     default: op
     description: Reload command permission
@@ -94,24 +96,27 @@ permissions:
   bpsurvival.tpdeny:
     default: op
     description: Teleport deny command permission
-  bpsurvival.home:
-    default: op
-    description: Home command permission
   bpsurvival.sethome:
     default: op
     description: Set home command permission
-  bpsurvival.homes.0:
+  bpsurvival.home:
+    default: op
+    description: Home command permission
+  bpsurvival.homes:
     default: op
     description: Homes limit permission
   bpsurvival.kit:
     default: op
     description: Kit command permission
-  bpsurvival.kits.name:
+  bpsurvival.kits:
     default: op
     description: Kit permission for players
   bpsurvival.chat:
     default: op
-    description: Disables chat command permission
+    description: Disables chat permission
+  bpsurvival.streaming:
+    default: op
+    description: Disables chat for player command permission
   bpsurvival.message:
     default: op
     description: Message command permission
@@ -122,5 +127,8 @@ permissions:
     default: op
     description: Bypass for all of the events
   bpsurvival.protection:
+    default: op
+    description: Bypass for spawn protection
+  bpsurvival.sleep.skip:
     default: op
     description: Bypass for spawn protection

@@ -39,6 +39,16 @@ public class SetHomeCommand implements CommandExecutor, TabCompleter {
 
         if (!(sender instanceof Player player)) return false;
 
+        if (player.getWorld().equals(pluginManager.getSpawnLocation().getWorld())) {
+
+            messageManager.sendCommandMessage(player, "home.spawn");
+
+            messageManager.playPlayerSound(player, "error");
+
+            return false;
+
+        }
+
         if (pluginManager.getWaitingPlayers().containsKey(player.getUniqueId())) {
 
             messageManager.sendCommandMessage(player, "teleport.already");
@@ -67,23 +77,15 @@ public class SetHomeCommand implements CommandExecutor, TabCompleter {
 
         }
 
-        if (maxHomes == 0) {
+        if (maxHomes == 0) return setPlayerHome(player, profile, homeName);
 
-            return setPlayerHome(player, profile, homeName);
+        if (profile.getHomes().size() <= maxHomes) return setPlayerHome(player, profile, homeName);
 
-        }
+        messageManager.sendCommandMessage(player, "home.max");
 
-        if (profile.getHomes().size() >= maxHomes) {
+        messageManager.playPlayerSound(player, "error");
 
-            messageManager.sendCommandMessage(player, "home.max");
-
-            messageManager.playPlayerSound(player, "error");
-
-            return false;
-
-        }
-
-        return setPlayerHome(player, profile, homeName);
+        return false;
 
     }
 
@@ -100,6 +102,7 @@ public class SetHomeCommand implements CommandExecutor, TabCompleter {
     }
 
     private boolean setPlayerHome(Player player, Profile profile, String homeName) {
+
         if (profile.getHomes().containsKey(homeName)) {
 
             profile.setHome(homeName, player.getLocation());

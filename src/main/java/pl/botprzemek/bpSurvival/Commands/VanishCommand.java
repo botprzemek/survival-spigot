@@ -6,6 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.jetbrains.annotations.NotNull;
 import pl.botprzemek.bpSurvival.BpSurvival;
 import pl.botprzemek.bpSurvival.SurvivalManager.Config.PluginManager;
@@ -40,6 +41,8 @@ public class VanishCommand implements CommandExecutor {
 
         if (pluginManager.isHiddenPlayer(player)) {
 
+            player.setMetadata("vanished", new FixedMetadataValue(instance, false));
+
             pluginManager.clearHiddenPlayer(player);
 
             for (Player target : Bukkit.getOnlinePlayers()) target.showPlayer(instance, player);
@@ -63,6 +66,8 @@ public class VanishCommand implements CommandExecutor {
             if (!pluginManager.getHiddenPlayers().contains(target.getUniqueId())) target.hidePlayer(instance, player);
 
         }
+
+        player.setMetadata("vanished", new FixedMetadataValue(instance, true));
 
         pluginManager.setHiddenPlayer(player);
 

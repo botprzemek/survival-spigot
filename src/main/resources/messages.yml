@@ -1,6 +1,6 @@
 # Prefix for all of the messages (%prefix%)
 
-prefix: "<gradient:#FFE04A:#FFA400>★ <bold>ʙʜɪᴠᴇ.ᴘʟ</bold> ★</gradient> <reset>"
+prefix: "<gradient:#FFE04A:#FFA400>★ <bold>ʙʜɪᴠᴇ.ᴘʟ</bold> ★</gradient>"
 
 # Command messages
 
@@ -39,6 +39,7 @@ commands:
       clear: "%prefix% Prośby o przeniesienie zostały <gradient:#FFE04A:#FFA400><bold>anulowane!</bold></gradient>"
   home:
     max: "%prefix% Utworzyłeś/aś maksymalną ilość <gradient:#FFE04A:#FFA400><bold>domów!</bold></gradient>"
+    spawn: "%prefix% Nie możesz utworzyć domu na <gradient:#FFE04A:#FFA400><bold>spawnie!</bold></gradient>"
     set:
       custom: "%prefix% Pomyślnie ustawiłeś/aś swój <gradient:#FFE04A:#FFA400><bold>dom</bold></gradient> o nazwie <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
       rewrite: "%prefix% Pomyślnie nadpisałeś/aś swój <gradient:#FFE04A:#FFA400><bold>dom</bold></gradient> o nazwie <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
@@ -80,7 +81,7 @@ events:
     join: "%prefix% %player_name% dołączył/a <gradient:#FFE04A:#FFA400><bold>do gry! (%value% gracz/y)</bold></gradient>"
     quit: "%prefix% %player_name% nas <gradient:#FFE04A:#FFA400><bold>opuścił/a!</bold></gradient>"
   chat:
-    success: "<color:#FFE04A>★<reset>%luckperms_prefix%<gradient:#FFE04A:#FFA400><bold>%player_name%</bold> ★</gradient><reset> %value%"
+    success: "<color:#FFE04A>★<reset>%luckperms_prefix%%player_name% <color:#FFA400>★<reset> %value%"
     failed: "%prefix% Nie masz <gradient:#FFE04A:#FFA400><bold>uprawnień</bold></gradient> do wysyłania <gradient:#FFE04A:#FFA400><bold>wiadomości!</bold></gradient>"
   sleep:
     message: "%prefix% %player_name% położył/a się <gradient:#FFE04A:#FFA400><bold>spać! (%value%% gracz/y śpi)</bold></gradient>"
