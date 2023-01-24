@@ -9,11 +9,11 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.*;
 
-public class ProfileConfig extends Config {
+public class ConfigProfile extends Config {
 
     HashMap<UUID, Profile> profiles = new HashMap<>();
 
-    public ProfileConfig(BpSurvival instance, String file) {
+    public ConfigProfile(BpSurvival instance, String file) {
 
         super(instance, file);
 

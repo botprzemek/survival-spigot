@@ -1,4 +1,4 @@
-package pl.botprzemek.bpSurvival.SurvivalManager.Config;
+package pl.botprzemek.bpSurvival.SurvivalManager;
 
 import io.th0rgal.oraxen.api.OraxenItems;
 import org.bukkit.Bukkit;
@@ -8,13 +8,14 @@ import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.ConfigPlugin;
 import pl.botprzemek.bpSurvival.SurvivalManager.Utils.Kit;
 
 import java.util.*;
 
-public class PluginManager {
+public class ManagerPlugin {
 
-    private final PluginConfig pluginConfig;
+    private final ConfigPlugin configPlugin;
 
     private Location spawnLocation;
 
@@ -38,9 +39,11 @@ public class PluginManager {
 
     private final List<String> whitelistedBlocks;
 
-    public PluginManager(PluginConfig pluginConfig) {
+    private final List<String> blacklistedMobs;
 
-        this.pluginConfig = pluginConfig;
+    public ManagerPlugin(ConfigPlugin configPlugin) {
+
+        this.configPlugin = configPlugin;
 
         waitingPlayers = new HashMap<>();
 
@@ -58,6 +61,8 @@ public class PluginManager {
 
         whitelistedBlocks = new ArrayList<>();
 
+        blacklistedMobs = new ArrayList<>();
+
         loadConfigs();
 
     }
@@ -69,6 +74,8 @@ public class PluginManager {
         setKits();
 
         setWhitelistedBlocks();
+
+        setBlacklistedMobs();
 
         setTimer();
 
@@ -92,7 +99,7 @@ public class PluginManager {
 
     public void setSpawnLocation() {
 
-        ConfigurationSection spawnSection = pluginConfig.getConfigurationSection("spawn");
+        ConfigurationSection spawnSection = configPlugin.getConfigurationSection("spawn");
 
         if (spawnSection == null) return;
 
@@ -117,7 +124,7 @@ public class PluginManager {
 
     public void setTimer() {
 
-        timer = pluginConfig.getInt("commands.cooldown.timer");
+        timer = configPlugin.getInt("commands.cooldown.timer");
 
     }
 
@@ -129,7 +136,7 @@ public class PluginManager {
 
     public void setLimit() {
 
-        limit = pluginConfig.getInt("spawn.limit");
+        limit = configPlugin.getInt("spawn.limit");
 
     }
 
@@ -143,7 +150,7 @@ public class PluginManager {
 
         if (kits.size() != 0) kits.clear();
 
-        ConfigurationSection kitsSection = pluginConfig.getConfigurationSection("kits");
+        ConfigurationSection kitsSection = configPlugin.getConfigurationSection("kits");
 
         if (kitsSection == null) return;
 
@@ -339,13 +346,27 @@ public class PluginManager {
 
         if (whitelistedBlocks.size() != 0) whitelistedBlocks.clear();
 
-        for (String materialName : pluginConfig.getStringList("whitelist")) whitelistedBlocks.add(materialName.toUpperCase().replace(" ", "_"));
+        for (String materialName : configPlugin.getStringList("block-whitelist")) whitelistedBlocks.add(materialName.toUpperCase().replace(" ", "_"));
 
     }
 
     public List<String> getWhitelistedBlocks() {
 
         return whitelistedBlocks;
+
+    }
+
+    public void setBlacklistedMobs() {
+
+        if (blacklistedMobs.size() != 0) blacklistedMobs.clear();
+
+        for (String mobName : configPlugin.getStringList("mob-blacklist")) blacklistedMobs.add(mobName.toUpperCase().replace(" ", "_"));
+
+    }
+
+    public List<String> getBlacklistedMobs() {
+
+        return blacklistedMobs;
 
     }
 

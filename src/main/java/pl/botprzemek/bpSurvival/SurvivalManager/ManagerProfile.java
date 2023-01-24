@@ -1,20 +1,21 @@
-package pl.botprzemek.bpSurvival.SurvivalManager.Config;
+package pl.botprzemek.bpSurvival.SurvivalManager;
 
 import org.bukkit.entity.Player;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.ConfigProfile;
 import pl.botprzemek.bpSurvival.SurvivalManager.Utils.Profile;
 
 import java.util.HashMap;
 import java.util.UUID;
 
-public class ProfileManager {
+public class ManagerProfile {
 
-    private final ProfileConfig profileConfig;
+    private final ConfigProfile configProfile;
 
     private final HashMap<UUID, Profile> profiles;
 
-    public ProfileManager(ProfileConfig profileConfig) {
+    public ManagerProfile(ConfigProfile configProfile) {
 
-        this.profileConfig = profileConfig;
+        this.configProfile = configProfile;
 
         profiles = loadProfiles();
 
@@ -38,13 +39,13 @@ public class ProfileManager {
 
     public void saveProfiles() {
 
-        profileConfig.saveProfiles();
+        configProfile.saveProfiles();
 
     }
 
     public HashMap<UUID, Profile> loadProfiles() {
 
-        return profileConfig.loadProfiles();
+        return configProfile.loadProfiles();
 
     }
 

@@ -7,30 +7,30 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import pl.botprzemek.bpSurvival.SurvivalManager.Config.PluginManager;
-import pl.botprzemek.bpSurvival.SurvivalManager.Config.MessageManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.ManagerPlugin;
+import pl.botprzemek.bpSurvival.SurvivalManager.ManagerMessage;
 import pl.botprzemek.bpSurvival.SurvivalManager.Utils.Profile;
-import pl.botprzemek.bpSurvival.SurvivalManager.Config.ProfileManager;
-import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.ManagerProfile;
+import pl.botprzemek.bpSurvival.SurvivalManager.ManagerSurvival;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SetHomeCommand implements CommandExecutor, TabCompleter {
+public class CommandSetHome implements CommandExecutor, TabCompleter {
 
-    private final PluginManager pluginManager;
+    private final ManagerPlugin managerPlugin;
 
-    private final ProfileManager profileManager;
+    private final ManagerProfile managerProfile;
 
-    private final MessageManager messageManager;
+    private final ManagerMessage managerMessage;
 
-    public SetHomeCommand(SurvivalManager survivalManager) {
+    public CommandSetHome(ManagerSurvival managerSurvival) {
 
-        pluginManager = survivalManager.getPluginManager();
+        managerPlugin = managerSurvival.getPluginManager();
 
-        profileManager = survivalManager.getProfileManager();
+        managerProfile = managerSurvival.getProfileManager();
 
-        messageManager = survivalManager.getMessageManager();
+        managerMessage = managerSurvival.getMessageManager();
 
     }
 
@@ -39,27 +39,27 @@ public class SetHomeCommand implements CommandExecutor, TabCompleter {
 
         if (!(sender instanceof Player player)) return false;
 
-        if (player.getWorld().equals(pluginManager.getSpawnLocation().getWorld())) {
+        if (player.getWorld().equals(managerPlugin.getSpawnLocation().getWorld())) {
 
-            messageManager.sendCommandMessage(player, "home.spawn");
+            managerMessage.sendCommandMessage(player, "home.spawn");
 
-            messageManager.playPlayerSound(player, "error");
-
-            return false;
-
-        }
-
-        if (pluginManager.getWaitingPlayers().containsKey(player.getUniqueId())) {
-
-            messageManager.sendCommandMessage(player, "teleport.already");
-
-            messageManager.playPlayerSound(player, "error");
+            managerMessage.playPlayerSound(player, "error");
 
             return false;
 
         }
 
-        Profile profile = profileManager.getProfile(player);
+        if (managerPlugin.getWaitingPlayers().containsKey(player.getUniqueId())) {
+
+            managerMessage.sendCommandMessage(player, "teleport.already");
+
+            managerMessage.playPlayerSound(player, "error");
+
+            return false;
+
+        }
+
+        Profile profile = managerProfile.getProfile(player);
 
         String homeName = (args.length == 0) ? "dom" : args[0];
 
@@ -81,9 +81,9 @@ public class SetHomeCommand implements CommandExecutor, TabCompleter {
 
         if (profile.getHomes().size() <= maxHomes) return setPlayerHome(player, profile, homeName);
 
-        messageManager.sendCommandMessage(player, "home.max");
+        managerMessage.sendCommandMessage(player, "home.max");
 
-        messageManager.playPlayerSound(player, "error");
+        managerMessage.playPlayerSound(player, "error");
 
         return false;
 
@@ -107,9 +107,9 @@ public class SetHomeCommand implements CommandExecutor, TabCompleter {
 
             profile.setHome(homeName, player.getLocation());
 
-            messageManager.sendCommandMessage(player, "home.set.rewrite", homeName);
+            managerMessage.sendCommandMessage(player, "home.set.rewrite", homeName);
 
-            messageManager.playPlayerSound(player, "activate");
+            managerMessage.playPlayerSound(player, "activate");
 
             return true;
 
@@ -117,9 +117,9 @@ public class SetHomeCommand implements CommandExecutor, TabCompleter {
 
         profile.setHome(homeName, player.getLocation());
 
-        messageManager.sendCommandMessage(player, "home.set.custom", homeName);
+        managerMessage.sendCommandMessage(player, "home.set.custom", homeName);
 
-        messageManager.playPlayerSound(player, "activate");
+        managerMessage.playPlayerSound(player, "activate");
 
         return true;
     }

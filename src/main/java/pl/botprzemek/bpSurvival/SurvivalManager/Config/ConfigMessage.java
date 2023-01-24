@@ -5,9 +5,9 @@ import org.bukkit.configuration.ConfigurationSection;
 import pl.botprzemek.bpSurvival.BpSurvival;
 import pl.botprzemek.bpSurvival.SurvivalManager.Utils.Config;
 
-public class MessageConfig extends Config {
+public class ConfigMessage extends Config {
 
-    public MessageConfig(BpSurvival instance, String file) {
+    public ConfigMessage(BpSurvival instance, String file) {
 
         super(instance, file);
 

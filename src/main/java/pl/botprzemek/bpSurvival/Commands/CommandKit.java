@@ -9,11 +9,11 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import pl.botprzemek.bpSurvival.SurvivalManager.Utils.Kit;
-import pl.botprzemek.bpSurvival.SurvivalManager.Config.PluginManager;
-import pl.botprzemek.bpSurvival.SurvivalManager.Config.MessageManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.ManagerPlugin;
+import pl.botprzemek.bpSurvival.SurvivalManager.ManagerMessage;
 import pl.botprzemek.bpSurvival.SurvivalManager.Utils.Profile;
-import pl.botprzemek.bpSurvival.SurvivalManager.Config.ProfileManager;
-import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.ManagerProfile;
+import pl.botprzemek.bpSurvival.SurvivalManager.ManagerSurvival;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -22,21 +22,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class KitCommand implements CommandExecutor, TabCompleter {
+public class CommandKit implements CommandExecutor, TabCompleter {
 
-    private final PluginManager pluginManager;
+    private final ManagerPlugin managerPlugin;
 
-    private final ProfileManager profileManager;
+    private final ManagerProfile managerProfile;
 
-    private final MessageManager messageManager;
+    private final ManagerMessage managerMessage;
 
-    public KitCommand(SurvivalManager survivalManager) {
+    public CommandKit(ManagerSurvival managerSurvival) {
 
-        pluginManager = survivalManager.getPluginManager();
+        managerPlugin = managerSurvival.getPluginManager();
 
-        profileManager = survivalManager.getProfileManager();
+        managerProfile = managerSurvival.getProfileManager();
 
-        messageManager = survivalManager.getMessageManager();
+        managerMessage = managerSurvival.getMessageManager();
 
     }
 
@@ -47,25 +47,25 @@ public class KitCommand implements CommandExecutor, TabCompleter {
 
         if (args.length == 0) {
 
-            messageManager.sendCommandMessage(player, "kits.invalid");
+            managerMessage.sendCommandMessage(player, "kits.invalid");
 
-            messageManager.playPlayerSound(player, "error");
+            managerMessage.playPlayerSound(player, "error");
 
             return false;
 
         }
 
-        Profile profile = profileManager.getProfile(player);
+        Profile profile = managerProfile.getProfile(player);
 
-        Kit kit = pluginManager.getKit(args[0].toLowerCase());
+        Kit kit = managerPlugin.getKit(args[0].toLowerCase());
 
         String kitName = args[0].substring(0, 1).toUpperCase() + args[0].substring(1).toLowerCase();
 
         if (kit == null) {
 
-            messageManager.sendCommandMessage(player, "kits.empty");
+            managerMessage.sendCommandMessage(player, "kits.empty");
 
-            messageManager.playPlayerSound(player, "error");
+            managerMessage.playPlayerSound(player, "error");
 
             return false;
 
@@ -73,9 +73,9 @@ public class KitCommand implements CommandExecutor, TabCompleter {
 
         if (!player.hasPermission("bpsurvival.kits." + args[0].toLowerCase())) {
 
-            messageManager.sendCommandMessage(player, "kits.deny", kitName);
+            managerMessage.sendCommandMessage(player, "kits.deny", kitName);
 
-            messageManager.playPlayerSound(player, "error");
+            managerMessage.playPlayerSound(player, "error");
 
             return false;
 
@@ -91,9 +91,9 @@ public class KitCommand implements CommandExecutor, TabCompleter {
 
                 String newDate = new SimpleDateFormat("EEEE, dd MMMM, k:mm", new Locale("pl")).format(new Date((oldTime + kit.getCooldown()) * 1000));
 
-                messageManager.sendCommandMessage(player, "kits.cooldown", newDate);
+                managerMessage.sendCommandMessage(player, "kits.cooldown", newDate);
 
-                messageManager.playPlayerSound(player, "error");
+                managerMessage.playPlayerSound(player, "error");
 
                 return false;
 
@@ -101,11 +101,11 @@ public class KitCommand implements CommandExecutor, TabCompleter {
 
         }
 
-        if (!pluginManager.inventoryHaveSpace(player, kit.getItems().size())) {
+        if (!managerPlugin.inventoryHaveSpace(player, kit.getItems().size())) {
 
-            messageManager.sendCommandMessage(player, "kits.full", kitName);
+            managerMessage.sendCommandMessage(player, "kits.full", kitName);
 
-            messageManager.playPlayerSound(player, "error");
+            managerMessage.playPlayerSound(player, "error");
 
             return false;
 
@@ -113,11 +113,11 @@ public class KitCommand implements CommandExecutor, TabCompleter {
 
         for (ItemStack item : kit.getItems()) player.getInventory().addItem(item);
 
-        messageManager.sendTitle(player, "commands.kits.success.title", kitName, kitName);
+        managerMessage.sendTitle(player, "commands.kits.success.title", kitName, kitName);
 
-        messageManager.sendCommandMessage(player, "kits.success.message", kitName);
+        managerMessage.sendCommandMessage(player, "kits.success.message", kitName);
 
-        messageManager.playPlayerSound(player, "success");
+        managerMessage.playPlayerSound(player, "success");
 
         profile.setCooldown("kits." + args[0].toLowerCase(), newTime);
 
@@ -131,9 +131,9 @@ public class KitCommand implements CommandExecutor, TabCompleter {
 
         if (!(sender instanceof Player player)) return null;
 
-        Profile profile = profileManager.getProfile(player);
+        Profile profile = managerProfile.getProfile(player);
 
-        List<Kit> kits = pluginManager.getKits();
+        List<Kit> kits = managerPlugin.getKits();
 
         List<String> kitNames = new ArrayList<>();
 

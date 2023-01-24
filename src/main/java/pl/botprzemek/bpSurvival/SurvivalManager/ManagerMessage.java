@@ -1,4 +1,4 @@
-package pl.botprzemek.bpSurvival.SurvivalManager.Config;
+package pl.botprzemek.bpSurvival.SurvivalManager;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
@@ -7,23 +7,23 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.Config.ConfigMessage;
 
 import java.util.Objects;
 
-public class MessageManager {
+public class ManagerMessage {
 
-    private final MessageConfig messageConfig;
+    private final ConfigMessage configMessage;
 
     private final BukkitAudiences adventure;
 
     private final MiniMessage mm;
 
-    public MessageManager(SurvivalManager survivalManager) {
+    public ManagerMessage(ManagerSurvival managerSurvival) {
 
-        this.messageConfig = survivalManager.getConfigManager().getMessageConfig();
+        this.configMessage = managerSurvival.getConfigManager().getMessageConfig();
 
-        adventure = BukkitAudiences.create(survivalManager.getInstance());
+        adventure = BukkitAudiences.create(managerSurvival.getInstance());
 
         mm = MiniMessage.miniMessage();
 
@@ -37,10 +37,10 @@ public class MessageManager {
 
     public void sendCommandMessage(Player player, String path) {
 
-        String message = messageConfig.getCommandMessage(path);
+        String message = configMessage.getCommandMessage(path);
 
         Component serializedMessage = serializeString(player, message
-            .replace("%prefix%", messageConfig.getPrefix()));
+            .replace("%prefix%", configMessage.getPrefix()));
 
         adventure.player(player).sendMessage(serializedMessage);
 
@@ -48,10 +48,10 @@ public class MessageManager {
 
     public void sendCommandMessage(Player player, String path, String value) {
 
-        String message = messageConfig.getCommandMessage(path);
+        String message = configMessage.getCommandMessage(path);
 
         Component serializedMessage = serializeString(player, message
-            .replace("%prefix%", messageConfig.getPrefix())
+            .replace("%prefix%", configMessage.getPrefix())
             .replace("%value%", value));
 
         adventure.player(player).sendMessage(serializedMessage);
@@ -60,10 +60,10 @@ public class MessageManager {
 
     public void sendEventMessage(Player player, String path, String value) {
 
-        String message = messageConfig.getEventMessage(path);
+        String message = configMessage.getEventMessage(path);
 
         Component serializedMessage = serializeString(player, message
-            .replace("%prefix%", messageConfig.getPrefix())
+            .replace("%prefix%", configMessage.getPrefix())
             .replace("%value%", value));
 
         adventure.player(player).sendMessage(serializedMessage);
@@ -72,7 +72,7 @@ public class MessageManager {
 
     public void sendTitle(Player player, String path) {
 
-        ConfigurationSection section = messageConfig.getConfigurationSection(path);
+        ConfigurationSection section = configMessage.getConfigurationSection(path);
 
         if (section == null) return;
 
@@ -88,7 +88,7 @@ public class MessageManager {
 
     public void sendTitle(Player player, String path, String value1, String value2) {
 
-        ConfigurationSection section = messageConfig.getConfigurationSection(path);
+        ConfigurationSection section = configMessage.getConfigurationSection(path);
 
         if (section == null) return;
 
@@ -106,10 +106,10 @@ public class MessageManager {
 
     public void sendAnnouncement(Player player, String path, String value) {
 
-        String message = messageConfig.getEventMessage(path);
+        String message = configMessage.getEventMessage(path);
 
         Component serializedMessage = serializeString(player, message
-            .replace("%prefix%", messageConfig.getPrefix())
+            .replace("%prefix%", configMessage.getPrefix())
             .replace("%value%", value));
 
         adventure.all().sendMessage(serializedMessage);
@@ -118,10 +118,10 @@ public class MessageManager {
 
     public String getMessageString(Player player, String path) {
 
-        String message = messageConfig.getMessage(path);
+        String message = configMessage.getMessage(path);
 
         Component serializedMessage = serializeString(player, message
-            .replace("%prefix%", messageConfig.getPrefix()));
+            .replace("%prefix%", configMessage.getPrefix()));
 
         return LegacyComponentSerializer.legacySection().serialize(serializedMessage);
 
@@ -129,10 +129,10 @@ public class MessageManager {
 
     public String getMessageString(Player player, String path, String value) {
 
-        String message = messageConfig.getMessage(path);
+        String message = configMessage.getMessage(path);
 
         Component serializedMessage = serializeString(player, message
-            .replace("%prefix%", messageConfig.getPrefix())
+            .replace("%prefix%", configMessage.getPrefix())
             .replace("%value%", value));
 
         return LegacyComponentSerializer.legacySection().serialize(serializedMessage);
@@ -141,7 +141,7 @@ public class MessageManager {
 
     public String getMessageString(Player player, String path, String value, String playerName) {
 
-        String message = messageConfig.getMessage(path);
+        String message = configMessage.getMessage(path);
 
         Component serializedMessage = serializeString(player, message
             .replace("%player%", playerName)
@@ -153,11 +153,11 @@ public class MessageManager {
 
     public void playPlayerSound(Player player, String path) {
 
-        player.playSound(player, messageConfig.getSound(path), 1F, 1F);
+        player.playSound(player, configMessage.getSound(path), 1F, 1F);
 
     }
 
-    public void sendMessageToReceiver(PluginManager pluginManager, Player player, Player target, String[] args, int index) {
+    public void sendMessageToReceiver(ManagerPlugin managerPlugin, Player player, Player target, String[] args, int index) {
 
         StringBuilder message = new StringBuilder();
 
@@ -167,9 +167,9 @@ public class MessageManager {
 
         player.sendMessage(getMessageString(player, "commands.message.format.sender", message.toString(), target.getDisplayName()));
 
-        pluginManager.setReplyPlayer(target, player);
+        managerPlugin.setReplyPlayer(target, player);
 
-        pluginManager.setReplyPlayer(player, target);
+        managerPlugin.setReplyPlayer(player, target);
 
     }
 

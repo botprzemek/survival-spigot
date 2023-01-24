@@ -1,23 +1,23 @@
 package pl.botprzemek.bpSurvival;
 
-import pl.botprzemek.bpSurvival.SurvivalManager.SurvivalManager;
+import pl.botprzemek.bpSurvival.SurvivalManager.ManagerSurvival;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class    BpSurvival extends JavaPlugin {
 
-    private SurvivalManager survivalManager;
+    private ManagerSurvival managerSurvival;
 
     @Override
     public void onEnable() {
 
-        survivalManager = new SurvivalManager(this);
+        managerSurvival = new ManagerSurvival(this);
 
     }
 
     @Override
     public void onDisable() {
 
-        if (survivalManager != null) survivalManager.cleanUp();
+        if (managerSurvival != null) managerSurvival.cleanUp();
 
     }
 
