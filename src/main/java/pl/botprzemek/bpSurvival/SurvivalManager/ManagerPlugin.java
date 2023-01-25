@@ -1,6 +1,7 @@
 package pl.botprzemek.bpSurvival.SurvivalManager;
 
 import io.th0rgal.oraxen.api.OraxenItems;
+import io.th0rgal.oraxen.items.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -37,9 +38,13 @@ public class ManagerPlugin {
 
     private final List<UUID> streamingPlayers;
 
-    private final List<String> whitelistedBlocks;
+    private final List<String> blacklistedBlocks;
 
     private final List<String> blacklistedMobs;
+
+    private boolean isBlacklistedBlocksEnabled;
+
+    private boolean isBlacklistedMobsEnabled;
 
     public ManagerPlugin(ConfigPlugin configPlugin) {
 
@@ -59,9 +64,13 @@ public class ManagerPlugin {
 
         streamingPlayers = new ArrayList<>();
 
-        whitelistedBlocks = new ArrayList<>();
+        blacklistedBlocks = new ArrayList<>();
 
         blacklistedMobs = new ArrayList<>();
+
+        isBlacklistedBlocksEnabled = true;
+
+        isBlacklistedMobsEnabled = false;
 
         loadConfigs();
 
@@ -73,9 +82,13 @@ public class ManagerPlugin {
 
         setKits();
 
-        setWhitelistedBlocks();
+        setBlacklistedBlocksEnabled();
 
-        setBlacklistedMobs();
+        setBlacklistedMobsEnabled();
+
+        if (isBlacklistedBlocksEnabled) setBlacklistedBlocks();
+
+        if (isBlacklistedMobsEnabled) setBlacklistedMobs();
 
         setTimer();
 
@@ -162,6 +175,8 @@ public class ManagerPlugin {
 
             int kitCooldown = kitSection.getInt("cooldown");
 
+            if (kitCooldown == 0) kitCooldown = 86400;
+
             List<ItemStack> kitItems = new ArrayList<>();
 
             ConfigurationSection itemsSection = kitSection.getConfigurationSection("items");
@@ -174,7 +189,11 @@ public class ManagerPlugin {
 
                 if (itemSection == null) return;
 
-                ItemStack item = OraxenItems.getItemById(itemSection.getString("id")).build();
+                ItemBuilder itemBuilder = OraxenItems.getItemById(itemSection.getString("id"));
+
+                if (itemBuilder == null) return;
+
+                ItemStack item = itemBuilder.build();
 
                 item.setAmount(itemSection.getInt("amount"));
 
@@ -342,17 +361,41 @@ public class ManagerPlugin {
 
     }
 
-    public void setWhitelistedBlocks() {
+    public void setBlacklistedBlocksEnabled() {
 
-        if (whitelistedBlocks.size() != 0) whitelistedBlocks.clear();
-
-        for (String materialName : configPlugin.getStringList("block-whitelist")) whitelistedBlocks.add(materialName.toUpperCase().replace(" ", "_"));
+        isBlacklistedBlocksEnabled = configPlugin.getBoolean("block-blacklist.enabled");
 
     }
 
-    public List<String> getWhitelistedBlocks() {
+    public boolean isBlacklistedBlocksEnabled() {
 
-        return whitelistedBlocks;
+        return isBlacklistedBlocksEnabled;
+
+    }
+
+    public void setBlacklistedBlocks() {
+
+        if (blacklistedBlocks.size() != 0) blacklistedBlocks.clear();
+
+        for (String materialName : configPlugin.getStringList("block-blacklist.list")) blacklistedBlocks.add(materialName.toUpperCase().replace(" ", "_"));
+
+    }
+
+    public List<String> getBlacklistedBlocks() {
+
+        return blacklistedBlocks;
+
+    }
+
+    public void setBlacklistedMobsEnabled() {
+
+        isBlacklistedMobsEnabled = configPlugin.getBoolean("mob-blacklist.enabled");
+
+    }
+
+    public boolean isBlacklistedMobsEnabled() {
+
+        return isBlacklistedMobsEnabled;
 
     }
 
@@ -360,7 +403,7 @@ public class ManagerPlugin {
 
         if (blacklistedMobs.size() != 0) blacklistedMobs.clear();
 
-        for (String mobName : configPlugin.getStringList("mob-blacklist")) blacklistedMobs.add(mobName.toUpperCase().replace(" ", "_"));
+        for (String mobName : configPlugin.getStringList("mob-blacklist.list")) blacklistedMobs.add(mobName.toUpperCase().replace(" ", "_"));
 
     }
 

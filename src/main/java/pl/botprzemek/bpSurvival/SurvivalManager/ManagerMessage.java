@@ -58,6 +58,17 @@ public class ManagerMessage {
 
     }
 
+    public void sendEventMessage(Player player, String path) {
+
+        String message = configMessage.getEventMessage(path);
+
+        Component serializedMessage = serializeString(player, message
+                .replace("%prefix%", configMessage.getPrefix()));
+
+        adventure.player(player).sendMessage(serializedMessage);
+
+    }
+
     public void sendEventMessage(Player player, String path, String value) {
 
         String message = configMessage.getEventMessage(path);

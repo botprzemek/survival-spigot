@@ -3,7 +3,7 @@ package pl.botprzemek.bpSurvival;
 import pl.botprzemek.bpSurvival.SurvivalManager.ManagerSurvival;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class    BpSurvival extends JavaPlugin {
+public class BpSurvival extends JavaPlugin {
 
     private ManagerSurvival managerSurvival;
 

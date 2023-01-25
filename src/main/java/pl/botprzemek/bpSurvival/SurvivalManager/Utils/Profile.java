@@ -24,6 +24,12 @@ public class Profile {
 
     }
 
+    public void removeHome(String homeName) {
+
+        homes.remove(homeName);
+
+    }
+
     public HashMap<String, Location> getHomes() {
 
         return homes;

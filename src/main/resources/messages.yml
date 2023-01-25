@@ -19,6 +19,11 @@ commands:
     show: "%prefix% Jesteś teraz <gradient:#FFE04A:#FFA400><bold>widoczny/a</bold></gradient> dla graczy!"
     hide: "%prefix% Jesteś teraz <gradient:#FFE04A:#FFA400><bold>niewidoczny/a</bold></gradient> dla graczy!"
   tp:
+    player:
+      success: "%prefix% Zostałeś/aś przeniesiony/a do <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
+      invalid: "%prefix% Użycie: <insert:/tp>/tp</insert> <gradient:#FFE04A:#FFA400><bold>(gracz)</bold></gradient>"
+      offline: "%prefix% Gracz, do którego próbujesz się przenieść, jest <gradient:#FFE04A:#FFA400><bold>offline!</bold></gradient>"
+      same: "%prefix% Nie możesz <gradient:#FFE04A:#FFA400><bold>przenieść</bold></gradient> się do <gradient:#FFE04A:#FFA400><bold>samego/ej siebie!</bold></gradient>"
     request:
       success: "%prefix% Prośba o przeniesienie do <gradient:#FFE04A:#FFA400><bold>%value%</bold></gradient> została <gradient:#FFE04A:#FFA400><bold>wysłana!</bold></gradient>"
       request: "%prefix% Otrzymałeś/aś prośbę przeniesienie od <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient> Użyj komendy <gradient:#FFE04A:#FFA400><bold><click:run_command:/tpaccept>/tpaccept,</click></bold></gradient> aby zaakceptować!"
@@ -48,6 +53,10 @@ commands:
       time: "%prefix% Poczekaj jeszcze <gradient:#FFE04A:#FFA400><bold>%value%/5s!</bold></gradient>"
       success: "%prefix% Przeniesiono na <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
       empty: "%prefix% Nie masz domu o nazwie <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient> Użyj komendy <gradient:#FFE04A:#FFA400><bold><insert:/ustawdom>/ustawdom (nazwa),</insert></bold></gradient> aby go dodać!"
+    remove:
+      success: "%prefix% Pomyślnie usunąłęś/aś swój <gradient:#FFE04A:#FFA400><bold>dom!</bold></gradient>"
+      this: "%prefix% Nie możesz <gradient:#FFE04A:#FFA400><bold>usunąć</bold></gradient> domu, kiedy się <gradient:#FFE04A:#FFA400><bold>przenosisz!</bold></gradient>"
+      error: "%prefix% Podany dom, nie został przez ciebie <gradient:#FFE04A:#FFA400><bold>ustawiony!</bold></gradient>"
   kits:
     success:
       title:
@@ -91,6 +100,9 @@ events:
       fadein: 1
       stay: 3
       fadeout: 1
+  gamemode:
+    change:
+      hidden: "%prefix% Nie możesz zmienić <gradient:#FFE04A:#FFA400><bold>trybu gry,</bold></gradient> gdy jesteś <gradient:#FFE04A:#FFA400><bold>niewidzialny/a!</bold></gradient>"
 
 # Sounds
 

@@ -1,7 +1,7 @@
 package pl.botprzemek.bpSurvival.SurvivalManager;
 
 import pl.botprzemek.bpSurvival.BpSurvival;
-import pl.botprzemek.bpSurvival.Events.*;
+import pl.botprzemek.bpSurvival.listeners.*;
 
 public class ManagerEvent {
 
@@ -18,6 +18,10 @@ public class ManagerEvent {
         instance.getServer().getPluginManager().registerEvents(new EventBedSleep(managerSurvival), instance);
 
         instance.getServer().getPluginManager().registerEvents(new EventSpawnProtection(managerSurvival), instance);
+
+        instance.getServer().getPluginManager().registerEvents(new EventEntitySpawn(managerSurvival), instance);
+
+        instance.getServer().getPluginManager().registerEvents(new EventChangeGamemode(managerSurvival), instance);
 
     }
 

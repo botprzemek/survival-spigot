@@ -1,4 +1,4 @@
-package pl.botprzemek.bpSurvival.Commands;
+package pl.botprzemek.bpSurvival.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -45,6 +45,8 @@ public class CommandVanish implements CommandExecutor {
 
             managerPlugin.clearHiddenPlayer(player);
 
+            player.setGameMode(GameMode.CREATIVE);
+
             for (Player target : Bukkit.getOnlinePlayers()) target.showPlayer(instance, player);
 
             for (UUID playerUUID : managerPlugin.getHiddenPlayers()) Objects.requireNonNull(Bukkit.getPlayer(playerUUID)).showPlayer(instance, player);
@@ -54,8 +56,6 @@ public class CommandVanish implements CommandExecutor {
             managerMessage.sendCommandMessage(player, "vanish.show");
 
             managerMessage.playPlayerSound(player, "activate");
-
-            player.setGameMode(GameMode.CREATIVE);
 
             return true;
 
@@ -69,6 +69,8 @@ public class CommandVanish implements CommandExecutor {
 
         player.setMetadata("vanished", new FixedMetadataValue(instance, true));
 
+        player.setGameMode(GameMode.SPECTATOR);
+
         managerPlugin.setHiddenPlayer(player);
 
         managerMessage.sendAnnouncement(player, "connect.quit", String.valueOf(Bukkit.getOnlinePlayers().size() - managerPlugin.getHiddenPlayers().size()));
@@ -76,8 +78,6 @@ public class CommandVanish implements CommandExecutor {
         managerMessage.sendCommandMessage(player, "vanish.hide");
 
         managerMessage.playPlayerSound(player, "activate");
-
-        player.setGameMode(GameMode.SPECTATOR);
 
         return true;
 

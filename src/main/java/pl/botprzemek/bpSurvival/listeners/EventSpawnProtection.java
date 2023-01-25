@@ -1,4 +1,4 @@
-package pl.botprzemek.bpSurvival.Events;
+package pl.botprzemek.bpSurvival.listeners;
 
 import io.th0rgal.oraxen.api.events.OraxenFurnitureBreakEvent;
 import io.th0rgal.oraxen.api.events.OraxenFurniturePlaceEvent;
@@ -129,7 +129,7 @@ public class EventSpawnProtection implements Listener {
 
         if (clickedBlock == null) return;
 
-        if (!managerPlugin.getWhitelistedBlocks().contains(clickedBlock.getType().name())) return;
+        if (!managerPlugin.getBlacklistedBlocks().contains(clickedBlock.getType().name())) return;
 
         event.setCancelled(true);
 
@@ -146,7 +146,9 @@ public class EventSpawnProtection implements Listener {
 
         EntityType entityType = event.getRightClicked().getType();
 
-        if (!managerPlugin.getWhitelistedBlocks().contains(entityType.name())) return;
+        if (!managerPlugin.isBlacklistedBlocksEnabled()) return;
+
+        if (!managerPlugin.getBlacklistedBlocks().contains(entityType.name())) return;
 
         event.setCancelled(true);
 

@@ -1,7 +1,7 @@
 package pl.botprzemek.bpSurvival.SurvivalManager;
 
 import pl.botprzemek.bpSurvival.BpSurvival;
-import pl.botprzemek.bpSurvival.Commands.*;
+import pl.botprzemek.bpSurvival.commands.*;
 
 import java.util.Objects;
 
@@ -17,6 +17,8 @@ public class ManagerCommand {
 
         Objects.requireNonNull(instance.getCommand("vanish")).setExecutor(new CommandVanish(managerSurvival));
 
+        Objects.requireNonNull(instance.getCommand("tp")).setExecutor(new CommandTeleport(managerSurvival));
+
         Objects.requireNonNull(instance.getCommand("tprequest")).setExecutor(new CommandTeleportRequest(managerSurvival));
 
         Objects.requireNonNull(instance.getCommand("tpaccept")).setExecutor(new CommandTeleportAccept(managerSurvival));
@@ -27,6 +29,8 @@ public class ManagerCommand {
 
         Objects.requireNonNull(instance.getCommand("sethome")).setExecutor(new CommandSetHome(managerSurvival));
 
+        Objects.requireNonNull(instance.getCommand("delhome")).setExecutor(new CommandRemoveHome(managerSurvival));
+
         Objects.requireNonNull(instance.getCommand("kit")).setExecutor(new CommandKit(managerSurvival));
 
         Objects.requireNonNull(instance.getCommand("streaming")).setExecutor(new CommandStreamingMode(managerSurvival));
@@ -34,6 +38,8 @@ public class ManagerCommand {
         Objects.requireNonNull(instance.getCommand("message")).setExecutor(new CommandMessage(managerSurvival));
 
         Objects.requireNonNull(instance.getCommand("reply")).setExecutor(new CommandReply(managerSurvival));
+
+        Objects.requireNonNull(instance.getCommand("summonsupply")).setExecutor(new CommandSummonSupplyDrop(managerSurvival));
 
     }
 

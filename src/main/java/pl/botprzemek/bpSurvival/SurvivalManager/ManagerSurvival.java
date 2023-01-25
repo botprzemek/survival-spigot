@@ -26,14 +26,6 @@ public class ManagerSurvival {
 
         managerProfile = new ManagerProfile(managerConfig.getProfileConfig());
 
-        // todo mobs manager
-
-        // todo remove homes
-
-        // todo armorstand item change
-
-        // todo entity interact
-
         new ManagerEvent(this);
 
         new ManagerCommand(this);

@@ -1,4 +1,4 @@
-package pl.botprzemek.bpSurvival.Commands;
+package pl.botprzemek.bpSurvival.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -68,6 +68,20 @@ public class CommandKit implements CommandExecutor, TabCompleter {
             managerMessage.playPlayerSound(player, "error");
 
             return false;
+
+        }
+
+        if (player.hasPermission("bpsurvival.kits-bypass")) {
+
+            for (ItemStack item : kit.getItems()) player.getInventory().addItem(item);
+
+            managerMessage.sendTitle(player, "commands.kits.success.title", kitName, kitName);
+
+            managerMessage.sendCommandMessage(player, "kits.success.message", kitName);
+
+            managerMessage.playPlayerSound(player, "success");
+
+            return true;
 
         }
 

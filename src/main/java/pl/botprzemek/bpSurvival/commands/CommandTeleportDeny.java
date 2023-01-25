@@ -1,4 +1,4 @@
-package pl.botprzemek.bpSurvival.Commands;
+package pl.botprzemek.bpSurvival.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

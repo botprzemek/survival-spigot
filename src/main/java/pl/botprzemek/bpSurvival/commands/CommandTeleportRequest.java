@@ -1,36 +1,53 @@
-package pl.botprzemek.bpSurvival.Commands;
+package pl.botprzemek.bpSurvival.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
+import pl.botprzemek.bpSurvival.BpSurvival;
 import pl.botprzemek.bpSurvival.SurvivalManager.ManagerPlugin;
 import pl.botprzemek.bpSurvival.SurvivalManager.ManagerMessage;
 import pl.botprzemek.bpSurvival.SurvivalManager.ManagerSurvival;
 
-public class CommandMessage implements CommandExecutor {
+public class CommandTeleportRequest implements CommandExecutor {
+
+    private final BpSurvival instance;
 
     private final ManagerPlugin managerPlugin;
 
     private final ManagerMessage managerMessage;
 
-    public CommandMessage(ManagerSurvival managerSurvival) {
+    public CommandTeleportRequest(ManagerSurvival managerSurvival) {
+
+        instance = managerSurvival.getInstance();
 
         managerPlugin = managerSurvival.getPluginManager();
 
         managerMessage = managerSurvival.getMessageManager();
 
     }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
         if (!(sender instanceof Player player)) return false;
 
+        if (managerPlugin.getWaitingPlayers().containsKey(player.getUniqueId())) {
+
+            managerMessage.sendCommandMessage(player, "teleport.already");
+
+            managerMessage.playPlayerSound(player, "error");
+
+            return false;
+
+        }
+
         if (args.length == 0) {
 
-            managerMessage.sendCommandMessage(player, "message.invalid");
+            managerMessage.sendCommandMessage(player, "tp.request.invalid");
 
             managerMessage.playPlayerSound(player, "error");
 
@@ -42,7 +59,7 @@ public class CommandMessage implements CommandExecutor {
 
         if (target == null) {
 
-            managerMessage.sendCommandMessage(player, "message.offline");
+            managerMessage.sendCommandMessage(player, "tp.request.offline");
 
             managerMessage.playPlayerSound(player, "error");
 
@@ -52,7 +69,7 @@ public class CommandMessage implements CommandExecutor {
 
         if (target.equals(player)) {
 
-            managerMessage.sendCommandMessage(player, "message.same");
+            managerMessage.sendCommandMessage(player, "tp.request.same");
 
             managerMessage.playPlayerSound(player, "error");
 
@@ -60,19 +77,22 @@ public class CommandMessage implements CommandExecutor {
 
         }
 
-        if (managerPlugin.isStreamingPlayer(target)) {
+        managerPlugin.setTeleportingQueuePlayer(target, player);
 
-            managerMessage.sendCommandMessage(player, "message.deny");
+        managerMessage.sendCommandMessage(player, "tp.request.success", args[0]);
 
-            managerMessage.playPlayerSound(player, "error");
+        managerMessage.sendCommandMessage(target, "tp.request.request", player.getDisplayName());
 
-            return false;
+        managerMessage.playPlayerSound(player, "activate");
 
-        }
+        new BukkitRunnable() {
 
-        managerMessage.sendMessageToReceiver(managerPlugin, player, target, args, 1);
+            public void run() { managerPlugin.clearTeleportingQueuePlayer(target); }
+
+        }.runTaskLaterAsynchronously(instance, 60 * 20);
 
         return true;
 
     }
+
 }

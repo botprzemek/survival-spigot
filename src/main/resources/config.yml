@@ -17,7 +17,15 @@ commands:
 
 # Whitelisted blocks for spawn
 
-whitelist: ["spruce_trapdoor", "spruce_door", "spruce_button", "spruce_fence_gate", "item_frame", "painting"]
+block-blacklist:
+  enabled: true
+  list: ["spruce trapdoor", "spruce door", "spruce button", "spruce fence_gate", "item frame", "painting", "chest", "barrel"]
+
+# Blacklisted mobs
+
+mob-blacklist:
+  enabled: false
+  list: ["bat", "squid", "dolphin", "tropical fish", "cod", "salmon", "pufferfish", "turtle"]
 
 # Kits config
 

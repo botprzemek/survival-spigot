@@ -1,4 +1,4 @@
-package pl.botprzemek.bpSurvival.Events;
+package pl.botprzemek.bpSurvival.listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
