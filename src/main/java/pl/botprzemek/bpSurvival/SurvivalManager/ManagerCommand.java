@@ -41,6 +41,10 @@ public class ManagerCommand {
 
         Objects.requireNonNull(instance.getCommand("summonsupply")).setExecutor(new CommandSummonSupplyDrop(managerSurvival));
 
+        Objects.requireNonNull(instance.getCommand("openinv")).setExecutor(new CommandOpenInv(managerSurvival));
+
+        Objects.requireNonNull(instance.getCommand("openchest")).setExecutor(new CommandOpenChest(managerSurvival));
+
     }
 
 }

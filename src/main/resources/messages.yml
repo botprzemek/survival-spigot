@@ -82,7 +82,12 @@ commands:
     format:
       receiver: "<color:#FFE04A>★<reset> %player% <gradient:#FFE04A:#FFA400><bold>do ciebie</bold> ★</gradient> %value%"
       sender: "<color:#FFE04A>★<reset> Ty <gradient:#FFE04A:#FFA400><bold>do %player%</bold> ★</gradient> %value%"
-
+  open-inv:
+    offline: "%prefix% Gracz, którego próbujesz sprawdzić, jest <gradient:#FFE04A:#FFA400><bold>offline!</bold></gradient>"
+    same: "%prefix% Nie możesz <gradient:#FFE04A:#FFA400><bold>otworzyć</bold></gradient> własnego <gradient:#FFE04A:#FFA400><bold>ekwipunku!</bold></gradient>"
+  open-chest:
+    none: "%prefix% Nie znaleziono żadnej <gradient:#FFE04A:#FFA400><bold>skrzynki!</bold> na wprost ciebie</gradient>"
+    block: "%prefix% Current block: <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
 # Event messages
 
 events:
