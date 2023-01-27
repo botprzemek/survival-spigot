@@ -15,8 +15,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.bukkit.event.player.*;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerPlugin;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerSurvival;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerPlugin;
+import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
 
 import java.util.Objects;
 
@@ -24,9 +24,9 @@ public class EventSpawnProtection implements Listener {
 
     private final ManagerPlugin managerPlugin;
 
-    public EventSpawnProtection(ManagerSurvival managerSurvival) {
+    public EventSpawnProtection(SurvivalPlugin survivalPlugin) {
 
-        managerPlugin = managerSurvival.getPluginManager();
+        managerPlugin = survivalPlugin.getManagerPlugin();
 
     }
 

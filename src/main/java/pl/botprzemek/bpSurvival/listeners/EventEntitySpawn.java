@@ -3,16 +3,16 @@ package pl.botprzemek.bpSurvival.listeners;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerPlugin;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerSurvival;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerPlugin;
+import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
 
 public class EventEntitySpawn implements Listener {
 
     private final ManagerPlugin managerPlugin;
 
-    public EventEntitySpawn(ManagerSurvival managerSurvival) {
+    public EventEntitySpawn(SurvivalPlugin survivalPlugin) {
 
-        managerPlugin = managerSurvival.getPluginManager();
+        managerPlugin = survivalPlugin.getManagerPlugin();
 
     }
 

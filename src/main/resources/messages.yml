@@ -86,8 +86,7 @@ commands:
     offline: "%prefix% Gracz, którego próbujesz sprawdzić, jest <gradient:#FFE04A:#FFA400><bold>offline!</bold></gradient>"
     same: "%prefix% Nie możesz <gradient:#FFE04A:#FFA400><bold>otworzyć</bold></gradient> własnego <gradient:#FFE04A:#FFA400><bold>ekwipunku!</bold></gradient>"
   open-chest:
-    none: "%prefix% Nie znaleziono żadnej <gradient:#FFE04A:#FFA400><bold>skrzynki!</bold> na wprost ciebie</gradient>"
-    block: "%prefix% Current block: <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
+    none: "%prefix% Nie wskazujesz na <gradient:#FFE04A:#FFA400><bold>skrzynkę!</bold></gradient>"
 # Event messages
 
 events:

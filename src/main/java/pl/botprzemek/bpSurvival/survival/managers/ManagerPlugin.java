@@ -1,4 +1,4 @@
-package pl.botprzemek.bpSurvival.SurvivalManager;
+package pl.botprzemek.bpSurvival.survival.managers;
 
 import io.th0rgal.oraxen.api.OraxenItems;
 import io.th0rgal.oraxen.items.ItemBuilder;
@@ -9,8 +9,8 @@ import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import pl.botprzemek.bpSurvival.SurvivalManager.Config.ConfigPlugin;
-import pl.botprzemek.bpSurvival.SurvivalManager.Utils.Kit;
+import pl.botprzemek.bpSurvival.survival.configs.ConfigPlugin;
+import pl.botprzemek.bpSurvival.survival.utils.Kit;
 
 import java.util.*;
 

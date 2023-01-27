@@ -1,8 +1,8 @@
-package pl.botprzemek.bpSurvival.SurvivalManager;
+package pl.botprzemek.bpSurvival.survival.managers;
 
 import org.bukkit.entity.Player;
-import pl.botprzemek.bpSurvival.SurvivalManager.Config.ConfigProfile;
-import pl.botprzemek.bpSurvival.SurvivalManager.Utils.Profile;
+import pl.botprzemek.bpSurvival.survival.configs.ConfigProfile;
+import pl.botprzemek.bpSurvival.survival.utils.Profile;
 
 import java.util.HashMap;
 import java.util.UUID;

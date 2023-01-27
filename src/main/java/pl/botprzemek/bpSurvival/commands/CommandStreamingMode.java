@@ -5,9 +5,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerPlugin;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerMessage;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerSurvival;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerPlugin;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerMessage;
+import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
 
 public class CommandStreamingMode implements CommandExecutor {
 
@@ -15,11 +15,11 @@ public class CommandStreamingMode implements CommandExecutor {
 
     private final ManagerMessage managerMessage;
 
-    public CommandStreamingMode(ManagerSurvival managerSurvival) {
+    public CommandStreamingMode(SurvivalPlugin survivalPlugin) {
 
-        managerPlugin = managerSurvival.getPluginManager();
+        managerPlugin = survivalPlugin.getManagerPlugin();
 
-        managerMessage = managerSurvival.getMessageManager();
+        managerMessage = survivalPlugin.getManagerMessage();
 
     }
 

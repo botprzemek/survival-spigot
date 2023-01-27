@@ -1,4 +1,4 @@
-package pl.botprzemek.bpSurvival.SurvivalManager.Utils;
+package pl.botprzemek.bpSurvival.survival.utils;
 
 import pl.botprzemek.bpSurvival.BpSurvival;
 import org.bukkit.configuration.InvalidConfigurationException;

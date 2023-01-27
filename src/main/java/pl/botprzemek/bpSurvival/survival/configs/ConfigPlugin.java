@@ -1,7 +1,7 @@
-package pl.botprzemek.bpSurvival.SurvivalManager.Config;
+package pl.botprzemek.bpSurvival.survival.configs;
 
 import pl.botprzemek.bpSurvival.BpSurvival;
-import pl.botprzemek.bpSurvival.SurvivalManager.Utils.Config;
+import pl.botprzemek.bpSurvival.survival.utils.Config;
 
 public class ConfigPlugin extends Config {
 

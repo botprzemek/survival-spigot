@@ -8,12 +8,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import pl.botprzemek.bpSurvival.SurvivalManager.Utils.Kit;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerPlugin;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerMessage;
-import pl.botprzemek.bpSurvival.SurvivalManager.Utils.Profile;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerProfile;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerSurvival;
+import pl.botprzemek.bpSurvival.survival.utils.Kit;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerPlugin;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerMessage;
+import pl.botprzemek.bpSurvival.survival.utils.Profile;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerProfile;
+import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -30,13 +30,13 @@ public class CommandKit implements CommandExecutor, TabCompleter {
 
     private final ManagerMessage managerMessage;
 
-    public CommandKit(ManagerSurvival managerSurvival) {
+    public CommandKit(SurvivalPlugin survivalPlugin) {
 
-        managerPlugin = managerSurvival.getPluginManager();
+        managerPlugin = survivalPlugin.getManagerPlugin();
 
-        managerProfile = managerSurvival.getProfileManager();
+        managerProfile = survivalPlugin.getManagerProfile();
 
-        managerMessage = managerSurvival.getMessageManager();
+        managerMessage = survivalPlugin.getManagerMessage();
 
     }
 

@@ -15,8 +15,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerMessage;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerSurvival;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerMessage;
+import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
+import pl.botprzemek.bpSurvival.survival.utils.RayTrace;
 
 import java.util.ArrayList;
 
@@ -24,34 +25,9 @@ public class CommandOpenChest implements CommandExecutor {
 
     private final ManagerMessage managerMessage;
 
-    public CommandOpenChest(ManagerSurvival managerSurvival) {
-        managerMessage = managerSurvival.getMessageManager();
+    public CommandOpenChest(SurvivalPlugin survivalPlugin) {
+        managerMessage = survivalPlugin.getManagerMessage();
     }
-
-    public class RayTrace {
-        Vector origin, direction;
-
-        RayTrace(Vector origin, Vector direction) {
-            this.origin = origin;
-            this.direction = direction;
-        }
-
-
-        public Vector getPosition(double blocksAway) {
-            return origin.clone().add(direction.clone().multiply(blocksAway));
-        }
-
-        public ArrayList<Vector> getAllTraverseLocations(double blocksAway, double acurracy) {
-            ArrayList<Vector> positions = new ArrayList<>();
-
-            for (double d = 0; d < blocksAway; d += acurracy) {
-                positions.add(getPosition(d));
-            }
-
-            return positions;
-        }
-    }
-
 
     public void openInventory(Player player, Inventory inventory, Block target) {
         ItemStack[] contents = inventory.getContents();
@@ -75,7 +51,6 @@ public class CommandOpenChest implements CommandExecutor {
 
             RayTrace rayTrace = new RayTrace(player.getEyeLocation().toVector(), player.getEyeLocation().getDirection());
             ArrayList<Vector> postions = rayTrace.getAllTraverseLocations(6, 0.1);
-
 
             for (Vector position : postions) {
                 Location location = new Location(world, position.getX(), position.getY(), position.getZ());

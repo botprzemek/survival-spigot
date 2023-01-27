@@ -10,11 +10,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import pl.botprzemek.bpSurvival.BpSurvival;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerPlugin;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerMessage;
-import pl.botprzemek.bpSurvival.SurvivalManager.Utils.Profile;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerProfile;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerSurvival;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerPlugin;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerMessage;
+import pl.botprzemek.bpSurvival.survival.utils.Profile;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerProfile;
+import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
 
 import java.util.List;
 
@@ -28,15 +28,15 @@ public class CommandHome implements CommandExecutor, TabCompleter {
 
     private final ManagerProfile managerProfile;
 
-    public CommandHome(ManagerSurvival managerSurvival) {
+    public CommandHome(SurvivalPlugin survivalPlugin) {
 
-        instance = managerSurvival.getInstance();
+        instance = survivalPlugin.getInstance();
 
-        managerPlugin = managerSurvival.getPluginManager();
+        managerPlugin = survivalPlugin.getManagerPlugin();
 
-        managerMessage = managerSurvival.getMessageManager();
+        managerMessage = survivalPlugin.getManagerMessage();
 
-        managerProfile = managerSurvival.getProfileManager();
+        managerProfile = survivalPlugin.getManagerProfile();
 
     }
 

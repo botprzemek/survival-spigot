@@ -9,9 +9,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.jetbrains.annotations.NotNull;
 import pl.botprzemek.bpSurvival.BpSurvival;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerPlugin;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerMessage;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerSurvival;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerPlugin;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerMessage;
+import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -24,13 +24,13 @@ public class CommandVanish implements CommandExecutor {
 
     private final ManagerMessage managerMessage;
 
-    public CommandVanish(ManagerSurvival managerSurvival) {
+    public CommandVanish(SurvivalPlugin survivalPlugin) {
 
-        instance = managerSurvival.getInstance();
+        instance = survivalPlugin.getInstance();
 
-        managerPlugin = managerSurvival.getPluginManager();
+        managerPlugin = survivalPlugin.getManagerPlugin();
 
-        managerMessage = managerSurvival.getMessageManager();
+        managerMessage = survivalPlugin.getManagerMessage();
 
     }
 

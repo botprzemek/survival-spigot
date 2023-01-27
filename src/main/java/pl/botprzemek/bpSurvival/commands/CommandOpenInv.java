@@ -13,8 +13,8 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerMessage;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerSurvival;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerMessage;
+import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
 
 import java.util.Collection;
 
@@ -22,8 +22,8 @@ public class CommandOpenInv implements CommandExecutor {
 
     private final ManagerMessage managerMessage;
 
-    public CommandOpenInv(ManagerSurvival managerSurvival) {
-        managerMessage = managerSurvival.getMessageManager();
+    public CommandOpenInv(SurvivalPlugin survivalPlugin) {
+        managerMessage = survivalPlugin.getManagerMessage();
     }
 
     public boolean isPlayer(Entity entity) {

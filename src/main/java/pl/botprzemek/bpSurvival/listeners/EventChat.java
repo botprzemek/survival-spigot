@@ -5,9 +5,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerPlugin;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerMessage;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerSurvival;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerPlugin;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerMessage;
+import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
 
 import java.util.UUID;
 
@@ -17,11 +17,11 @@ public class EventChat implements Listener {
 
     private final ManagerMessage managerMessage;
 
-    public EventChat(ManagerSurvival managerSurvival) {
+    public EventChat(SurvivalPlugin survivalPlugin) {
 
-        managerPlugin = managerSurvival.getPluginManager();
+        managerPlugin = survivalPlugin.getManagerPlugin();
 
-        managerMessage = managerSurvival.getMessageManager();
+        managerMessage = survivalPlugin.getManagerMessage();
 
     }
 

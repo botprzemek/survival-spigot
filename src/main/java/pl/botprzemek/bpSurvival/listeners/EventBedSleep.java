@@ -7,9 +7,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
 import pl.botprzemek.bpSurvival.BpSurvival;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerPlugin;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerMessage;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerSurvival;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerPlugin;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerMessage;
+import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
 
 import java.util.Objects;
 
@@ -21,13 +21,13 @@ public class EventBedSleep implements Listener {
 
     private final ManagerMessage managerMessage;
 
-    public EventBedSleep(ManagerSurvival managerSurvival) {
+    public EventBedSleep(SurvivalPlugin survivalPlugin) {
 
-        instance = managerSurvival.getInstance();
+        instance = survivalPlugin.getInstance();
 
-        managerPlugin = managerSurvival.getPluginManager();
+        managerPlugin = survivalPlugin.getManagerPlugin();
 
-        managerMessage = managerSurvival.getMessageManager();
+        managerMessage = survivalPlugin.getManagerMessage();
 
     }
 

@@ -5,73 +5,50 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerConfig;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerPlugin;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerMessage;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerProfile;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerSurvival;
+import pl.botprzemek.bpSurvival.survival.managers.*;
+import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
 
 public class CommandReload implements CommandExecutor {
 
     private final ManagerConfig managerConfig;
-
     private final ManagerProfile managerProfile;
-
     private final ManagerMessage managerMessage;
-
     private final ManagerPlugin managerPlugin;
+    private final ManagerGui managerGui;
 
-    public CommandReload(ManagerSurvival managerSurvival) {
-
-        managerConfig = managerSurvival.getConfigManager();
-
-        managerProfile = managerSurvival.getProfileManager();
-
-        managerMessage = managerSurvival.getMessageManager();
-
-        managerPlugin = managerSurvival.getPluginManager();
-
+    public CommandReload(SurvivalPlugin survivalPlugin) {
+        managerConfig = survivalPlugin.getManagerConfig();
+        managerProfile = survivalPlugin.getManagerProfile();
+        managerMessage = survivalPlugin.getManagerMessage();
+        managerPlugin = survivalPlugin.getManagerPlugin();
+        managerGui = survivalPlugin.getManagerGui();
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-
         try {
-
             managerProfile.saveProfiles();
-
             managerConfig.saveConfigs();
-
             managerConfig.loadConfigs();
-
             managerProfile.loadProfiles();
-
             managerPlugin.loadConfigs();
+            managerGui.loadGuis();
 
-            if (sender instanceof Player player) {
+            if (!(sender instanceof Player player)) return true;
 
-                managerMessage.sendCommandMessage(player, "reload.success");
+            managerMessage.sendCommandMessage(player, "reload.success");
+            managerMessage.playPlayerSound(player, "activate");
 
-                managerMessage.playPlayerSound(player, "activate");
-
-            }
-
+            return true;
         }
-
         catch (Exception error) {
+            if (!(sender instanceof Player player)) return false;
 
-            if (sender instanceof Player player) {
+            managerMessage.sendCommandMessage(player, "reload.failed");
+            managerMessage.playPlayerSound(player, "error");
 
-                managerMessage.sendCommandMessage(player, "reload.failed");
-
-                managerMessage.playPlayerSound(player, "error");
-
-            }
+            return false;
 
         }
-
-        return false;
-
     }
-
 }

@@ -8,9 +8,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import pl.botprzemek.bpSurvival.BpSurvival;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerPlugin;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerMessage;
-import pl.botprzemek.bpSurvival.SurvivalManager.ManagerSurvival;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerPlugin;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerMessage;
+import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
 
 public class CommandTeleportAccept implements CommandExecutor {
 
@@ -20,13 +20,13 @@ public class CommandTeleportAccept implements CommandExecutor {
 
     private final ManagerMessage managerMessage;
 
-    public CommandTeleportAccept(ManagerSurvival managerSurvival) {
+    public CommandTeleportAccept(SurvivalPlugin survivalPlugin) {
 
-        instance = managerSurvival.getInstance();
+        instance = survivalPlugin.getInstance();
 
-        managerPlugin = managerSurvival.getPluginManager();
+        managerPlugin = survivalPlugin.getManagerPlugin();
 
-        managerMessage = managerSurvival.getMessageManager();
+        managerMessage = survivalPlugin.getManagerMessage();
 
     }
 

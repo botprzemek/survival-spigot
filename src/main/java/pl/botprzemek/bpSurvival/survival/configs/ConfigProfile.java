@@ -1,10 +1,10 @@
-package pl.botprzemek.bpSurvival.SurvivalManager.Config;
+package pl.botprzemek.bpSurvival.survival.configs;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import pl.botprzemek.bpSurvival.BpSurvival;
-import pl.botprzemek.bpSurvival.SurvivalManager.Utils.Config;
-import pl.botprzemek.bpSurvival.SurvivalManager.Utils.Profile;
+import pl.botprzemek.bpSurvival.survival.utils.Config;
+import pl.botprzemek.bpSurvival.survival.utils.Profile;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.*;

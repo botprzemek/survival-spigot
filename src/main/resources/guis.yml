@@ -1,0 +1,48 @@
+categories:
+  title: "Kategorie"
+  size: 27
+  buttons:
+    open:
+      slot: 13
+      item-id: "oxium_ore"
+      item-type: "oraxen"
+      action: "minerals"
+      action-type: "open"
+      display-name: "Minerały"
+      lore:
+        - "Wejdź do sklepu z minerałami"
+
+minerals:
+  title: "Minerały"
+  size: 27
+  buttons:
+    open:
+      slot: 21
+      item-id: "server_selector"
+      item-type: "oraxen"
+      action: "categories"
+      action-type: "open"
+      display-name: "Powróć"
+      lore:
+        - "Wróć do kategorii"
+    close:
+      slot: 23
+      item-id: "barrier"
+      item-type: "minecraft"
+      action: "close"
+      action-type: "close"
+      display-name: "Wyjdź"
+      lore:
+        - "Wyjdź z menu"
+    shop:
+      slot: 13
+      item-id: "oxium_ore"
+      item-type: "oraxen"
+      action: "10"
+      action-type: "shop"
+      display-name: "Testowy"
+      lore:
+        - "LPM - Sprzedaj 1"
+        - "LPM + SHIFT - Sprzedaj wszystkie"
+        - "PPM - Kup 1"
+        - "PPM + SHIFT - Kup 64"

@@ -1,9 +1,9 @@
-package pl.botprzemek.bpSurvival.SurvivalManager.Config;
+package pl.botprzemek.bpSurvival.survival.configs;
 
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import pl.botprzemek.bpSurvival.BpSurvival;
-import pl.botprzemek.bpSurvival.SurvivalManager.Utils.Config;
+import pl.botprzemek.bpSurvival.survival.utils.Config;
 
 public class ConfigMessage extends Config {
 

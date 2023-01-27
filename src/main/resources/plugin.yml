@@ -5,7 +5,7 @@ website: 'https://www.github.com/botprzemek/bpSurvival/'
 description: Survival addons (1.18.2)
 main: pl.botprzemek.bpSurvival.BpSurvival
 api-version: '1.18'
-softdepend: [PlaceholderAPI, Oraxen]
+softdepend: [PlaceholderAPI, Oraxen, Vault]
 commands:
   bpsurvival:
     aliases: [bps]
@@ -63,9 +63,6 @@ commands:
     aliases: [r, odpowiedz]
     default: op
     description: Reply command
-  summonsupply:
-    default: op
-    description: Supply command
   openinv:
     aliases: [podglad, podg]
     default: op
@@ -74,6 +71,10 @@ commands:
     aliases: [pods]
     default: op
     description: Open storages
+  opengui:
+    aliases: [otworzgui, gui]
+    default: op
+    description: Open custom gui
 permissions:
   bpsurvival.*:
     default: op
