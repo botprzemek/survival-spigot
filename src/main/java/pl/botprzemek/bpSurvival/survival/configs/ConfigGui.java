@@ -26,6 +26,8 @@ public class ConfigGui extends Config {
     }
 
     public void loadGuis() {
+        if (guiModels.size() != 0) guiModels.clear();
+
         ConfigurationSection guisSection = getConfigurationSection("");
 
         if (guisSection == null) return;
@@ -82,14 +84,13 @@ public class ConfigGui extends Config {
         return guiModels.get(guiName);
     }
 
-
     public String getParsedString(Player player, String string) {
-        Component serializedMessage = MiniMessage.miniMessage().deserialize(PlaceholderAPI.setPlaceholders(player, string));
+        Component serializedMessage = MiniMessage.miniMessage().deserialize(PlaceholderAPI.setPlaceholders(player, "<white>" + string));
         return LegacyComponentSerializer.legacySection().serialize(serializedMessage);
     }
 
     public List<String> getParsedLore(Player player, List<String> lore) {
-        lore.replaceAll(string -> getParsedString(player, string));
+        lore.replaceAll(string -> getParsedString(player, "<white>" + string));
         return lore;
     }
 }

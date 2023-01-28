@@ -5,9 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -42,14 +40,12 @@ public class EventInventoryInteract implements Listener {
         if (button == null) return;
 
         switch (button.getTypeAction()) {
+            case NULL -> managerGui.refreshGui(player, gui.getName());
+            case CLOSE -> player.closeInventory();
+            case COMMAND -> Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), button.getAction());
             case OPEN -> {
-                managerGui.removeGui(player);
                 Gui newGui = managerGui.createGui(player, button.getAction());
                 newGui.openInventory();
-            }
-            case CLOSE -> {
-                managerGui.removeGui(player);
-                player.closeInventory();
             }
             case SHOP -> {
                 Inventory inventory = player.getInventory();
@@ -64,24 +60,10 @@ public class EventInventoryInteract implements Listener {
                             item.setAmount(item.getAmount() - 1);
                             player.updateInventory();
                             managerEconomy.depositPlayer(player, price);
+                            managerGui.refreshGui(player, gui.getName());
 
                             return;
                         }
-                    }
-                    case SHIFT_LEFT -> {
-                        int amount = 0;
-
-                        for (ItemStack item : inventory.getContents()) {
-                            if (item == null || !item.isSimilar(button.getItem())) continue;
-
-                            amount += item.getAmount();
-
-                            inventory.removeItem(item);
-                        }
-
-                        double price = Double.parseDouble(button.getAction()) * amount;
-
-                        managerEconomy.depositPlayer(player, price);
                     }
                     case RIGHT -> {
                         double price = Double.parseDouble(button.getAction()) * 3;
@@ -89,8 +71,23 @@ public class EventInventoryInteract implements Listener {
                         if (managerEconomy.getBalance(player) < price) return;
 
                         managerEconomy.withdrawPlayer(player, price);
+                        managerGui.refreshGui(player, gui.getName());
 
                         inventory.addItem(button.getItem());
+                    }
+                    case SHIFT_LEFT -> {
+                        int amount = 0;
+
+                        for (ItemStack item : inventory.getContents()) {
+                            if (item == null || !item.isSimilar(button.getItem())) continue;
+                            amount += item.getAmount();
+                            inventory.removeItem(item);
+                        }
+
+                        double price = Double.parseDouble(button.getAction()) * amount;
+
+                        managerEconomy.depositPlayer(player, price);
+                        managerGui.refreshGui(player, gui.getName());
                     }
                     case SHIFT_RIGHT -> {
                         double price = Double.parseDouble(button.getAction()) * 3 * 64;
@@ -98,6 +95,7 @@ public class EventInventoryInteract implements Listener {
                         if (managerEconomy.getBalance(player) < price) return;
 
                         managerEconomy.withdrawPlayer(player, price);
+                        managerGui.refreshGui(player, gui.getName());
 
                         ItemStack item = button.getItem();
 
@@ -106,7 +104,6 @@ public class EventInventoryInteract implements Listener {
                     }
                 }
             }
-            case COMMAND -> Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), button.getAction());
         }
 
     }
@@ -127,7 +124,15 @@ public class EventInventoryInteract implements Listener {
     public void onInventoryClose(InventoryCloseEvent event) {
         Player player = (Player) event.getPlayer();
         Gui gui = managerGui.getGui(player);
-        if (gui != null) managerGui.removeGui(player);
+        if (gui == null) return;
+        if (event.getInventory().equals(gui.getInventory())) managerGui.removeGui(player);
+    }
+
+    @EventHandler
+    public void onInventoryOpen(InventoryOpenEvent event) {
+        if (event.getInventory().getType().equals(InventoryType.ANVIL)) {
+            if (!event.getPlayer().hasPermission("bpsurvival.protection")) event.setCancelled(true);
+        }
     }
 
 }

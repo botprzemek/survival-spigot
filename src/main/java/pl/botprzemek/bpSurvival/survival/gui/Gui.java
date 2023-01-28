@@ -10,11 +10,13 @@ import java.util.UUID;
 public class Gui {
 
     private final Inventory inventory;
+    private final String name;
     private final UUID playerUUID;
     private final List<Button> buttons;
 
-    public Gui(Player player, String title, int size, List<Button> buttons) {
+    public Gui(Player player, String name, String title, int size, List<Button> buttons) {
         this.playerUUID = player.getUniqueId();
+        this.name = name;
         this.buttons = buttons;
 
         inventory = Bukkit.createInventory(player, size, title);
@@ -31,8 +33,16 @@ public class Gui {
         return inventory;
     }
 
+    public String getName() {
+        return name;
+    }
+
     private void fillInventory(List<Button> buttons) {
         for (Button button : buttons) inventory.setItem(button.getSlot(), button.getPlaceholderItem());
+    }
+
+    public void refreshGui(List<Button> newButtons) {
+        fillInventory(newButtons);
     }
 
     public Button getButton(int slot) {

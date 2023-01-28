@@ -21,6 +21,7 @@ public class ManagerGui {
 
     public void loadGuis() {
         configGui.loadGuis();
+        clearGuis();
     }
 
     public List<String> getGuisName() {
@@ -33,11 +34,19 @@ public class ManagerGui {
         return gui;
     }
 
+    public void clearGuis() {
+        playerGuis.clear();
+    }
+
     public void removeGui(Player player) {
         playerGuis.remove(player.getUniqueId());
     }
 
     public Gui getGui(Player player) {
         return playerGuis.get(player.getUniqueId());
+    }
+
+    public void refreshGui(Player player, String guiName) {
+        playerGuis.get(player.getUniqueId()).refreshGui(configGui.loadButtons(player, guiName));
     }
 }

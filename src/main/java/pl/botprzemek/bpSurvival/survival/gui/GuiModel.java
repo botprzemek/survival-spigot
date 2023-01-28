@@ -22,12 +22,12 @@ public class GuiModel {
 
     public Gui createGui(Player player, String guiName) {
         title = getParsedTitle(player);
-        return new Gui(player, title, size, configGui.loadButtons(player, guiName));
+        return new Gui(player, guiName, title, size, configGui.loadButtons(player, guiName));
     }
 
     public String getParsedTitle(Player player) {
         try {
-            Component serializedMessage = MiniMessage.miniMessage().deserialize(PlaceholderAPI.setPlaceholders(player, title));
+            Component serializedMessage = MiniMessage.miniMessage().deserialize(PlaceholderAPI.setPlaceholders(player, "<white>" + title));
             return LegacyComponentSerializer.legacySection().serialize(serializedMessage);
         }
         catch (ParsingException error) {
