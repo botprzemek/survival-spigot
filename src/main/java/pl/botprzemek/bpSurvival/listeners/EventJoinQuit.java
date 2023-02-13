@@ -7,12 +7,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import pl.botprzemek.bpSurvival.BpSurvival;
-import pl.botprzemek.bpSurvival.survival.managers.ManagerPlugin;
-import pl.botprzemek.bpSurvival.survival.managers.ManagerMessage;
-import pl.botprzemek.bpSurvival.survival.managers.ManagerProfile;
 import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerMessage;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerPlugin;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerProfile;
 
-import java.util.Objects;
+import java.util.List;
 import java.util.UUID;
 
 public class EventJoinQuit implements Listener {
@@ -33,13 +33,18 @@ public class EventJoinQuit implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+        UUID playerUUID = player.getUniqueId();
+        List<UUID> hiddenPlayers = managerPlugin.getHiddenPlayers();
 
-        event.setJoinMessage(managerMessage.getMessageString(player, "events.connect.join", String.valueOf(Bukkit.getOnlinePlayers().size() - managerPlugin.getHiddenPlayers().size())));
+        if (!hiddenPlayers.contains(playerUUID)) event.setJoinMessage(managerMessage.getMessageString(player, "events.connect.join", String.valueOf(Bukkit.getOnlinePlayers().size() - managerPlugin.getHiddenPlayers().size())));
 
         if (!player.hasPlayedBefore()) player.teleport(managerPlugin.getSpawnLocation());
         if (managerProfile.getProfile(player) == null) managerProfile.createProfile(player);
 
-        for (UUID playerUUID : managerPlugin.getHiddenPlayers()) player.hidePlayer(instance, Objects.requireNonNull(Bukkit.getPlayer(playerUUID)));
+        for (UUID targetUUID : hiddenPlayers) {
+            Player target = Bukkit.getPlayer(targetUUID);
+            if (target != null) player.hidePlayer(instance, target);
+        }
     }
 
     @EventHandler

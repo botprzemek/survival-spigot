@@ -1,9 +1,15 @@
 package pl.botprzemek.bpSurvival.survival;
 
+import com.google.common.collect.Lists;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import pl.botprzemek.bpSurvival.BpSurvival;
 import pl.botprzemek.bpSurvival.survival.managers.*;
+
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class SurvivalPlugin {
 
@@ -26,6 +32,12 @@ public class SurvivalPlugin {
         managerMessage = new ManagerMessage(this);
         managerProfile = new ManagerProfile(managerConfig.getConfigProfile());
         managerGui = new ManagerGui(managerConfig.getConfigGui());
+
+        Bukkit.getScheduler().runTaskTimerAsynchronously(instance, () -> {
+            List<Player> players = Lists.newArrayList(Bukkit.getOnlinePlayers());
+            int randomPlayer = ThreadLocalRandom.current().nextInt(players.size());
+            Bukkit.getLogger().info();
+        }, 0, (5*20));
 
         new ManagerEvent(this);
         new ManagerCommand(this);

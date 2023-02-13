@@ -1,5 +1,5 @@
 name: bpSurvival
-version: '0.2'
+version: '0.3'
 authors: [botprzemek]
 website: 'https://www.github.com/botprzemek/bpSurvival/'
 description: Survival addons (1.18.2)
@@ -75,6 +75,10 @@ commands:
     aliases: [otworzgui, gui]
     default: op
     description: Open custom gui
+  letter:
+    aliases: [walentynka, poczta]
+    default: op
+    description: Send valentines
 permissions:
   bpsurvival.*:
     default: op

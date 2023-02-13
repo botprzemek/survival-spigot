@@ -23,7 +23,7 @@ public class ManagerProfile {
 
     public void createProfile(Player player) {
 
-        Profile profile = new Profile(new HashMap<>(), new HashMap<>());
+        Profile profile = new Profile(new HashMap<>(), new HashMap<>(), new HashMap<>());
 
         UUID playerUUID = player.getUniqueId();
 
