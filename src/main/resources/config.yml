@@ -13,6 +13,7 @@ spawn:
 
 commands:
   cooldown:
+    event: 72000
     timer: 5
 
 # Whitelisted blocks for spawn
@@ -30,12 +31,9 @@ mob-blacklist:
 # Kits config
 
 kits:
-  nowicjusz:
+  walentynka:
     cooldown: 86400
     items:
       '0':
-        id: "example_sword" # Oraxen ID
-        amount: 1 # Amount
-      '1':
-        id: "grape"
-        amount: 2
+        id: "love_letter"
+        amount: 1

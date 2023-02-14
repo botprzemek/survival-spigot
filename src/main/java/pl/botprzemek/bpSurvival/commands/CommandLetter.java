@@ -13,17 +13,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
 import pl.botprzemek.bpSurvival.survival.managers.ManagerMessage;
-import pl.botprzemek.bpSurvival.survival.managers.ManagerPlugin;
 import pl.botprzemek.bpSurvival.survival.managers.ManagerProfile;
 import pl.botprzemek.bpSurvival.survival.utils.Profile;
 
 public class CommandLetter implements CommandExecutor {
-    private final ManagerPlugin managerPlugin;
     private final ManagerProfile managerProfile;
     private final ManagerMessage managerMessage;
 
     public CommandLetter(SurvivalPlugin survivalPlugin) {
-        managerPlugin = survivalPlugin.getManagerPlugin();
         managerProfile = survivalPlugin.getManagerProfile();
         managerMessage = survivalPlugin.getManagerMessage();
     }
@@ -31,38 +28,54 @@ public class CommandLetter implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player player)) return false;
-        if (args.length == 0) return false;
+
+        if (args.length == 0) {
+            managerMessage.sendCommandMessage(player, "letter.invalid");
+            return false;
+        }
 
         PlayerInventory inventory = player.getInventory();
 
-        if (!inventory.getItemInMainHand().isSimilar(OraxenItems.getItemById("love_letter").build())) return false;
+        if (!inventory.getItemInMainHand().isSimilar(OraxenItems.getItemById("love_letter").build())) {
+            managerMessage.sendCommandMessage(player, "letter.item");
+            return false;
+        }
 
         Profile profile = managerProfile.getProfile(player);
         Player target = Bukkit.getPlayer(args[0]);
-        ItemStack item = getCustomItem(player.getDisplayName());
+        ItemStack item = getLetterItem(player.getDisplayName());
 
-        if (target == null) return false;
+        if (target == null) {
+            managerMessage.sendCommandMessage(player, "letter.offline");
+            return false;
+        }
 
-        if (profile.getLetters().containsKey(target.getUniqueId())) return false;
+        if (target == player) {
+            managerMessage.sendCommandMessage(player, "letter.same");
+            return false;
+        }
+
+        if (profile.getLetters().containsKey(target.getUniqueId())) {
+            managerMessage.sendCommandMessage(player, "letter.limit");
+            return false;
+        }
 
         target.getInventory().addItem(item);
-
         inventory.setItem(inventory.getHeldItemSlot(), new ItemStack(Material.AIR));
-
         profile.setLetter(target, true);
 
-        Bukkit.getLogger().info(profile.getLetters().toString());
+        managerMessage.sendMessageToReceiver(player, target, args, 1);
 
         return true;
     }
 
-    private ItemStack getCustomItem(String playerName) {
+    private ItemStack getLetterItem(String playerName) {
         ItemStack item = OraxenItems.getItemById("love_letter").build();
         ItemMeta meta = item.getItemMeta();
 
         if (meta == null) return item;
 
-        meta.setDisplayName("§rWalentynka od " + playerName);
+        meta.setDisplayName("§r§fWalentynka od " + playerName);
         item.setItemMeta(meta);
 
         return item;

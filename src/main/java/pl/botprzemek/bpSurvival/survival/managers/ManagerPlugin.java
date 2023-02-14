@@ -15,85 +15,52 @@ import pl.botprzemek.bpSurvival.survival.utils.Kit;
 import java.util.*;
 
 public class ManagerPlugin {
-
     private final ConfigPlugin configPlugin;
-
     private Location spawnLocation;
-
     private Integer timer;
-
+    private Integer eventTimer;
     private Integer limit;
-
     private final HashMap<UUID, Integer> waitingPlayers;
-
     private final HashMap<UUID, UUID> teleportingQueue;
-
     private final HashMap<UUID, UUID> replyPlayers;
-
     private final List<Kit> kits;
-
     private final List<UUID> sleepingPlayers;
-
     private final List<UUID> hiddenPlayers;
-
     private final List<UUID> streamingPlayers;
-
     private final List<String> blacklistedBlocks;
-
     private final List<String> blacklistedMobs;
-
     private boolean isBlacklistedBlocksEnabled;
-
     private boolean isBlacklistedMobsEnabled;
 
     public ManagerPlugin(ConfigPlugin configPlugin) {
-
         this.configPlugin = configPlugin;
-
         waitingPlayers = new HashMap<>();
-
         teleportingQueue = new HashMap<>();
-
         replyPlayers = new HashMap<>();
-
         kits = new ArrayList<>();
-
         sleepingPlayers = new ArrayList<>();
-
         hiddenPlayers = new ArrayList<>();
-
         streamingPlayers = new ArrayList<>();
-
         blacklistedBlocks = new ArrayList<>();
-
         blacklistedMobs = new ArrayList<>();
-
         isBlacklistedBlocksEnabled = true;
-
         isBlacklistedMobsEnabled = false;
 
         loadConfigs();
-
     }
 
     public void loadConfigs() {
-
         setSpawnLocation();
-
         setKits();
-
         setBlacklistedBlocksEnabled();
-
         setBlacklistedMobsEnabled();
 
         if (isBlacklistedBlocksEnabled) setBlacklistedBlocks();
-
         if (isBlacklistedMobsEnabled) setBlacklistedMobs();
 
+        setEventTimer();
         setTimer();
-
         setLimit();
-
     }
 
     public boolean inventoryHaveSpace(Player player, int size) {
@@ -130,9 +97,15 @@ public class ManagerPlugin {
     }
 
     public Location getSpawnLocation() {
-
         return spawnLocation;
+    }
 
+    public void setEventTimer() {
+        eventTimer = configPlugin.getInt("commands.cooldown.event");
+    }
+
+    public Integer getEventTimer() {
+        return eventTimer;
     }
 
     public void setTimer() {

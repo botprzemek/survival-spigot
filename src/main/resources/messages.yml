@@ -86,7 +86,17 @@ commands:
     offline: "%prefix% Gracz, którego próbujesz sprawdzić, jest <gradient:#FFE04A:#FFA400><bold>offline!</bold></gradient>"
     same: "%prefix% Nie możesz <gradient:#FFE04A:#FFA400><bold>otworzyć</bold></gradient> własnego <gradient:#FFE04A:#FFA400><bold>ekwipunku!</bold></gradient>"
   open-chest:
-    none: "%prefix% Nie wskazujesz na <gradient:#FFE04A:#FFA400><bold>skrzynkę!</bold></gradient>"
+    none: "%prefix% Nie znaleziono żadnej <gradient:#FFE04A:#FFA400><bold>skrzynki!</bold> na wprost ciebie</gradient>"
+    block: "%prefix% Current block: <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
+  letter:
+    invalid: "%prefix% Użycie: <insert:/tprequest>/poczta</insert> <gradient:#FFE04A:#FFA400><bold>(gracz)</bold></gradient>"
+    item: "%prefix% Aby wysłać  <gradient:#FFE04A:#FFA400><bold>walentynkę,</bold></gradient> musisz mieć ją w ręce!"
+    full: "%prefix% Odbiorca walentynki ma pełny <gradient:#FFE04A:#FFA400><bold>ekwipunek!</bold></gradient> Spróbuj ponownie później!"
+    offline: "%prefix% Gracz, do którego wysyłasz walentynkę, jest <gradient:#FFE04A:#FFA400><bold>offline!</bold></gradient>"
+    same: "%prefix% Nie możesz <gradient:#FFE04A:#FFA400><bold>wysłać</bold></gradient> walentynki do <gradient:#FFE04A:#FFA400><bold>samego/ej siebie!</bold></gradient>"
+    limit: "%prefix% Możesz wysłać tylko jedną <gradient:#FFE04A:#FFA400><bold>walentynkę</bold></gradient> do jednej osoby!"
+    format: "%prefix% Walentynka od <gradient:#FFE04A:#FFA400><bold>%player%:</bold></gradient> %value%"
+
 # Event messages
 
 events:
@@ -94,7 +104,7 @@ events:
     join: "%prefix% %player_name% dołączył/a <gradient:#FFE04A:#FFA400><bold>do gry! (%value% gracz/y)</bold></gradient>"
     quit: "%prefix% %player_name% nas <gradient:#FFE04A:#FFA400><bold>opuścił/a!</bold></gradient>"
   chat:
-    success: "<color:#FFE04A>★<reset>%luckperms_prefix%%player_name% <color:#FFA400>★<reset> %value%"
+    success: "<color:#FFE04A>★<reset> %luckperms_prefix% %player_name% <color:#FFA400>★<reset> %value%"
     failed: "%prefix% Nie masz <gradient:#FFE04A:#FFA400><bold>uprawnień</bold></gradient> do wysyłania <gradient:#FFE04A:#FFA400><bold>wiadomości!</bold></gradient>"
   sleep:
     message: "%prefix% %player_name% położył/a się <gradient:#FFE04A:#FFA400><bold>spać! (%value%% gracz/y śpi)</bold></gradient>"
@@ -107,6 +117,11 @@ events:
   gamemode:
     change:
       hidden: "%prefix% Nie możesz zmienić <gradient:#FFE04A:#FFA400><bold>trybu gry,</bold></gradient> gdy jesteś <gradient:#FFE04A:#FFA400><bold>niewidzialny/a!</bold></gradient>"
+  broadcast:
+    lottery:
+      empty: "%prefix% Losowanie zostało <gradient:#FFE04A:#FFA400><bold>anulowane!</bold></gradient> %value% gracz/y na serwerze!"
+      step: "%prefix% Za <gradient:#FFE04A:#FFA400><bold>%value%/5s!</bold></gradient>"
+      success: "%prefix% %value% otrzymał/a klucz do <gradient:#FB5B8B:#FB174E><bold>ᴘᴀᴄᴢᴋɪ ᴡᴀʟᴇɴᴛʏɴᴋᴏᴡᴇᴊ!</bold></gradient> Gratulujemy szczęścia!"
 
 # Sounds
 

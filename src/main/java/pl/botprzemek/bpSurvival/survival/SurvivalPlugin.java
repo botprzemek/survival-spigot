@@ -1,18 +1,11 @@
 package pl.botprzemek.bpSurvival.survival;
 
-import com.google.common.collect.Lists;
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import pl.botprzemek.bpSurvival.BpSurvival;
 import pl.botprzemek.bpSurvival.survival.managers.*;
 
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
-
 public class SurvivalPlugin {
-
     private final BpSurvival instance;
     private Economy managerEconomy;
     private final ManagerConfig managerConfig;
@@ -22,7 +15,6 @@ public class SurvivalPlugin {
     private final ManagerGui managerGui;
 
     public SurvivalPlugin(BpSurvival instance) {
-
         this.instance = instance;
 
         if (!setupEconomy()) instance.getServer().shutdown();
@@ -33,15 +25,8 @@ public class SurvivalPlugin {
         managerProfile = new ManagerProfile(managerConfig.getConfigProfile());
         managerGui = new ManagerGui(managerConfig.getConfigGui());
 
-        Bukkit.getScheduler().runTaskTimerAsynchronously(instance, () -> {
-            List<Player> players = Lists.newArrayList(Bukkit.getOnlinePlayers());
-            int randomPlayer = ThreadLocalRandom.current().nextInt(players.size());
-            Bukkit.getLogger().info();
-        }, 0, (5*20));
-
         new ManagerEvent(this);
         new ManagerCommand(this);
-
     }
 
     private boolean setupEconomy() {

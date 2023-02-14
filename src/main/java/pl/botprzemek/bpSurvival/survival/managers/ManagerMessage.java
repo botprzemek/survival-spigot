@@ -5,6 +5,7 @@ import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
@@ -26,6 +27,10 @@ public class ManagerMessage {
 
     public Component serializeString(Player player,  String message) {
         return mm.deserialize(PlaceholderAPI.setPlaceholders(player, message));
+    }
+
+    public Component serializeString(String message) {
+        return mm.deserialize(message);
     }
 
     public void sendCommandMessage(Player player, String path) {
@@ -101,6 +106,15 @@ public class ManagerMessage {
         adventure.all().sendMessage(serializedMessage);
     }
 
+    public void sendAnnouncement(String path, String value) {
+        String message = configMessage.getEventMessage(path);
+        Component serializedMessage = serializeString(message
+                .replace("%prefix%", configMessage.getPrefix())
+                .replace("%value%", value));
+
+        adventure.all().sendMessage(serializedMessage);
+    }
+
     public String getMessageString(Player player, String path) {
         String message = configMessage.getMessage(path);
         Component serializedMessage = serializeString(player, message
@@ -131,6 +145,10 @@ public class ManagerMessage {
         player.playSound(player, configMessage.getSound(path), 1F, 1F);
     }
 
+    public void playPlayerSound(String path) {
+        for (Player player : Bukkit.getOnlinePlayers()) player.playSound(player, configMessage.getSound(path), 1F, 1F);
+    }
+
     public void sendMessageToReceiver(ManagerPlugin managerPlugin, Player player, Player target, String[] args, int index) {
         StringBuilder message = new StringBuilder();
 
@@ -141,5 +159,13 @@ public class ManagerMessage {
 
         managerPlugin.setReplyPlayer(target, player);
         managerPlugin.setReplyPlayer(player, target);
+    }
+
+    public void sendMessageToReceiver(Player player, Player target, String[] args, int index) {
+        StringBuilder message = new StringBuilder();
+
+        for (int i = index; i < args.length; i++) message.append(args[i]).append(" ");
+
+        target.sendMessage(getMessageString(target, "commands.letter.format", message.toString(), player.getDisplayName()));
     }
 }

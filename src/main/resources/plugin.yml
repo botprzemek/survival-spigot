@@ -79,6 +79,10 @@ commands:
     aliases: [walentynka, poczta]
     default: op
     description: Send valentines
+  lottery:
+    aliases: [losowanie]
+    default: op
+    description: Lottery command
 permissions:
   bpsurvival.*:
     default: op

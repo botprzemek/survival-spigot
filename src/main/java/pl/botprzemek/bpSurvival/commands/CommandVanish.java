@@ -9,11 +9,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.jetbrains.annotations.NotNull;
 import pl.botprzemek.bpSurvival.BpSurvival;
-import pl.botprzemek.bpSurvival.survival.managers.ManagerPlugin;
-import pl.botprzemek.bpSurvival.survival.managers.ManagerMessage;
 import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerMessage;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerPlugin;
 
-import java.util.Objects;
 import java.util.UUID;
 
 public class CommandVanish implements CommandExecutor {
@@ -49,7 +48,10 @@ public class CommandVanish implements CommandExecutor {
 
             for (Player target : Bukkit.getOnlinePlayers()) target.showPlayer(instance, player);
 
-            for (UUID playerUUID : managerPlugin.getHiddenPlayers()) Objects.requireNonNull(Bukkit.getPlayer(playerUUID)).showPlayer(instance, player);
+            for (UUID playerUUID : managerPlugin.getHiddenPlayers()) {
+                Player target = Bukkit.getPlayer(playerUUID);
+                if (target != null) target.showPlayer(instance, player);
+            }
 
             managerMessage.sendAnnouncement(player, "connect.join", String.valueOf(Bukkit.getOnlinePlayers().size() - managerPlugin.getHiddenPlayers().size()));
 
