@@ -81,6 +81,8 @@ public class ConfigProfile extends Config {
 
         for (UUID targetUUID : profile.getLetters().keySet()) set(path + ".letters" + targetUUID.toString(), true);
 
+        set(path + ".homes", null);
+
         for (String homeName : profile.getHomes().keySet()) {
             Location location = profile.getHomes().get(homeName);
 

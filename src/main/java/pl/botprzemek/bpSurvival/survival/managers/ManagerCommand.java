@@ -28,5 +28,6 @@ public class ManagerCommand {
         Objects.requireNonNull(instance.getCommand("opengui")).setExecutor(new CommandOpenGui(survivalPlugin));
         Objects.requireNonNull(instance.getCommand("letter")).setExecutor(new CommandLetter(survivalPlugin));
         Objects.requireNonNull(instance.getCommand("lottery")).setExecutor(new CommandLottery(survivalPlugin));
+        Objects.requireNonNull(instance.getCommand("adminletter")).setExecutor(new CommandAdminLetter());
     }
 }

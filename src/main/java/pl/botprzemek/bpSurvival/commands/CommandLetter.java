@@ -2,7 +2,6 @@ package pl.botprzemek.bpSurvival.commands;
 
 import io.th0rgal.oraxen.api.OraxenItems;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -61,7 +60,8 @@ public class CommandLetter implements CommandExecutor {
         }
 
         target.getInventory().addItem(item);
-        inventory.setItem(inventory.getHeldItemSlot(), new ItemStack(Material.AIR));
+        ItemStack playerItem = inventory.getItem(inventory.getHeldItemSlot());
+        if (playerItem != null) playerItem.setAmount(playerItem.getAmount()- 1);
         profile.setLetter(target, true);
 
         managerMessage.sendMessageToReceiver(player, target, args, 1);

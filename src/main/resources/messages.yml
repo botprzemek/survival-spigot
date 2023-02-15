@@ -89,13 +89,13 @@ commands:
     none: "%prefix% Nie znaleziono żadnej <gradient:#FFE04A:#FFA400><bold>skrzynki!</bold> na wprost ciebie</gradient>"
     block: "%prefix% Current block: <gradient:#FFE04A:#FFA400><bold>%value%!</bold></gradient>"
   letter:
-    invalid: "%prefix% Użycie: <insert:/tprequest>/poczta</insert> <gradient:#FFE04A:#FFA400><bold>(gracz)</bold></gradient>"
-    item: "%prefix% Aby wysłać  <gradient:#FFE04A:#FFA400><bold>walentynkę,</bold></gradient> musisz mieć ją w ręce!"
+    invalid: "%prefix% Użycie: <insert:/poczta>/poczta</insert> <gradient:#FFE04A:#FFA400><bold>(gracz)</bold></gradient>"
+    item: "%prefix% Aby wysłać <gradient:#FFE04A:#FFA400><bold>walentynkę,</bold></gradient> musisz mieć ją w ręce!"
     full: "%prefix% Odbiorca walentynki ma pełny <gradient:#FFE04A:#FFA400><bold>ekwipunek!</bold></gradient> Spróbuj ponownie później!"
     offline: "%prefix% Gracz, do którego wysyłasz walentynkę, jest <gradient:#FFE04A:#FFA400><bold>offline!</bold></gradient>"
     same: "%prefix% Nie możesz <gradient:#FFE04A:#FFA400><bold>wysłać</bold></gradient> walentynki do <gradient:#FFE04A:#FFA400><bold>samego/ej siebie!</bold></gradient>"
-    limit: "%prefix% Możesz wysłać tylko jedną <gradient:#FFE04A:#FFA400><bold>walentynkę</bold></gradient> do jednej osoby!"
-    format: "%prefix% Walentynka od <gradient:#FFE04A:#FFA400><bold>%player%:</bold></gradient> %value%"
+    limit: "%prefix% Możesz wysłać tylko jedną <gradient:#FFE04A:#FFA400><bold>walentynkę</bold></gradient> do jednej <gradient:#FFE04A:#FFA400><bold>osoby!</bold></gradient>"
+    format: "%prefix% Walentynka od <gradient:#FFE04A:#FFA400><bold>%player% - </bold></gradient><italic>%value%</italic>"
 
 # Event messages
 
@@ -120,7 +120,7 @@ events:
   broadcast:
     lottery:
       empty: "%prefix% Losowanie zostało <gradient:#FFE04A:#FFA400><bold>anulowane!</bold></gradient> %value% gracz/y na serwerze!"
-      step: "%prefix% Za <gradient:#FFE04A:#FFA400><bold>%value%/5s!</bold></gradient>"
+      step: "%prefix% Za %value% sekundy odbędzie się <gradient:#FFE04A:#FFA400><bold>losowanie klucza!</bold></gradient>"
       success: "%prefix% %value% otrzymał/a klucz do <gradient:#FB5B8B:#FB174E><bold>ᴘᴀᴄᴢᴋɪ ᴡᴀʟᴇɴᴛʏɴᴋᴏᴡᴇᴊ!</bold></gradient> Gratulujemy szczęścia!"
 
 # Sounds

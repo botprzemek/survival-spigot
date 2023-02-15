@@ -135,6 +135,7 @@ public class ManagerMessage {
     public String getMessageString(Player player, String path, String value, String playerName) {
         String message = configMessage.getMessage(path);
         Component serializedMessage = serializeString(player, message
+            .replace("%prefix%", configMessage.getPrefix())
             .replace("%player%", playerName)
             .replace("%value%", value));
 

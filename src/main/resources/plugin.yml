@@ -83,6 +83,10 @@ commands:
     aliases: [losowanie]
     default: op
     description: Lottery command
+  adminletter:
+    aliases: [adminwalentynka]
+    default: op
+    description: Letter command
 permissions:
   bpsurvival.*:
     default: op
@@ -173,6 +177,6 @@ permissions:
   bpsurvival.sleep.skip:
     default: op
     description: Bypass for spawn protection
-  bpsurvival.supply:
+  bpsurvival.letter:
     default: op
-    description: Spawn supply on map
+    description: Letter command permission

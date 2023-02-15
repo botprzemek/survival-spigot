@@ -9,17 +9,21 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import pl.botprzemek.bpSurvival.survival.managers.ManagerGui;
 import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
 import pl.botprzemek.bpSurvival.survival.gui.Button;
 import pl.botprzemek.bpSurvival.survival.gui.Gui;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerGui;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerPlugin;
+
+import java.util.Objects;
 
 public class EventInventoryInteract implements Listener {
-
+    private final ManagerPlugin managerPlugin;
     private final ManagerGui managerGui;
     private final Economy managerEconomy;
 
     public EventInventoryInteract(SurvivalPlugin survivalPlugin) {
+        managerPlugin = survivalPlugin.getManagerPlugin();
         managerGui = survivalPlugin.getManagerGui();
         managerEconomy = survivalPlugin.getManagerEconomy();
     }
@@ -30,15 +34,12 @@ public class EventInventoryInteract implements Listener {
         Gui gui = managerGui.getGui(player);
 
         if (gui == null) return;
-
         if (!event.getInventory().equals(gui.getInventory())) return;
-
         event.setCancelled(true);
 
         Button button = gui.getButton(event.getSlot());
 
         if (button == null) return;
-
         switch (button.getTypeAction()) {
             case NULL -> managerGui.refreshGui(player, gui.getName());
             case CLOSE -> player.closeInventory();
@@ -130,6 +131,7 @@ public class EventInventoryInteract implements Listener {
 
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent event) {
+        if (!Objects.equals(managerPlugin.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
         if (event.getInventory().getType().equals(InventoryType.ANVIL)) {
             if (!event.getPlayer().hasPermission("bpsurvival.protection")) event.setCancelled(true);
         }

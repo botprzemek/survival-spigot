@@ -7,7 +7,6 @@ import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
 public class ManagerEvent {
     public ManagerEvent(SurvivalPlugin survivalPlugin) {
         BpSurvival instance = survivalPlugin.getInstance();
-
         instance.getServer().getPluginManager().registerEvents(new EventJoinQuit(survivalPlugin), instance);
         instance.getServer().getPluginManager().registerEvents(new EventChat(survivalPlugin), instance);
         instance.getServer().getPluginManager().registerEvents(new EventMovement(survivalPlugin), instance);
