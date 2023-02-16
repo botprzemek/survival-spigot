@@ -131,8 +131,8 @@ public class EventInventoryInteract implements Listener {
 
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent event) {
-        if (!Objects.equals(managerPlugin.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
         if (event.getInventory().getType().equals(InventoryType.ANVIL)) {
+            if (!Objects.equals(managerPlugin.getSpawnLocation().getWorld(), event.getPlayer().getWorld())) return;
             if (!event.getPlayer().hasPermission("bpsurvival.protection")) event.setCancelled(true);
         }
     }

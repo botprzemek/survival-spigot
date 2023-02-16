@@ -21,6 +21,9 @@ public class CommandAdminLetter implements CommandExecutor {
 
         Inventory inventory = player.getInventory();
         ItemStack item = OraxenItems.getItemById("love_letter").build();
+
+        if (args.length == 1) return false;
+
         int amount = Integer.parseInt(args[1]);
 
         if (amount < 0) inventory.addItem(item);

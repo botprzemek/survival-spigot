@@ -29,15 +29,14 @@ public class CommandLottery implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        List<Player> players = Lists.newArrayList(Bukkit.getOnlinePlayers());
-        int eventTimer = managerPlugin.getEventTimer();
-
-        if (players.size() < 2) {
-            managerMessage.sendAnnouncement("broadcast.lottery.empty", String.valueOf(players.size()));
-            return false;
-        }
-
         Bukkit.getScheduler().runTaskTimer(instance, () -> {
+            List<Player> players = Lists.newArrayList(Bukkit.getOnlinePlayers());
+
+            if (players.size() < 2) {
+                managerMessage.sendAnnouncement("broadcast.lottery.empty", String.valueOf(players.size()));
+                return;
+            }
+
             new BukkitRunnable() {
                 private int time = 3;
                 public void run() {
@@ -56,7 +55,7 @@ public class CommandLottery implements CommandExecutor {
                     time--;
                 }
             }.runTaskTimer(instance, 20, 20);
-        }, 0, eventTimer);
+        }, 0, managerPlugin.getEventTimer());
 
         return true;
     }
