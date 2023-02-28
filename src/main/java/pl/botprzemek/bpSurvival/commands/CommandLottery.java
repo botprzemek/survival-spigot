@@ -1,35 +1,30 @@
 package pl.botprzemek.bpSurvival.commands;
 
 import com.google.common.collect.Lists;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
+import eu.okaeri.injector.annotation.Inject;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.jetbrains.annotations.NotNull;
 import pl.botprzemek.bpSurvival.BpSurvival;
-import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
 import pl.botprzemek.bpSurvival.survival.managers.ManagerMessage;
 import pl.botprzemek.bpSurvival.survival.managers.ManagerPlugin;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class CommandLottery implements CommandExecutor {
-    private final BpSurvival instance;
-    private final ManagerPlugin managerPlugin;
-    private final ManagerMessage managerMessage;
+@Route(name = "lottery", aliases = "losowanie")
+@Permission("bpsurvival.admin.command.lottery")
+public class CommandLottery {
+    @Inject BpSurvival bpSurvival;
+    @Inject ManagerPlugin managerPlugin;
+    @Inject ManagerMessage managerMessage;
 
-    public CommandLottery(SurvivalPlugin survivalPlugin) {
-        instance = survivalPlugin.getInstance();
-        managerPlugin = survivalPlugin.getManagerPlugin();
-        managerMessage = survivalPlugin.getManagerMessage();
-    }
-
-    @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        Bukkit.getScheduler().runTaskTimer(instance, () -> {
+    @Execute
+    public void lottery() {
+        Bukkit.getScheduler().runTaskTimer(bpSurvival, () -> {
             List<Player> players = Lists.newArrayList(Bukkit.getOnlinePlayers());
 
             if (players.size() < 2) {
@@ -54,9 +49,7 @@ public class CommandLottery implements CommandExecutor {
                     managerMessage.playPlayerSound("step");
                     time--;
                 }
-            }.runTaskTimer(instance, 20, 20);
+            }.runTaskTimer(bpSurvival, 20, 20);
         }, 0, managerPlugin.getEventTimer());
-
-        return true;
     }
 }

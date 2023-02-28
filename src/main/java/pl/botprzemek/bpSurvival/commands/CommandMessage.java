@@ -1,78 +1,50 @@
 package pl.botprzemek.bpSurvival.commands;
 
+import dev.rollczi.litecommands.argument.Args;
+import dev.rollczi.litecommands.argument.joiner.Joiner;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
+import eu.okaeri.injector.annotation.Inject;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
-import pl.botprzemek.bpSurvival.survival.managers.ManagerPlugin;
 import pl.botprzemek.bpSurvival.survival.managers.ManagerMessage;
-import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerPlugin;
 
-public class CommandMessage implements CommandExecutor {
+@Route(name = "message", aliases = "msg")
+@Permission("bpsurvival.player.command.message")
+public class CommandMessage {
+    @Inject ManagerPlugin managerPlugin;
+    @Inject ManagerMessage managerMessage;
 
-    private final ManagerPlugin managerPlugin;
-
-    private final ManagerMessage managerMessage;
-
-    public CommandMessage(SurvivalPlugin survivalPlugin) {
-
-        managerPlugin = survivalPlugin.getManagerPlugin();
-
-        managerMessage = survivalPlugin.getManagerMessage();
-
-    }
-    @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-
-        if (!(sender instanceof Player player)) return false;
-
-        if (args.length == 0) {
-
+    @Execute
+    public void onMessage(Player player, @Args String playerName, @Joiner String message) {
+        if (message == null) {
             managerMessage.sendCommandMessage(player, "message.invalid");
-
             managerMessage.playPlayerSound(player, "error");
-
-            return false;
-
+            return;
         }
 
-        Player target = Bukkit.getPlayer(args[0]);
+        Player target = Bukkit.getPlayer(playerName);
 
         if (target == null) {
-
             managerMessage.sendCommandMessage(player, "message.offline");
-
             managerMessage.playPlayerSound(player, "error");
-
-            return false;
-
+            return;
         }
 
         if (target.equals(player)) {
-
             managerMessage.sendCommandMessage(player, "message.same");
-
             managerMessage.playPlayerSound(player, "error");
-
-            return false;
-
+            return;
         }
 
         if (managerPlugin.isStreamingPlayer(target)) {
-
             managerMessage.sendCommandMessage(player, "message.deny");
-
             managerMessage.playPlayerSound(player, "error");
-
-            return false;
-
+            return;
         }
 
-        managerMessage.sendMessageToReceiver(managerPlugin, player, target, args, 1);
-
-        return true;
-
+        managerMessage.sendMessageToReceiver(managerPlugin, player, target, message);
     }
 }

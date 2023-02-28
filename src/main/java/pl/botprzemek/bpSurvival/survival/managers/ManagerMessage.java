@@ -150,23 +150,11 @@ public class ManagerMessage {
         for (Player player : Bukkit.getOnlinePlayers()) player.playSound(player, configMessage.getSound(path), 1F, 1F);
     }
 
-    public void sendMessageToReceiver(ManagerPlugin managerPlugin, Player player, Player target, String[] args, int index) {
-        StringBuilder message = new StringBuilder();
-
-        for (int i = index; i < args.length; i++) message.append(args[i]).append(" ");
-
-        target.sendMessage(getMessageString(target, "commands.message.format.receiver", message.toString(), player.getDisplayName()));
-        player.sendMessage(getMessageString(player, "commands.message.format.sender", message.toString(), target.getDisplayName()));
+    public void sendMessageToReceiver(ManagerPlugin managerPlugin, Player player, Player target, String message) {
+        target.sendMessage(getMessageString(target, "commands.message.format.receiver", message, player.getDisplayName()));
+        player.sendMessage(getMessageString(player, "commands.message.format.sender", message, target.getDisplayName()));
 
         managerPlugin.setReplyPlayer(target, player);
         managerPlugin.setReplyPlayer(player, target);
-    }
-
-    public void sendMessageToReceiver(Player player, Player target, String[] args, int index) {
-        StringBuilder message = new StringBuilder();
-
-        for (int i = index; i < args.length; i++) message.append(args[i]).append(" ");
-
-        target.sendMessage(getMessageString(target, "commands.letter.format", message.toString(), player.getDisplayName()));
     }
 }

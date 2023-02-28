@@ -1,26 +1,25 @@
 package pl.botprzemek.bpSurvival.commands;
 
+import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import pl.botprzemek.bpSurvival.survival.managers.ManagerPlugin;
-import pl.botprzemek.bpSurvival.survival.managers.ManagerMessage;
-import pl.botprzemek.bpSurvival.survival.utils.Profile;
-import pl.botprzemek.bpSurvival.survival.managers.ManagerProfile;
 import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerMessage;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerPlugin;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerProfile;
+import pl.botprzemek.bpSurvival.survival.utils.Profile;
 
 import java.util.List;
 
-public class CommandRemoveHome implements CommandExecutor, TabCompleter {
-
+@Route(name = "delhome", aliases = "usundom")
+@Permission("bpsurvival.player.command.delhome")
+public class CommandRemoveHome {
     private final ManagerPlugin managerPlugin;
-
     private final ManagerProfile managerProfile;
-
     private final ManagerMessage managerMessage;
 
     public CommandRemoveHome(SurvivalPlugin survivalPlugin) {

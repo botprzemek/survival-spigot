@@ -7,9 +7,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
 import pl.botprzemek.bpSurvival.BpSurvival;
-import pl.botprzemek.bpSurvival.survival.managers.ManagerPlugin;
-import pl.botprzemek.bpSurvival.survival.managers.ManagerMessage;
 import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerMessage;
+import pl.botprzemek.bpSurvival.survival.managers.ManagerPlugin;
 
 import java.util.Objects;
 
@@ -56,29 +56,19 @@ public class EventBedSleep implements Listener {
 
     @EventHandler
     public void onBedLeaveEvent(PlayerBedLeaveEvent event) {
-
         Player player = event.getPlayer();
 
         if (player.getWorld().getTime() != 0) {
-
             managerPlugin.clearSleepingPlayer(player);
-
             return;
-
         }
-
+        
         if (!managerPlugin.getSleepingPlayers().contains(player.getUniqueId())) return;
-
         player.setHealth(Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue());
-
         player.setFoodLevel(20);
 
         managerMessage.sendTitle(player, "sleep.success");
-
         managerMessage.playPlayerSound(player, "step");
-
         managerPlugin.clearSleepingPlayer(player);
-
     }
-
 }

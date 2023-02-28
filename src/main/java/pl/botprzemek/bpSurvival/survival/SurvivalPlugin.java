@@ -25,8 +25,7 @@ public class SurvivalPlugin {
         managerProfile = new ManagerProfile(managerConfig.getConfigProfile());
         managerGui = new ManagerGui(managerConfig.getConfigGui());
 
-        new ManagerEvent(this);
-        new ManagerCommand(this);
+        new ManagerListeners(this);
     }
 
     private boolean setupEconomy() {

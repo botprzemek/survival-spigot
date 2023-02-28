@@ -1,15 +1,16 @@
 package pl.botprzemek.bpSurvival.commands;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.platform.LiteSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
-import pl.botprzemek.bpSurvival.survival.managers.*;
 import pl.botprzemek.bpSurvival.survival.SurvivalPlugin;
+import pl.botprzemek.bpSurvival.survival.managers.*;
 
-public class CommandReload implements CommandExecutor {
-
+@Route(name = "bpsurvival", aliases = "bps")
+@Permission("bpsurvival.admin.command.reload")
+public class CommandReload {
     private final ManagerConfig managerConfig;
     private final ManagerProfile managerProfile;
     private final ManagerMessage managerMessage;
@@ -24,8 +25,8 @@ public class CommandReload implements CommandExecutor {
         managerGui = survivalPlugin.getManagerGui();
     }
 
-    @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    @Execute
+    public void reload(LiteSender sender) {
         try {
             managerProfile.saveProfiles();
             managerConfig.saveConfigs();
@@ -33,22 +34,14 @@ public class CommandReload implements CommandExecutor {
             managerProfile.loadProfiles();
             managerPlugin.loadConfigs();
             managerGui.loadGuis();
-
-            if (!(sender instanceof Player player)) return true;
-
+            if (!(sender instanceof Player player)) return;
             managerMessage.sendCommandMessage(player, "reload.success");
             managerMessage.playPlayerSound(player, "activate");
-
-            return true;
         }
         catch (Exception error) {
-            if (!(sender instanceof Player player)) return false;
-
+            if (!(sender instanceof Player player)) return;
             managerMessage.sendCommandMessage(player, "reload.failed");
             managerMessage.playPlayerSound(player, "error");
-
-            return false;
-
         }
     }
 }
